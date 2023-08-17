@@ -3,23 +3,8 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import sass from 'rollup-plugin-sass';
 import dts from 'rollup-plugin-dts';
-
-const configs = {
-  input: {
-    index: 'src/index',
-  },
-  external: [
-    /node_modules/
-  ],
-};
-
-const resolvePlugin = resolve({
-  extensions: [
-    '.web.ts', '.web.tsx', '.web.mjs', '.web.js',
-    '.ts', '.tsx', '.mjs', '.js',
-  ]
-});
 
 const rollupPlugins = [
   typescript({ declaration: false }),
@@ -32,46 +17,62 @@ const rollupPlugins = [
     transformMixedEsModules: true,
   }),
   json(),
+  sass({
+    output: true,
+  }),
 ];
 
 export default [
   {
-    ...configs,
+    input: `src/index`,
+    external: [
+      /node_modules/,
+      /^react$/,
+      /^react-native$/,
+    ],
     output: [
       {
-        entryFileNames: '[name].js',
-        chunkFileNames: 'internals/[name]-[hash].js',
-        dir: './dist',
+        file: 'dist/index.js',
         format: 'cjs',
         sourcemap: true,
       },
       {
-        entryFileNames: '[name].mjs',
-        chunkFileNames: 'internals/[name]-[hash].mjs',
-        dir: './dist',
+        file: 'dist/index.mjs',
         format: 'esm',
         sourcemap: true,
       },
     ],
     plugins: [
-      resolvePlugin,
+      resolve({
+        extensions: [
+          '.web.ts', '.web.tsx', '.web.mjs', '.web.js',
+          '.ts', '.tsx', '.mjs', '.js',
+        ]
+      }),
       ...rollupPlugins
     ],
   },
   {
-    ...configs,
+    input: `src/index`,
+    external: [
+      /node_modules/,
+      /^react$/,
+      /^react-native$/,
+    ],
     output: [
       {
-        entryFileNames: '[name].d.ts',
-        chunkFileNames: 'internals/[name]-[hash].d.ts',
-        dir: './dist',
+        file: `dist/index.d.ts`,
         format: 'es',
-        sourcemap: true,
       },
     ],
     plugins: [
-      resolvePlugin,
+      resolve({
+        extensions: [
+          '.web.ts', '.web.tsx', '.web.mjs', '.web.js',
+          '.ts', '.tsx', '.mjs', '.js',
+        ]
+      }),
       dts()
     ],
-  },
+  }
 ];
