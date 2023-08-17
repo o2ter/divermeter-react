@@ -2887,10 +2887,10 @@ prop-types@^15.5.7, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.22:
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.22.tgz#61a6de24856b81d760329f7e7a8a804e0238a6ee"
-  integrity sha512-A8TRqRTsxeU7DmFxKbr+oBSB+QME7hkf0krBHctlxoUKJielXpJf8y8cywG1zmAzLzdfjWGwT9lvm6h0q0eK7Q==
+proto.io@^0.0.23:
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.23.tgz#f055ea78746a68ff3018f4b947020470d2e33a01"
+  integrity sha512-T7XVjjkxWP+In/08oaJAXP8UQJOez77BEtJUGq+yqYtauk9Nqkj6kZ2Hu5FEbD2vFchdDt8d+JJjRUm1vEfWig==
   dependencies:
     axios "^1.2.2"
     bson "^5.4.0"
