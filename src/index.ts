@@ -29,11 +29,15 @@ import application from './run/application';
 import Broswer from './browser';
 
 type DivermeterOptions = {
+  endpoint: string;
   env: any;
 };
 
 export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(Broswer), {
-  env: options.env,
+  env: { 
+    ...options.env,
+    PROTO_SERVER_URL: options.endpoint,
+  },
   jsSrc: '/bundle.js',
   cssSrc: '/css/bundle.css',
 })
