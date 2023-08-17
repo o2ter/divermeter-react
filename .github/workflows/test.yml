@@ -1,0 +1,51 @@
+name: Test
+on: [push, pull_request]
+env:
+  POSTGRES_DATABASE: postgres
+  POSTGRES_USERNAME: o2ter
+  POSTGRES_PASSWORD: o2ter
+  MONGO_DATABASE: o2ter
+  MONGO_USERNAME: o2ter
+  MONGO_PASSWORD: o2ter
+  MONGO_AUTHSOURCE: admin
+  MONGO_REPLICA_SET: rs0
+jobs:
+  test:
+    name: node ${{ matrix.node_version }}
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        ports: 
+          - 5432:5432
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DATABASE }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: ['14.x', '16.x', '18.x', '20.x']
+    steps:
+      - name: Start MongoDB
+        uses: SusanDoggie/mongodb-action@0.0.1
+        with:
+          network: ${{ job.container.network }}
+          host: mongo
+          username: ${{ env.MONGO_USERNAME }}
+          password: ${{ env.MONGO_PASSWORD }}
+          database: ${{ env.MONGO_DATABASE }}
+          replica_set: ${{ env.MONGO_REPLICA_SET }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install
+      - name: Test rollup
+        run: yarn rollup
+      - name: Run tests
+        run: yarn test
+        env:
+          POSTGRES_HOST: localhost
+          MONGO_HOST: mongo
