@@ -26,10 +26,18 @@
 import _ from 'lodash';
 import React from 'react';
 import { Navigator } from '@o2ter/react-ui';
+import { ProtoProvider } from './proto';
 
-export const Broswer = () => (
-  <Navigator>
-  </Navigator>
-);
+export const Broswer = () => {
+
+  const [masterUser, setMasterUser] = React.useState<{ user: string; pass: string; }>();
+
+  return (
+    <ProtoProvider masterUser={masterUser}>
+      <Navigator>
+      </Navigator>
+    </ProtoProvider>
+  );
+};
 
 export default Broswer;

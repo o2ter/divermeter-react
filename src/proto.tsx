@@ -1,5 +1,5 @@
 //
-//  proto.ts
+//  proto.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -24,9 +24,23 @@
 //
 
 import _ from 'lodash';
+import React from 'react';
 import ProtoClient from 'proto.io/dist/client';
 import { env } from '@o2ter/react-route/dist/client';
 
-export const Proto = new ProtoClient({
-  endpoint: env.PROTO_SERVER_URL,
-});
+const ProtoContext = React.createContext<ProtoClient<any> | undefined>(undefined);
+
+export const ProtoProvider = (props: React.PropsWithChildren<{
+  masterUser?: { user: string; pass: string; };
+}>) => {
+  const proto = React.useMemo(() => new ProtoClient({
+    endpoint: env.PROTO_SERVER_URL,
+    masterUser: props.masterUser,
+  }), [props.masterUser?.user, props.masterUser?.pass]);
+  return (
+    <ProtoContext.Provider value={proto}>{props.children}</ProtoContext.Provider>
+  );
+};
+
+export const useProto = () => React.useContext(ProtoContext);
+
