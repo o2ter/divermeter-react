@@ -28,7 +28,7 @@ import React from 'react';
 import { Navigator } from '@o2ter/react-ui';
 import { ProtoProvider } from './proto';
 
-export const Broswer = () => {
+export const Browser = () => {
 
   const [masterUser, setMasterUser] = React.useState<{ user: string; pass: string; }>();
 
@@ -40,4 +40,4 @@ export const Broswer = () => {
   );
 };
 
-export default Broswer;
+export default Browser;
