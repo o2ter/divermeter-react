@@ -27,7 +27,11 @@ import _ from 'lodash';
 import React from 'react';
 import { Navigator } from '@o2ter/react-ui';
 
-export const Broswer = () => (
+type BroswerOptions = {
+  endpoint: string;
+};
+
+export const Broswer = (options: BroswerOptions) => () => (
   <Navigator>
   </Navigator>
 );
