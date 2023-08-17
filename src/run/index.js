@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  index.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -23,19 +23,9 @@
 //  THE SOFTWARE.
 //
 
-import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import 'bootstrap/dist/js/bootstrap.js';
 
-type DivermeterOptions = {
-  env: any;
-};
+import application from './application';
+import { runApplication } from '@o2ter/react-route/dist/client';
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
-
-export default Divermeter;
+export default (App) => runApplication(application(App));

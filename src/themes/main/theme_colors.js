@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  theme_colors.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -23,19 +23,12 @@
 //  THE SOFTWARE.
 //
 
-import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
-
-type DivermeterOptions = {
-  env: any;
-};
-
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
-
-export default Divermeter;
+export const primary = '#0d6efd';
+export const secondary = '#6c757d';
+export const success = '#198754';
+export const info = '#0dcaf0';
+export const warning = '#ffc107';
+export const error = '#dc3545';
+export const danger = '#dc3545';
+export const light = '#f8f9fa';
+export const dark = '#212529';

@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  index.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -24,18 +24,18 @@
 //
 
 import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import React from 'react';
+import { ToastProvider as _ToastProvider } from '@o2ter/react-ui';
 
-type DivermeterOptions = {
-  env: any;
-};
+export const ToastProvider = ({
+  children,
+  ...props
+}) => {
+  return (
+    <_ToastProvider {...props}>
+      {children}
+    </_ToastProvider>
+  );
+}
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
-
-export default Divermeter;
+export default ToastProvider;

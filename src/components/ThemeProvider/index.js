@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  index.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -24,18 +24,31 @@
 //
 
 import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import React from 'react';
+import { ThemeProvider as _ThemeProvider } from '@o2ter/react-ui';
+import { BootstrapProvider } from '@o2ter/react-route/dist/client';
+import { useColorScheme } from '../../hooks/useColorScheme';
 
-type DivermeterOptions = {
-  env: any;
+import ThemeList from '../../themes';
+
+const defaultScheme = {
+  light: process.env.DEFAULT_THEME,
+  dark: process.env.DEFAULT_DARK_THEME,
 };
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
+export const ThemeProvider = ({
+  themes = defaultScheme,
+  children
+}) => {
 
-export default Divermeter;
+  const selected_theme = themes[useColorScheme()] ?? defaultScheme.light;
+  const { styles, ...variables } = ThemeList[selected_theme] ?? {};
+
+  return (
+    <BootstrapProvider theme={selected_theme}>
+      <_ThemeProvider variables={variables} styles={styles}>
+        {children}
+      </_ThemeProvider>
+    </BootstrapProvider>
+  );
+}

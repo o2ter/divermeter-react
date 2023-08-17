@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  index.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -24,18 +24,14 @@
 //
 
 import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import { useColorScheme as _useColorScheme } from 'react-native';
 
-type DivermeterOptions = {
-  env: any;
-};
+export function darkModeEnabled() {
+  const ENABLE_DARK_MODE = process.env.ENABLE_DARK_MODE;
+  return ENABLE_DARK_MODE === '1' || ENABLE_DARK_MODE === 'true';
+}
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
-
-export default Divermeter;
+export function useColorScheme() {
+  const colorScheme = _useColorScheme() ?? 'light';
+  return darkModeEnabled() ? colorScheme : 'light';
+}

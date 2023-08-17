@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  variables.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -23,19 +23,23 @@
 //  THE SOFTWARE.
 //
 
-import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import { Easing } from 'react-native';
 
-type DivermeterOptions = {
-  env: any;
+export const fontSizeBase = 16;
+
+export const fontWeightBase = '400';
+export const fontWeights = {
+  light: '300',
+  normal: '400',
+  semibold: '600',
+  bold: '700',
 };
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
+export const activityIndicatorDuration = 250;
+export const activityIndicatorEasing = Easing.linear;
 
-export default Divermeter;
+export const buttonDuration = 100;
+export const buttonEasing = Easing.linear;
+
+export const toastDuration = 250;
+export const toastEasing = Easing.linear;

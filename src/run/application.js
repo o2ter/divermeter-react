@@ -1,5 +1,5 @@
 //
-//  index.ts
+//  application.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -24,18 +24,21 @@
 //
 
 import _ from 'lodash';
-import { ReactRoute } from '@o2ter/react-route';
-import application from './run/application';
-import App from './browser';
+import React from 'react';
 
-type DivermeterOptions = {
-  env: any;
-};
+import {
+  ActivityIndicatorProvider,
+  ThemeProvider,
+  ToastProvider,
+  ModalProvider,
+} from '../components';
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
-  env: options.env,
-  jsSrc: '/bundle.js',
-  cssSrc: '/css/bundle.css',
-})
+const ProviderChain = ({ providers = [], children }) => _.reduceRight(providers, (children, Provider) => <Provider>{children}</Provider>, children);
+const appProviders = [
+  ThemeProvider,
+  ActivityIndicatorProvider,
+  ToastProvider,
+  ModalProvider,
+]
 
-export default Divermeter;
+export default (App) => () => <ProviderChain providers={appProviders}><App /></ProviderChain>;
