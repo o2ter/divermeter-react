@@ -25,11 +25,11 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator } from '@o2ter/react-ui/dist/index.web';
+import { Navigator } from '@o2ter/react-ui';
 
-export const App = () => (
+export const Broswer = () => (
   <Navigator>
   </Navigator>
 );
 
-export default App;
+export default Broswer;

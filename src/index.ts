@@ -26,13 +26,13 @@
 import _ from 'lodash';
 import { ReactRoute } from '@o2ter/react-route';
 import application from './run/application';
-import App from './browser';
+import Broswer from './browser';
 
 type DivermeterOptions = {
   env: any;
 };
 
-export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(App), {
+export const Divermeter = (options: DivermeterOptions) => ReactRoute(application(Broswer), {
   env: options.env,
   jsSrc: '/bundle.js',
   cssSrc: '/css/bundle.css',
