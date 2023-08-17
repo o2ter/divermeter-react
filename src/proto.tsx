@@ -28,7 +28,7 @@ import React from 'react';
 import ProtoClient from 'proto.io/dist/client';
 import { env } from '@o2ter/react-route/dist/client';
 
-const ProtoContext = React.createContext<ProtoClient<any> | undefined>(undefined);
+const ProtoContext = React.createContext(new ProtoClient({ endpoint: env.PROTO_SERVER_URL }));
 
 export const ProtoProvider = (props: React.PropsWithChildren<{
   masterUser?: { user: string; pass: string; };
