@@ -24,7 +24,7 @@
 //
 
 import _ from 'lodash';
-import { ProtoService } from 'proto.io';
+import ProtoRoute, { ProtoService } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
 
