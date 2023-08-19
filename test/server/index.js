@@ -24,7 +24,37 @@
 //
 
 import _ from 'lodash';
+import { ProtoService } from 'proto.io';
+import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
+import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
+
+const {
+  SERVER_URL, DATABASE_URI, JWT_KEY, DASHBOARD_USER, DASHBOARD_PASS,
+} = process.env;
+
+const database = new PostgresStorage(DATABASE_URI);
+const masterUsers = [];
+if (!_.isEmpty(DASHBOARD_USER) && !_.isEmpty(DASHBOARD_PASS)) {
+  masterUsers.push({
+    user: DASHBOARD_USER,
+    pass: DASHBOARD_PASS
+  });
+}
+
+const Proto = new ProtoService({
+  endpoint: SERVER_URL || 'http://localhost:8080/proto',
+  masterUsers: masterUsers,
+  jwtToken: JWT_KEY,
+  storage: database,
+  fileStorage: new DatabaseFileStorage(),
+  schema: {},
+});
 
 export default async (app, env) => {
 
+  env.PROTO_SERVER_URL = SERVER_URL || 'http://localhost:8080/proto';
+
+  app.use('/proto', await ProtoRoute({
+    proto: Proto,
+  }));
 }
