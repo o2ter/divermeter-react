@@ -24,27 +24,34 @@
 //
 
 import _ from 'lodash';
+import crypto from 'crypto';
 import ProtoRoute, { ProtoService } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
 
-const {
-  SERVER_URL, DATABASE_URI, JWT_KEY, DASHBOARD_USER, DASHBOARD_PASS,
-} = process.env;
+const db_host = process.env['POSTGRES_HOST'] ?? "localhost";
+const db_user = process.env['POSTGRES_USERNAME'];
+const db_pass = process.env['POSTGRES_PASSWORD'];
+const db = `/${process.env['POSTGRES_DATABASE'] ?? ''}`;
+const db_ssl = process.env['POSTGRES_SSLMODE'];
 
-const database = new PostgresStorage(DATABASE_URI);
-const masterUsers = [];
-if (!_.isEmpty(DASHBOARD_USER) && !_.isEmpty(DASHBOARD_PASS)) {
-  masterUsers.push({
-    user: DASHBOARD_USER,
-    pass: DASHBOARD_PASS
-  });
-}
+const uri = _.compact([
+  'postgres://',
+  db_user && db_pass && `${db_user}:${db_pass}@`,
+  db_host, db,
+  db_ssl && `?ssl=true&sslmode=${db_ssl}`
+]).join('');
+
+const database = new PostgresStorage(uri);
+const masterUsers = [{
+  user: 'admin',
+  pass: 'password'
+}];
 
 const Proto = new ProtoService({
-  endpoint: SERVER_URL || 'http://localhost:8080/proto',
+  endpoint: 'http://localhost:8080/proto',
   masterUsers: masterUsers,
-  jwtToken: JWT_KEY,
+  jwtToken: 'test token',
   storage: database,
   fileStorage: new DatabaseFileStorage(),
   schema: {},
@@ -52,7 +59,7 @@ const Proto = new ProtoService({
 
 export default async (app, env) => {
 
-  env.PROTO_SERVER_URL = SERVER_URL || 'http://localhost:8080/proto';
+  env.PROTO_SERVER_URL = 'http://localhost:8080/proto';
 
   app.use('/proto', await ProtoRoute({
     proto: Proto,
