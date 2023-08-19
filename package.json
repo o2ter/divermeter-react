@@ -13,8 +13,9 @@
   "scripts": {
     "clean": "rm -rf ./dist/*",
     "rollup": "yarn clean && rollup -c",
-    "test": "cd test && yarn test",
-    "postinstall": "cd test && yarn install"
+    "watch:build": "react-booster -w",
+    "watch:test": "until [ -f ./test/dist/server.js ]; do sleep 1; done && nodemon --watch ./test/dist ./test/dist/server.js",
+    "test": "rm -rf ./test/dist/* && npm-run-all --parallel watch:*"
   },
   "peerDependencies": {
     "@o2ter/i18n": ">=0.0.10",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@o2ter/i18n": "^0.0.10",
+    "@o2ter/react-booster": "^0.0.10",
     "@o2ter/react-route": "^0.0.59",
     "@o2ter/react-ui": "^0.0.148",
     "@o2ter/valid.js": "^1.0.2",
