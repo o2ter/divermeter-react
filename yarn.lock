@@ -348,10 +348,10 @@
     postcss "^8.4.24"
     sass "^1.63.2"
 
-"@o2ter/i18n@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@o2ter/i18n/-/i18n-0.0.9.tgz#40f873d3b25fa2805e3161545d7c18f89ad932ae"
-  integrity sha512-PjwzXGyyGifD9K+efsSKA61W/xU1nbfJnJQhMjK5wnzBwhCFBg2XjqUC3DaIbKtvepwWoVftvWc2PeZ7slH3/A==
+"@o2ter/i18n@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@o2ter/i18n/-/i18n-0.0.10.tgz#5f966a518def93e10824dc8ed26f1c3641280562"
+  integrity sha512-V57ghWj/a+mNXxbkkcBEqPLBW9QbosYf9Oq4vMXm/4EUGet3FkKStIdlMOu7BQyRMyxFZK6dKjVvQCd7/qqC7g==
   dependencies:
     events ">=3.3.0"
     lodash ">=4.17.21"
@@ -365,10 +365,10 @@
     cookie-parser ">=1.4.6"
     lodash ">=4.17.21"
 
-"@o2ter/react-ui@^0.0.137":
-  version "0.0.137"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.137.tgz#96fa74a8b6a7739861ead71ce57a2e3b9d7280d3"
-  integrity sha512-C5s5mXq7uPtfCumvrNcIqwR8p+OexCoCbAxrn8PU1XftmlrwtV/WECUpwO5oWCKQuA6vSgdjWQJORmoCi8Kw6w==
+"@o2ter/react-ui@^0.0.148":
+  version "0.0.148"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.148.tgz#efa348b8bac077ef289f242dd168c7462623f8ca"
+  integrity sha512-adRUSMFT54zPoBCNzWzXd0QmlL1yUvMqRD8ethudkB9vQIo8jT0EqIxNz5FIC1zl9caecIY4uTGyVxU+CXrsXg==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     codemirror "^6.0.1"
@@ -388,17 +388,17 @@
     react-native-vector-icons ">=9.2.0"
     react-router-dom ">=6.6.2"
 
-"@o2ter/valid.js@^1.0.0":
+"@o2ter/valid.js@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@o2ter/valid.js/-/valid.js-1.0.2.tgz#f37ceb964a064e489a60a3748009e92bc32f9753"
   integrity sha512-GbO9tylhBxMBx6vsKhPqNEgT/xIVPIsjvNCY11ypb13aAVkZM7pbCnWz97eq/xx2mqmRTvyUXzRbdBZIOy+xZg==
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.3.tgz#370b97adae01f5cfdb3a21567e6bbae19fd81892"
-  integrity sha512-QjDhzVsYlzcu3AlBp57q4Kd7AoyJb+EUF3dmOXIsUrqBrk5fy4zPUh9hWRhSb1nan+HK0rZFEKYTUAjMt2P7Pg==
+"@o2ter/wireframe@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.5.tgz#1b3da5595e9602fa5f69c2679a5e5a4298a42204"
+  integrity sha512-Aticy/mKrAI6UWm0qq0bo6elRrZXbV4SU7KnpS17/zJtVag/HvHNCBFjsh0I9NKMXjhssbGoNzEdpnDRMS4pAw==
   dependencies:
     lodash ">=4.17.21"
 
