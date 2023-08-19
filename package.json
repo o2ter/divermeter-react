@@ -14,7 +14,7 @@
     "clean": "rm -rf ./dist/*",
     "rollup": "yarn clean && rollup -c",
     "watch:build": "react-booster -w",
-    "watch:test": "until [ -f ./test/dist/server.js ]; do sleep 1; done && nodemon --watch ./test/dist ./test/dist/server.js",
+    "watch:test": "cd ./test && until [ -f ./dist/server.js ]; do sleep 1; done && nodemon --watch ./dist ./dist/server.js",
     "test": "rm -rf ./test/dist/* && npm-run-all --parallel watch:*"
   },
   "peerDependencies": {
