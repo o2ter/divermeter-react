@@ -24,7 +24,6 @@
 //
 
 import _ from 'lodash';
-import crypto from 'crypto';
 import ProtoRoute, { ProtoService } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
