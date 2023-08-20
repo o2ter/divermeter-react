@@ -63,6 +63,7 @@ export const Login = () => {
                 const proto = createProto(values);
                 await proto.schema({ master: true });
                 setAuth(values);
+                window.location.reload();
               });
             } catch {
               showError(localization.string('invalid_user'));

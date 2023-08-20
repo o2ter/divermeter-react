@@ -43,8 +43,8 @@ export const Dashboard = () => {
   const { resource: schema } = useAsyncResource(async () => {
     try {
       return await proto.schema({ master: true });
-    } catch {
-      setConfig({ user: null, pass: null });
+    } catch (e) {
+      showError(e);
     }
   });
   return (
