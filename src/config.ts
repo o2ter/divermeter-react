@@ -1,5 +1,5 @@
 //
-//  index.js
+//  config.ts
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -25,32 +25,28 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, useActivity, useToast } from '@o2ter/react-ui';
+import { TSerializable, deserialize, serialize } from 'proto.io/dist/client';
+import { useSessionStorage } from 'sugax/dist/index.web';
 
-import Localization from '../../i18n/pages/dashboard';
-import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
-import { useAuth } from '../../config';
+export const useConfig = () => {
+  const [config, setConfig] = useSessionStorage('X-PROTO-CONFIG');
+  return [
+    config ? deserialize(config) as Record<string, TSerializable> : {},
+    (v: Record<string, TSerializable | undefined>) => setConfig((x) => serialize(_.pickBy(x ? {
+      ...deserialize(x) as any,
+      ...v,
+    } : v, x => !_.isNil(x)))),
+  ] as const;
+}
 
-export const Dashboard = () => {
-  const [,setAuth] = useAuth();
-  const theme = useTheme();
-  const startActivity = useActivity();
-  const { showError } = useToast();
-  const localization = Localization.useLocalize();
-  return (
-    <View style={{ flex: 1, flexDirection: 'row' }}>
-      <View style={{
-        width: 300,
-        backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
-      }}>
-      </View>
-      <View style={{
-        flex: 1,
-        backgroundColor: shiftColor(theme.themeColors.secondary, theme.colorWeights['100']),
-      }}>
-      </View>
-    </View>
-  );
-};
-
-export default Dashboard;
+export const useAuth = () => {
+  const [config, setConfig] = useConfig();
+  const auth = config.user && config.pass ? _.pick(config, ['user', 'pass']) as {
+    user: string;
+    pass: string;
+  } : undefined;
+  const setAuth = React.useCallback((auth?: { user: string; pass: string; }) => {
+    setConfig({ user: auth?.user, pass: auth?.pass });
+  }, []);
+  return [auth, setAuth] as const;
+}

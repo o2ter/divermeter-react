@@ -31,8 +31,10 @@ import Localization from '../../i18n/pages/login';
 import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
 import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
+import { useAuth } from '../../config';
 
-export const Login = ({ setAuth }) => {
+export const Login = () => {
+  const [,setAuth] = useAuth();
   const theme = useTheme();
   const startActivity = useActivity();
   const { showError } = useToast();
@@ -61,6 +63,7 @@ export const Login = ({ setAuth }) => {
                 const proto = createProto(values);
                 await proto.schema({ master: true });
                 setAuth(values);
+                window.location.reload();
               });
             } catch {
               showError(localization.string('invalid_user'));

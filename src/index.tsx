@@ -26,24 +26,15 @@
 import _ from 'lodash';
 import React from 'react';
 import { ProtoProvider } from './proto';
+import { useAuth } from './config';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
-import { useSessionStorage } from 'sugax/dist/index.web';
 
 export const Browser = () => {
-  const [user, setUser] = useSessionStorage('X-PROTO-MASTER-USER');
-  const [pass, setPass] = useSessionStorage('X-PROTO-MASTER-PASS');
-  const [auth, setAuth] = React.useState<{ user: string; pass: string; } | undefined>(
-    user && pass ? { user, pass } : undefined
-  );
-  const _setAuth = React.useCallback((auth: { user: string; pass: string; }) => {
-    setAuth(auth);
-    setUser(auth.user);
-    setPass(auth.pass);
-  }, []);
+  const [auth] = useAuth();
   return typeof window === 'undefined' ? <></> : (
     <ProtoProvider auth={auth}>
-      {auth ? <Dashboard setAuth={_setAuth} /> : <Login setAuth={_setAuth} />}
+      {auth ? <Dashboard /> : <Login />}
     </ProtoProvider>
   );
 };
