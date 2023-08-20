@@ -30,12 +30,15 @@ import { useSessionStorage } from 'sugax/dist/index.web';
 
 export const useConfig = () => {
   const [config, setConfig] = useSessionStorage('X-PROTO-CONFIG');
+  const _setConfig = React.useCallback((
+    v: Record<string, TSerializable | undefined>
+  ) => setConfig((x) => serialize(_.pickBy({
+    ...x ? deserialize(x) as any : {},
+    ...v,
+  }, x => !_.isNil(x)))), []);
   return [
     config ? deserialize(config) as Record<string, TSerializable> : {},
-    (v: Record<string, TSerializable | undefined>) => setConfig((x) => serialize(_.pickBy(x ? {
-      ...deserialize(x) as any,
-      ...v,
-    } : v, x => !_.isNil(x)))),
+    _setConfig,
   ] as const;
 }
 

@@ -24,8 +24,7 @@
 //
 
 import _ from 'lodash';
-import React from 'react';
 import Browser from '../../src';
 import './css/main.scss';
 
-export default () => <Browser />;
+export default Browser;

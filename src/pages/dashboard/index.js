@@ -30,17 +30,27 @@ import { View, useActivity, useToast } from '@o2ter/react-ui';
 import Localization from '../../i18n/pages/dashboard';
 import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
 import { useConfig } from '../../config';
+import { useAsyncResource } from 'sugax/dist/index.web';
+import { useProto } from '../../proto';
 
 export const Dashboard = () => {
   const [config, setConfig] = useConfig();
+  const proto = useProto();
   const theme = useTheme();
   const startActivity = useActivity();
   const { showError } = useToast();
   const localization = Localization.useLocalize();
+  const { resource: schema } = useAsyncResource(async () => {
+    try {
+      return await proto.schema({ master: true });
+    } catch {
+      setConfig({ user: null, pass: null });
+    }
+  });
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View style={{
-        width: 300,
+        width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
         backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
       }}>
       </View>
