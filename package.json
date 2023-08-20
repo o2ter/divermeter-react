@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@o2ter/i18n": "^0.0.10",
-    "@o2ter/react-booster": "^0.0.13",
+    "@o2ter/react-booster": "^0.0.14",
     "@o2ter/react-route": "^0.0.59",
     "@o2ter/react-ui": "^0.0.148",
     "@o2ter/valid.js": "^1.0.2",

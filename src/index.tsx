@@ -27,6 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Navigator } from '@o2ter/react-ui';
 import { ProtoProvider } from './proto';
+import Login from './pages/login';
 
 export const Browser = () => {
 
@@ -34,8 +35,10 @@ export const Browser = () => {
 
   return (
     <ProtoProvider masterUser={masterUser}>
-      <Navigator>
-      </Navigator>
+      {masterUser ? (
+        <Navigator>
+        </Navigator>
+      ) : <Login setUser={setMasterUser} />}
     </ProtoProvider>
   );
 };

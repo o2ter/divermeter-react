@@ -28,15 +28,16 @@ import React from 'react';
 import ProtoClient from 'proto.io/dist/client';
 import { env } from '@o2ter/react-route/dist/client';
 
-const ProtoContext = React.createContext(new ProtoClient({ endpoint: env.PROTO_SERVER_URL }));
+export const createProto = (
+  masterUser?: { user: string; pass: string; },
+) => new ProtoClient({ endpoint: env.PROTO_SERVER_URL, masterUser });
+
+const ProtoContext = React.createContext(createProto());
 
 export const ProtoProvider = (props: React.PropsWithChildren<{
   masterUser?: { user: string; pass: string; };
 }>) => {
-  const proto = React.useMemo(() => new ProtoClient({
-    endpoint: env.PROTO_SERVER_URL,
-    masterUser: props.masterUser,
-  }), [props.masterUser?.user, props.masterUser?.pass]);
+  const proto = React.useMemo(() => createProto(props.masterUser), [props.masterUser?.user, props.masterUser?.pass]);
   return (
     <ProtoContext.Provider value={proto}>{props.children}</ProtoContext.Provider>
   );
