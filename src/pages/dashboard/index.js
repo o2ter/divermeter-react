@@ -29,10 +29,10 @@ import { View, useActivity, useToast } from '@o2ter/react-ui';
 
 import Localization from '../../i18n/pages/dashboard';
 import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
-import { useAuth } from '../../config';
+import { useConfig } from '../../config';
 
 export const Dashboard = () => {
-  const [,setAuth] = useAuth();
+  const [config, setConfig] = useConfig();
   const theme = useTheme();
   const startActivity = useActivity();
   const { showError } = useToast();
