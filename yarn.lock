@@ -1288,10 +1288,10 @@
     cookie-parser ">=1.4.6"
     lodash ">=4.17.21"
 
-"@o2ter/react-ui@^0.0.149":
-  version "0.0.149"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.149.tgz#bd50dd591598b59d719f4e38bee40c0aa0fb4585"
-  integrity sha512-tNmFn3JXGDClTElFem6/bTvDhi2QjIqAEjLl743K66V5Q4zM3rHKY9R7/6iKDMTfW0FgJhhUDpVL6pm65AFwRQ==
+"@o2ter/react-ui@^0.0.150":
+  version "0.0.150"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.150.tgz#e82d1b1b25c6e5cbf3e7ac739e450af10e6647f9"
+  integrity sha512-0lxjiO0hwoMGayuNrYx/bITgLVFUz7P1b8YxYM4S/kUKBlNWHsOhMSrQw3ocVMmuggk/O8ldf241rm2F8KkpKg==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     codemirror "^6.0.1"
