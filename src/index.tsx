@@ -25,20 +25,25 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator } from '@o2ter/react-ui';
 import { ProtoProvider } from './proto';
+import Dashboard from './pages/dashboard';
 import Login from './pages/login';
+import { useSessionStorage } from 'sugax/dist/index.web';
 
 export const Browser = () => {
-
-  const [masterUser, setMasterUser] = React.useState<{ user: string; pass: string; }>();
-
-  return (
-    <ProtoProvider masterUser={masterUser}>
-      {masterUser ? (
-        <Navigator>
-        </Navigator>
-      ) : <Login setUser={setMasterUser} />}
+  const [user, setUser] = useSessionStorage('X-PROTO-MASTER-USER');
+  const [pass, setPass] = useSessionStorage('X-PROTO-MASTER-PASS');
+  const [auth, setAuth] = React.useState<{ user: string; pass: string; } | undefined>(
+    user && pass ? { user, pass } : undefined
+  );
+  const _setAuth = React.useCallback((auth: { user: string; pass: string; }) => {
+    setAuth(auth);
+    setUser(auth.user);
+    setPass(auth.pass);
+  }, []);
+  return typeof window === 'undefined' ? <></> : (
+    <ProtoProvider auth={auth}>
+      {auth ? <Dashboard setAuth={_setAuth} /> : <Login setAuth={_setAuth} />}
     </ProtoProvider>
   );
 };

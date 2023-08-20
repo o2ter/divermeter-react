@@ -1,5 +1,5 @@
 //
-//  proto.tsx
+//  index.js
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -25,23 +25,30 @@
 
 import _ from 'lodash';
 import React from 'react';
-import ProtoClient from 'proto.io/dist/client';
-import { env } from '@o2ter/react-route/dist/client';
+import { View, useActivity, useToast } from '@o2ter/react-ui';
 
-export const createProto = (
-  auth?: { user: string; pass: string; },
-) => new ProtoClient({ endpoint: env.PROTO_SERVER_URL, masterUser: auth });
+import Localization from '../../i18n/pages/dashboard';
+import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
 
-const ProtoContext = React.createContext(createProto());
-
-export const ProtoProvider = (props: React.PropsWithChildren<{
-  auth?: { user: string; pass: string; };
-}>) => {
-  const proto = React.useMemo(() => createProto(props.auth), [props.auth?.user, props.auth?.pass]);
+export const Dashboard = ({ setAuth }) => {
+  const theme = useTheme();
+  const startActivity = useActivity();
+  const { showError } = useToast();
+  const localization = Localization.useLocalize();
   return (
-    <ProtoContext.Provider value={proto}>{props.children}</ProtoContext.Provider>
+    <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{
+        width: 300,
+        backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
+      }}>
+      </View>
+      <View style={{
+        flex: 1,
+        backgroundColor: shiftColor(theme.themeColors.secondary, theme.colorWeights['100']),
+      }}>
+      </View>
+    </View>
   );
 };
 
-export const useProto = () => React.useContext(ProtoContext);
-
+export default Dashboard;

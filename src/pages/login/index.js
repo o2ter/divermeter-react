@@ -32,20 +32,15 @@ import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
 import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
 
-export const Login = ({ setUser }) => {
-
-  const localization = Localization.useLocalize();
-
+export const Login = ({ setAuth }) => {
   const theme = useTheme();
-  const backgroundColor = shiftColor(theme.themeColors.primary, theme.colorWeights['900']);
-
   const startActivity = useActivity();
   const { showError } = useToast();
-
+  const localization = Localization.useLocalize();
   return (
     <View style={{
       flex: 1,
-      backgroundColor,
+      backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
       alignItems: 'center',
       justifyContent: 'center',
     }}>
@@ -65,7 +60,7 @@ export const Login = ({ setUser }) => {
               await startActivity(async () => {
                 const proto = createProto(values);
                 await proto.schema({ master: true });
-                setUser(values);
+                setAuth(values);
               });
             } catch {
               showError(localization.string('invalid_user'));
