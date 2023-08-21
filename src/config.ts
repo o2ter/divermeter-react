@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { TSerializable, deserialize, serialize } from 'proto.io/dist/client';
-import { useSessionStorage } from 'sugax/dist/index.web';
+import { useSessionStorage } from 'sugax';
 
 export const useConfig = () => {
   const [config, setConfig] = useSessionStorage('X-PROTO-CONFIG');

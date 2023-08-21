@@ -28,9 +28,9 @@ import React from 'react';
 import { View, useActivity, useToast } from '@o2ter/react-ui';
 
 import Localization from '../../i18n/pages/dashboard';
-import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
+import { shiftColor, useTheme } from '@o2ter/react-ui';
 import { useConfig } from '../../config';
-import { useAsyncResource } from 'sugax/dist/index.web';
+import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
 
 export const Dashboard = () => {

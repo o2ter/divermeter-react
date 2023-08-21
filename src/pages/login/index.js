@@ -28,7 +28,7 @@ import React from 'react';
 import { View, Form, Text, useActivity, useToast } from '@o2ter/react-ui';
 
 import Localization from '../../i18n/pages/login';
-import { shiftColor, useTheme } from '@o2ter/react-ui/dist/index.web';
+import { shiftColor, useTheme } from '@o2ter/react-ui';
 import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
 import { useAuth } from '../../config';
