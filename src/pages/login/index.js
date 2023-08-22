@@ -70,21 +70,21 @@ export const Login = () => {
             }
           }}
         >
-          <View style={{ paddingVertical: theme.spacers['1'] }}>
+          <View classes='py-1'>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text>{localization.string('username')}</Text>
               <Form.ErrorMessage name='user' />
             </View>
             <Form.TextField name='user' />
           </View>
-          <View style={{ paddingVertical: theme.spacers['1'] }}>
+          <View classes='py-1'>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text>{localization.string('password')}</Text>
               <Form.ErrorMessage name='pass' />
             </View>
             <Form.TextField secureTextEntry name='pass' />
           </View>
-          <View style={{ paddingVertical: theme.spacers['1'] }}>
+          <View classes='py-1'>
             <Form.Button title={localization.string('login')} variant='primary' action='submit' />
           </View>
         </Form>
