@@ -28,30 +28,23 @@ import React from 'react';
 import { View, Form, Text, useActivity, useToast } from '@o2ter/react-ui';
 
 import Localization from '../../i18n/pages/login';
-import { shiftColor, useTheme } from '@o2ter/react-ui';
 import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
 import { useAuth } from '../../config';
 
 export const Login = () => {
-  const [,setAuth] = useAuth();
-  const theme = useTheme();
+  const [, setAuth] = useAuth();
   const startActivity = useActivity();
   const { showError } = useToast();
   const localization = Localization.useLocalize();
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-      <View style={{
-        backgroundColor: 'white',
-        paddingHorizontal: theme.spacers['3'],
-        paddingVertical: theme.spacers['2'],
-        borderRadius: theme.borderRadius['sm'],
-      }}>
+    <View
+      classes='bg-primary-900 align-items-center justify-content-center'
+      style={{
+        flex: 1,
+      }}
+    >
+      <View classes='bg-white px-3 py-2 rounded-sm'>
         <Form
           schema={{
             user: string().required().label(localization.string('username')),
@@ -71,14 +64,14 @@ export const Login = () => {
           }}
         >
           <View classes='py-1'>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View classes='flex-row justify-content-between'>
               <Text>{localization.string('username')}</Text>
               <Form.ErrorMessage name='user' />
             </View>
             <Form.TextField name='user' />
           </View>
           <View classes='py-1'>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View classes='flex-row justify-content-between'>
               <Text>{localization.string('password')}</Text>
               <Form.ErrorMessage name='pass' />
             </View>

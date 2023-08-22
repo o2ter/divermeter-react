@@ -28,7 +28,6 @@ import React from 'react';
 import { View, useActivity, useToast } from '@o2ter/react-ui';
 
 import Localization from '../../i18n/pages/dashboard';
-import { shiftColor, useTheme } from '@o2ter/react-ui';
 import { useConfig } from '../../config';
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
@@ -36,7 +35,6 @@ import { useProto } from '../../proto';
 export const Dashboard = () => {
   const [config, setConfig] = useConfig();
   const proto = useProto();
-  const theme = useTheme();
   const startActivity = useActivity();
   const { showError } = useToast();
   const localization = Localization.useLocalize();
@@ -49,15 +47,16 @@ export const Dashboard = () => {
   });
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
-      <View style={{
+      <View classes='bg-primary-900' style={{
         width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
-        backgroundColor: shiftColor(theme.themeColors.primary, theme.colorWeights['900']),
       }}>
       </View>
-      <View style={{
-        flex: 1,
-        backgroundColor: shiftColor(theme.themeColors.secondary, theme.colorWeights['100']),
-      }}>
+      <View
+        classes='bg-secondary-900'
+        style={{
+          flex: 1,
+        }}
+      >
       </View>
     </View>
   );
