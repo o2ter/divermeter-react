@@ -1232,10 +1232,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.17.tgz#cb26fd0879de66d00c12b28694f42ed8b76206aa"
-  integrity sha512-yo6O+N0Y2ApxJfVTVTtObWSwELXehTQg8U11IaqpW07Ot0rEpWiuWphCXaO8h/00eeHNJwyZgL34BKQ0g1t9bQ==
+"@o2ter/react-booster@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.19.tgz#5c19c91e5e15a6f59f026ebc5e56e903b2ccf109"
+  integrity sha512-Mc4QIKqX3A81KC5Og785WaIe/MW2i7c/S/k/bZcs/rdjABOcabbWZ1bCS0LbwSafbuFJEso7xFmRrNtiFPRjcg==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -1268,10 +1268,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.154":
-  version "0.0.154"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.154.tgz#dab7f5b27845e317a670387808bb3ae815eaecc6"
-  integrity sha512-TvTKtGYHAiuERYYJepHVCD6KeF3cTsMNLpzoQPAljc8WRby1FBMIp19e6xY0NCnW0jltu7tuqIwAfzzG2McH7w==
+"@o2ter/react-ui@^0.0.158":
+  version "0.0.158"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.158.tgz#98bec8aa47b50988d0e07aa2bea28670a83ea900"
+  integrity sha512-WoutOYVyDx9QU2oB8v3OuuAT2eknGKMFv5k5kF4k7yHEQfKpBsb+wRmlPL9FYa24530VEzDljV9TI6wqzymYwA==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     codemirror "^6.0.1"
@@ -1298,10 +1298,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.7.tgz#9dd8e52a98639d9580e29103cd2ffe2b572c56ac"
-  integrity sha512-eM63CETYcI/0NcyUSTvWw0NNhui5KSMcKHPo5m8yIC68CwQMpIalQy5SwANXPxhpFh8AH4CgOgpLr54uJtJAYQ==
+"@o2ter/wireframe@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.8.tgz#1cc049e53a57745bf85215ce4f295068329d626d"
+  integrity sha512-FenBeVko8Xcki7WpglZMgbx6IAxihwyegOAxDEpprQoIx8N2Gid/WlnoHOGuAC7NKiEvV8MP1ncDBKeqpZigSQ==
   dependencies:
     lodash ">=4.17.21"
 
