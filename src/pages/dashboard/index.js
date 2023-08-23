@@ -46,22 +46,15 @@ export const Dashboard = () => {
     }
   });
   return (
-    <View
-      classes='flex-row'
-      style={{
-        flex: 1,
-      }}
-    >
-      <View classes='bg-primary-900' style={{
-        width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
-      }}>
-      </View>
+    <View classes='flex-row flex-fill'>
       <View
-        classes='bg-secondary-100'
+        classes='bg-primary-900'
         style={{
-          flex: 1,
+          width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
         }}
       >
+      </View>
+      <View classes='bg-secondary-100 flex-fill'>
       </View>
     </View>
   );

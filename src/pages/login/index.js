@@ -38,12 +38,7 @@ export const Login = () => {
   const { showError } = useToast();
   const localization = Localization.useLocalize();
   return (
-    <View
-      classes='bg-primary-900 align-items-center justify-content-center'
-      style={{
-        flex: 1,
-      }}
-    >
+    <View classes='flex-fill bg-primary-900 align-items-center justify-content-center'>
       <View classes='bg-white px-3 py-2 rounded-sm'>
         <Form
           schema={{
