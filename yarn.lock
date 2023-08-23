@@ -1232,10 +1232,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.21.tgz#32edb88a6479c626c82503be0fd1ca54036ef71e"
-  integrity sha512-Lbe38eBk2y47mo6usMaSve4ZpgcjKjjxjHuvCTQZBG6Ea6ctBDWW15eaTLhgT5z5CJY2i7tDuGob7QcXllWAGg==
+"@o2ter/react-booster@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.22.tgz#bb7cec4d3bc4a29a697389191b79fe735214c90d"
+  integrity sha512-2lw2kvpy3mUWbdtCEtWlgfw1VoF9Fbbo+ZYCnr23tOK+9vFW3lDTJHuUdKcsB1p6u7xQlwGCXbLaBT+wym6M6A==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -1298,10 +1298,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.15.tgz#b430a43d7b72386c39de6d31955c75949ba698ff"
-  integrity sha512-0PSBfTy5tks7+8gdI8ZFzOgKVHp7FoSDMec78m+DnJzvzjdZS8Is3RtzRnuMofDEOviZuiR1oju5PRVx46apGA==
+"@o2ter/wireframe@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.17.tgz#57cc15dc6e585070f9480a5b61db806f7494415f"
+  integrity sha512-gEaphJSuCz2bbT1omuv3HL31yt4L/m14s19157767Iu0ByczYbsMPgyQu1lfF7iFs0VTI/8uIGjnyn0l/U6Jgg==
   dependencies:
     lodash ">=4.17.21"
 
