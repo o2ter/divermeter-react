@@ -52,7 +52,7 @@ export const Dashboard = () => {
       }}>
       </View>
       <View
-        classes='bg-secondary-900'
+        classes='bg-secondary-100'
         style={{
           flex: 1,
         }}
