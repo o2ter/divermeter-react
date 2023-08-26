@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import ProtoClient from 'proto.io/dist/client';
-import { env } from '@o2ter/react-booster/src/route/client';
+import { env } from '@o2ter/react-booster/src/route/client/env';
 
 export const createProto = (
   auth?: { user: string; pass: string; },
