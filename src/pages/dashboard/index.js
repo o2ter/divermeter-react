@@ -48,12 +48,7 @@ export const Dashboard = () => {
   });
   return (
     <View classes='flex-row flex-fill'>
-      <View
-        classes='bg-primary-900'
-        style={{
-          width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
-        }}
-      >
+      <View classes='bg-primary-900'>
         <SideMenu schema={schema} />
       </View>
       <View classes='bg-secondary-100 flex-fill'>
