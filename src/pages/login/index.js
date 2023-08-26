@@ -27,7 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { View, Form, Text, useActivity, useToast } from '@o2ter/react-ui';
 
-import Localization from '../../i18n/pages/login';
+import Localization from '../../i18n/login';
 import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
 import { useAuth } from '../../config';

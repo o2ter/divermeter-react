@@ -25,41 +25,49 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, useActivity, useToast } from '@o2ter/react-ui';
+import { Icon, View, Text, TextStyleProvider, useNavigate } from '@o2ter/react-ui';
+import Localization from '../../../i18n/sidemenu';
+import { useAuth } from '../../../config';
+import { Pressable } from 'react-native';
 
-import Localization from '../../i18n/dashboard';
-import { useConfig } from '../../config';
-import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
-import { SideMenu } from './SideMenu';
+const Link = ({
+  icon,
+  iconName,
+  onPress,
+  label,
+}) => {
 
-export const Dashboard = () => {
-  const [config, setConfig] = useConfig();
-  const proto = useProto();
-  const startActivity = useActivity();
-  const { showError } = useToast();
-  const localization = Localization.useLocalize();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e) {
-      showError(e);
-    }
-  });
   return (
-    <View classes='flex-row flex-fill'>
-      <View
-        classes='bg-primary-900'
-        style={{
-          width: _.isNumber(config.sideMenuWidth) ? config.sideMenuWidth : 300,
-        }}
-      >
-        <SideMenu schema={schema} />
-      </View>
-      <View classes='bg-secondary-100 flex-fill'>
-      </View>
+    <Pressable onPress={onPress}>
+      <Text classes='text-white'>
+        <Icon classes='me-2' icon={icon} name={iconName} />
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
+export const SideMenu = ({ schema }) => {
+
+  const [, setAuth] = useAuth();
+  const localization = Localization.useLocalize();
+
+  const navigate = useNavigate();
+
+  return (
+    <View>
+      <TextStyleProvider classes='text-white'>
+        <Text>Browser</Text>
+        {_.map(_.keys(schema), key => (
+          <Link key={key} label={key} onPress={() => navigate(`/browser/${encodeURIComponent(key)}`)} />
+        ))}
+      </TextStyleProvider>
+      <Link
+        icon='MaterialIcons'
+        iconName='logout'
+        onPress={() => { setAuth(); }}
+        label={localization.string('logout')}
+      />
     </View>
   );
 };
-
-export default Dashboard;
