@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Icon, View, Text, TextStyleProvider, useNavigate } from '@o2ter/react-ui';
+import { Icon, View, Text, useNavigate } from '@o2ter/react-ui';
 import Localization from '../../../i18n/sidemenu';
 import { useAuth } from '../../../config';
 import { Pressable } from 'react-native';
@@ -37,10 +37,16 @@ const Link = ({
   label,
 }) => {
 
+  const [focus, setFocus] = React.useState(false);
+
   return (
-    <Pressable onPress={onPress}>
-      <Text classes='text-white'>
-        <Icon classes='me-2' icon={icon} name={iconName} />
+    <Pressable
+      onPress={onPress}
+      onHoverIn={() => setFocus(true)}
+      onHoverOut={() => setFocus(false)}
+    >
+      <Text classes={[focus ? 'text-white' : 'text-primary-200']}>
+        {icon && iconName && <Icon classes='ml-2' icon={icon} name={iconName} />}
         {label}
       </Text>
     </Pressable>
@@ -55,19 +61,23 @@ export const SideMenu = ({ schema }) => {
   const navigate = useNavigate();
 
   return (
-    <View>
-      <TextStyleProvider classes='text-white'>
-        <Text>Browser</Text>
-        {_.map(_.keys(schema), key => (
-          <Link key={key} label={key} onPress={() => navigate(`/browser/${encodeURIComponent(key)}`)} />
-        ))}
-      </TextStyleProvider>
-      <Link
-        icon='MaterialIcons'
-        iconName='logout'
-        onPress={() => { setAuth(); }}
-        label={localization.string('logout')}
-      />
+    <View classes='flex-fill'>
+      <View classes='flex-fill bg-primary-700 py-3 pl-5'>
+        <Text classes='text-white h4'>Browser</Text>
+        <View classes='border-left border-primary-200 pl-3'>
+          {_.map(_.keys(schema).sort(), key => (
+            <Link key={key} label={key} onPress={() => navigate(`/browser/${encodeURIComponent(key)}`)} />
+          ))}
+        </View>
+      </View>
+      <View classes='align-items-center py-2'>
+        <Link
+          icon='MaterialIcons'
+          iconName='logout'
+          onPress={() => { setAuth(); }}
+          label={localization.string('logout')}
+        />
+      </View>
     </View>
   );
 };
