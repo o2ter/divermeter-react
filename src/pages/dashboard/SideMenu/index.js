@@ -61,8 +61,8 @@ export const SideMenu = ({ schema }) => {
   const navigate = useNavigate();
 
   return (
-    <View classes='flex-fill'>
-      <View classes='flex-fill bg-primary-700 py-4 px-5'>
+    <View classes='flex-fill' style={{ height: '100vh' }}>
+      <View classes='flex-fill bg-primary-700 py-4 px-5 overflow-auto'>
         <Text classes='text-white h4'>Browser</Text>
         <View classes='border-left border-primary-200 pl-3'>
           {_.map(_.keys(schema).sort(), key => (
