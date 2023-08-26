@@ -27,11 +27,11 @@ import _ from 'lodash';
 import React from 'react';
 import { View, useActivity, useToast } from '@o2ter/react-ui';
 
-import Localization from '../../i18n/dashboard';
-import { useConfig } from '../../config';
+import Localization from '../i18n/dashboard';
+import { useConfig } from '../config';
 import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
-import { SideMenu } from './SideMenu';
+import { useProto } from '../proto';
+import { SideMenu } from '../sidemenu';
 
 export const Dashboard = () => {
   const [config, setConfig] = useConfig();

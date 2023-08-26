@@ -27,8 +27,8 @@ import _ from 'lodash';
 import React from 'react';
 import { ProtoProvider } from './proto';
 import { useAuth } from './config';
-import Dashboard from './pages/dashboard';
-import Login from './pages/login';
+import Dashboard from './dashboard';
+import Login from './login';
 
 export const Browser = () => {
   const [auth] = useAuth();
