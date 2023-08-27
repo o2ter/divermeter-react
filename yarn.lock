@@ -1269,10 +1269,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.185":
-  version "0.0.185"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.185.tgz#d9ec29d629373d6bb53e450417c658c719ad1d23"
-  integrity sha512-qamod1FXnddTH5mQXwIxxl50TmeK47WCA56ccQB+zYQm9AQ0Uf1KJDJxH6Fa7rrf7YynWqCa1luhYoPQciky3w==
+"@o2ter/react-ui@^0.0.191":
+  version "0.0.191"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.191.tgz#b7e90ef82fdd6f2b626160fb365dd0ead7aeac6b"
+  integrity sha512-j+Zyj4X0yzdbmm4S1sQPIueWEkQ1Dtf+25RMdYkUehfiaLxedr/gJR/cBouYC9E+kUAGQKY123ry1uMbivF7ag==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     codemirror "^6.0.1"
@@ -1299,10 +1299,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.27":
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.27.tgz#2f399241592eedf0b9b888663cf925be127188f1"
-  integrity sha512-aznthis9BzSo8cjYFDNF66p0p7dbNK+G4x8/nHQim8lrFrZPJT24gLlEqSy1YSuh7nESiZu3RpCHHe6o9sZkJA==
+"@o2ter/wireframe@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.28.tgz#fe7153daf4d40d6b16b5dd4ac7b4dca8950c3b5f"
+  integrity sha512-FFngOvrgMETPUWXFAUYUcQmmHbd41DDHnO8EjPMKPZygXsoouX/HfJBTLLrKsRjekPDhHqKDQiKR7mYBO4ZCxg==
   dependencies:
     lodash ">=4.17.21"
 
