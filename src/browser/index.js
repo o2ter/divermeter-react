@@ -36,7 +36,7 @@ export const Browser = ({ schema }) => {
 
   const { resource: objCount } = useAsyncResource(() => {
     return Proto.Query(_class, { master: true }).count();
-  });
+  }, null, [_class]);
 
   return (
     <View classes='flex-fill'>
