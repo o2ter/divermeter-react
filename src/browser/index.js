@@ -32,6 +32,7 @@ export const Browser = ({ schema }) => {
   const { class: _class } = useParams();
 
   return (
-    <View></View>
+    <View classes='flex-fill'>
+    </View>
   );
 };
