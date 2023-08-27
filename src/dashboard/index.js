@@ -31,6 +31,7 @@ import { useAsyncResource } from 'sugax';
 import { useProto } from '../proto';
 import { SideMenu } from '../sidemenu';
 import { Browser } from '../browser';
+import NotFound from '../NotFound';
 
 export const Dashboard = () => {
   const proto = useProto();
@@ -50,6 +51,7 @@ export const Dashboard = () => {
       <View classes='bg-secondary-100 flex-fill'>
         <Navigator>
           <Route path='/browser/:class' component={Browser} schema={schema} />
+          <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
         </Navigator>
       </View>
     </View>
