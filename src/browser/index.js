@@ -27,7 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { View, useParams } from '@o2ter/react-ui';
 
-export const Browser = () => {
+export const Browser = ({ schema }) => {
 
   const { class: _class } = useParams();
 

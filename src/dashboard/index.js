@@ -49,7 +49,7 @@ export const Dashboard = () => {
       </View>
       <View classes='bg-secondary-100 flex-fill'>
         <Navigator>
-          <Route path='/browser/:class' component={Browser} />
+          <Route path='/browser/:class' component={Browser} schema={schema} />
         </Navigator>
       </View>
     </View>
