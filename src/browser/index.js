@@ -25,35 +25,13 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
+import { View, useParams } from '@o2ter/react-ui';
 
-import { useAsyncResource } from 'sugax';
-import { useProto } from '../proto';
-import { SideMenu } from '../sidemenu';
-import { Browser } from '../browser';
+export const Browser = () => {
 
-export const Dashboard = () => {
-  const proto = useProto();
-  const { showError } = useToast();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e) {
-      showError(e);
-    }
-  });
+  const { class: _class } = useParams();
+
   return (
-    <View classes='flex-row flex-fill'>
-      <View classes='bg-primary-900'>
-        <SideMenu schema={schema} />
-      </View>
-      <View classes='bg-secondary-100 flex-fill'>
-        <Navigator>
-          <Route path='/browser/:class' component={Browser} />
-        </Navigator>
-      </View>
-    </View>
+    <View></View>
   );
 };
-
-export default Dashboard;
