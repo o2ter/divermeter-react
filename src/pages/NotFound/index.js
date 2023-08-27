@@ -8,7 +8,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Text, View } from '@o2ter/react-ui';
 
-import Localization from '../i18n/NotFound';
+import Localization from '../../i18n/NotFound';
 
 export default function NotFound() {
 

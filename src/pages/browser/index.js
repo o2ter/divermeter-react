@@ -25,35 +25,36 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
-
+import { View, Text, useParams } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
-import { useProto } from '../proto';
-import { SideMenu } from '../sidemenu';
-import { Browser } from '../browser';
-import NotFound from '../NotFound';
+import { useProto } from '../../proto';
 
-export const Dashboard = () => {
-  const proto = useProto();
-  const { showError } = useToast();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e) {
-      showError(e);
-    }
-  });
+export const Browser = ({ schema }) => {
+
+  const Proto = useProto();
+  const { class: _class } = useParams();
+
+  const { resource: objCount } = useAsyncResource(() => {
+    return Proto.Query(_class, { master: true }).count();
+  }, null, [_class]);
+
   return (
-    <View classes='flex-row flex-fill'>
-      <View classes='bg-primary-900'>
-        <SideMenu schema={schema} />
+    <View classes='flex-fill'>
+      <View classes='py-3 px-4 flex-row bg-secondary-600'>
+        <View>
+          <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
+          <Text>
+            <Text classes='h1 text-white'>{_class}</Text>
+            {!_.isNil(objCount) && <Text
+              classes='fs-small ml-3 text-secondary-200 font-monospace'
+            >{objCount} objects</Text>}
+          </Text>
+        </View>
+        <View>
+        </View>
       </View>
-      <Navigator>
-        <Route path='/browser/:class' component={Browser} schema={schema} />
-        <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
-      </Navigator>
+      <View classes='flex-fill py-3 px-4 bg-secondary-100'>
+      </View>
     </View>
   );
 };
-
-export default Dashboard;
