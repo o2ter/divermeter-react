@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, useParams } from '@o2ter/react-ui';
+import { View, Text, useParams } from '@o2ter/react-ui';
 
 export const Browser = ({ schema }) => {
 
@@ -33,6 +33,11 @@ export const Browser = ({ schema }) => {
 
   return (
     <View classes='flex-fill'>
+      <View classes='py-3 px-4 bg-secondary-600'>
+        <Text classes='h2 text-white'>{_class}</Text>
+      </View>
+      <View classes='flex-fill py-3 px-4 bg-secondary-100'>
+      </View>
     </View>
   );
 };
