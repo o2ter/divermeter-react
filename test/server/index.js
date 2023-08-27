@@ -53,7 +53,41 @@ const Proto = new ProtoService({
   jwtToken: 'test token',
   storage: database,
   fileStorage: new DatabaseFileStorage(),
-  schema: {},
+  schema: {
+    'User': {
+      fields: {
+        name: 'string',
+      }
+    },
+    'Test': {
+      fields: {
+        default: { type: 'number', default: 42 },
+        boolean: 'boolean',
+        number: 'number',
+        decimal: 'decimal',
+        string: 'string',
+        date: 'date',
+        object: 'object',
+        array: 'array',
+        null_boolean: 'boolean',
+        null_number: 'number',
+        null_decimal: 'decimal',
+        null_string: 'string',
+        null_date: 'date',
+        null_object: 'object',
+        null_array: 'array',
+        no_permission: 'boolean',
+        pointer: { type: 'pointer', target: 'Test' },
+        pointer2: { type: 'pointer', target: 'Test' },
+        relation: { type: 'relation', target: 'Test' },
+        relation2: { type: 'relation', target: 'Test', foreignField: 'pointer' },
+        relation3: { type: 'relation', target: 'Test', foreignField: 'relation' },
+      },
+      fieldLevelPermissions: {
+        no_permission: { read: ['role:admin'], create: ['role:admin'], update: ['role:admin'] }
+      }
+    }
+  },
 });
 
 export default async (app, env) => {
@@ -63,4 +97,6 @@ export default async (app, env) => {
   app.use('/proto', await ProtoRoute({
     proto: Proto,
   }));
+
+  await Proto.Query('Test').insert({});
 }
