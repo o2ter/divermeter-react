@@ -45,8 +45,8 @@ export const Browser = ({ schema }) => {
           <TextStyleProvider classes='text-white'>
             <Text style={{ fontSize: 10, fontFamily: 'var(--font-monospace)' }}>CLASS</Text>
             <Text>
-              <Text classes='h1'>{_class}  </Text>
-              <Text classes='fs-small'>{objCount} objects</Text>
+              <Text classes='h1'>{_class}</Text>
+              {!_.isNil(objCount) && <Text classes='fs-small ml-3'>{objCount} objects</Text>}
             </Text>
           </TextStyleProvider>
         </View>
