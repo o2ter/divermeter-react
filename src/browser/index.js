@@ -42,13 +42,13 @@ export const Browser = ({ schema }) => {
     <View classes='flex-fill'>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
         <View>
-          <TextStyleProvider classes='text-white'>
-            <Text style={{ fontSize: 10, fontFamily: 'var(--font-monospace)' }}>CLASS</Text>
-            <Text>
-              <Text classes='h1'>{_class}</Text>
-              {!_.isNil(objCount) && <Text classes='fs-small ml-3'>{objCount} objects</Text>}
-            </Text>
-          </TextStyleProvider>
+          <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
+          <Text>
+            <Text classes='h1 text-white'>{_class}</Text>
+            {!_.isNil(objCount) && <Text
+              classes='fs-small ml-3 text-secondary-200 font-monospace'
+            >{objCount} objects</Text>}
+          </Text>
         </View>
         <View>
         </View>
