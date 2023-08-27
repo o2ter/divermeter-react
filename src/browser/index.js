@@ -25,16 +25,33 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams } from '@o2ter/react-ui';
+import { View, Text, useParams, TextStyleProvider } from '@o2ter/react-ui';
+import { useAsyncResource } from 'sugax';
+import { useProto } from '../proto';
 
 export const Browser = ({ schema }) => {
 
+  const Proto = useProto();
   const { class: _class } = useParams();
+
+  const { resource: objCount } = useAsyncResource(() => {
+    return Proto.Query(_class, { master: true }).count();
+  });
 
   return (
     <View classes='flex-fill'>
-      <View classes='py-3 px-4 bg-secondary-600'>
-        <Text classes='h2 text-white'>{_class}</Text>
+      <View classes='py-3 px-4 flex-row bg-secondary-600'>
+        <View>
+          <TextStyleProvider classes='text-white'>
+            <Text style={{ fontSize: 10, fontFamily: 'var(--font-monospace)' }}>CLASS</Text>
+            <Text>
+              <Text classes='h1'>{_class}  </Text>
+              <Text classes='fs-small'>{objCount} objects</Text>
+            </Text>
+          </TextStyleProvider>
+        </View>
+        <View>
+        </View>
       </View>
       <View classes='flex-fill py-3 px-4 bg-secondary-100'>
       </View>
