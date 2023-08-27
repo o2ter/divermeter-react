@@ -46,7 +46,7 @@ const Link = ({
       onHoverOut={() => setFocus(false)}
     >
       <Text classes={[focus ? 'text-white' : 'text-primary-200']}>
-        {icon && iconName && <Icon classes='ml-2' icon={icon} name={iconName} />}
+        {icon && iconName && <Icon classes='mr-2' icon={icon} name={iconName} />}
         {label}
       </Text>
     </Pressable>
