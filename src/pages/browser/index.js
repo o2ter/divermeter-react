@@ -41,8 +41,13 @@ export const Browser = ({ schema }) => {
     return Proto.Query(_class, { master: true }).count();
   }, null, [_class]);
 
-  const { resource: objs } = useAsyncResource(() => {
-    return Proto.Query(_class, { master: true }).find();
+  const { resource: objs } = useAsyncResource(async () => {
+    try {
+      return await Proto.Query(_class, { master: true }).find();
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }, null, [_class]);
 
   console.log({ _class, _schema, objs })
