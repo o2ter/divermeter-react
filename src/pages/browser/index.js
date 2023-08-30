@@ -45,6 +45,8 @@ export const Browser = ({ schema }) => {
     return Proto.Query(_class, { master: true }).find();
   }, null, [_class]);
 
+  console.log({ _class, _schema, objs })
+
   return (
     <View classes='flex-fill'>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
