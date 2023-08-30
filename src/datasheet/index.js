@@ -26,47 +26,56 @@
 import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet } from '@o2ter/react-ui';
-import { Decimal } from 'proto.io';
+import { Decimal, serialize } from 'proto.io';
 
 const typeOf = (x) => _.isString(x) ? x : x.type;
 const DataSheetCell = ({ value, type, isEditing }) => {
 
   if (_.isNil(value)) {
     return (
-      <Text>null</Text>
+      <Text style={{ color: 'lightgray', fontFamily: 'monospace' }} numberOfLines={1}>null</Text>
     );
   }
   if (_.isBoolean(value)) {
     return (
-      <Text>{value}</Text>
+      <Text style={{ color: 'darkblue', fontFamily: 'monospace' }} numberOfLines={1}>{value}</Text>
     );
   }
   if (_.isNumber(value)) {
     return (
-      <Text>{value}</Text>
+      <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value}</Text>
     );
   }
   if (_.isString(value)) {
     return (
-      <Text>{value}</Text>
+      <Text style={{ color: 'darkred', fontFamily: 'monospace' }} numberOfLines={1}>{JSON.stringify(value)}</Text>
     );
   }
   if (_.isDate(value)) {
     return (
-      <Text>{value.toLocaleString()}</Text>
+      <Text style={{ color: 'darkslateblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.toLocaleString()}</Text>
     );
   }
   if (value instanceof Decimal) {
     return (
-      <Text>{value.toString()}</Text>
+      <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.toString()}</Text>
     );
   }
 
   switch (typeOf(type)) {
     case 'object':
     case 'array':
+      return (
+        <Text style={{ fontFamily: 'monospace' }} numberOfLines={1}>{serialize(value)}</Text>
+      );
     case 'pointer':
+      return (
+        <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.objectId ?? 0}</Text>
+      );
     case 'relation':
+      return (
+        <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{_.castArray(value).length} objects</Text>
+      );
     default: return;
   }
 }
