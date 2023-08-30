@@ -34,7 +34,7 @@ export const Browser = ({ schema }) => {
 
   const Proto = useProto();
   const { class: _class } = useParams();
-  const _schema = schema[_class];
+  const _schema = schema?.[_class];
   const columns = _.keys(_schema?.fields ?? {});
 
   const { resource: objCount } = useAsyncResource(() => {
@@ -61,7 +61,7 @@ export const Browser = ({ schema }) => {
         </View>
       </View>
       <View classes='flex-fill p-1 bg-secondary-100'>
-        {_schema && <div className='overflow-auto'>
+        {_schema && <div className='overflow-auto h-100'>
           <DataSheet
             data={objs}
             schema={_schema}
