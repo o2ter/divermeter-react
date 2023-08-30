@@ -26,6 +26,50 @@
 import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet } from '@o2ter/react-ui';
+import { Decimal } from 'proto.io';
+
+const typeOf = (x) => _.isString(x) ? x : x.type;
+const DataSheetCell = ({ value, type, isEditing }) => {
+
+  if (_.isNil(value)) {
+    return (
+      <Text>null</Text>
+    );
+  }
+  if (_.isBoolean(value)) {
+    return (
+      <Text>{value}</Text>
+    );
+  }
+  if (_.isNumber(value)) {
+    return (
+      <Text>{value}</Text>
+    );
+  }
+  if (_.isString(value)) {
+    return (
+      <Text>{value}</Text>
+    );
+  }
+  if (_.isDate(value)) {
+    return (
+      <Text>{value.toLocaleString()}</Text>
+    );
+  }
+  if (value instanceof Decimal) {
+    return (
+      <Text>{value.toString()}</Text>
+    );
+  }
+
+  switch (typeOf(type)) {
+    case 'object':
+    case 'array':
+    case 'pointer':
+    case 'relation':
+    default: return;
+  }
+}
 
 export const DataSheet = ({
   data,
@@ -34,17 +78,18 @@ export const DataSheet = ({
   ...props
 }) => {
 
-  const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, x.get(c)]))), [data]);
+  const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
+    value: x.get(c),
+    type: schema.fields[c],
+  }]))), [data]);
 
   return (
     <_DataSheet
       data={_data}
       columns={columns}
-      renderItem={({ item }) => {
-        return (
-          <></>
-        )
-      }}
+      renderItem={({ item, isEditing }) => (
+        <DataSheetCell isEditing={isEditing} {...item} />
+      )}
       {...props}
     />
   );

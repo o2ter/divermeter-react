@@ -61,13 +61,13 @@ export const Browser = ({ schema }) => {
         </View>
       </View>
       <View classes='flex-fill p-1 bg-secondary-100'>
-        <div className='overflow-auto'>
+        {_schema && <div className='overflow-auto'>
           <DataSheet
             data={objs}
             schema={_schema}
             columns={columns}
           />
-        </div>
+        </div>}
       </View>
     </View>
   );
