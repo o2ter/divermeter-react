@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams } from '@o2ter/react-ui';
+import { View, Text, useParams, DataSheet } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
 
@@ -53,7 +53,14 @@ export const Browser = ({ schema }) => {
         <View>
         </View>
       </View>
-      <View classes='flex-fill py-3 px-4 bg-secondary-100'>
+      <View classes='flex-fill p-1 bg-secondary-100'>
+        <div className='overflow-auto'>
+          <DataSheet
+            data={[{ test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }]}
+            columns={['test', 'test', 'test', 'test', 'test']}
+            renderItem={({ item }) => <Text>{item}</Text>}
+          />
+        </div>
       </View>
     </View>
   );
