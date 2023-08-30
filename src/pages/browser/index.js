@@ -65,7 +65,7 @@ export const Browser = ({ schema }) => {
       <View classes='flex-fill p-1 bg-secondary-100'>
         {_schema && <div className='overflow-auto h-100'>
           <DataSheet
-            data={objs}
+            data={objs ?? []}
             schema={_schema}
             columns={columns}
           />
