@@ -42,7 +42,8 @@ export const DataSheet: React.FC<DataSheetProps> = ({
 
   return (
     <_DataSheet
-      data={_data}
+      data={_data as any[]}
+      columns={columns}
       renderItem={({ item }) => {
         return (
           <></>
