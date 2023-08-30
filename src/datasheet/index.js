@@ -38,12 +38,12 @@ const DataSheetCell = ({ value, type }) => {
   }
   if (_.isBoolean(value)) {
     return (
-      <Text classes='font-monospace' style={{ color: 'darkblue' }} numberOfLines={1}>{value}</Text>
+      <Text classes='font-monospace' style={{ color: 'darkblue' }} numberOfLines={1}>{value ? 'true' : 'false'}</Text>
     );
   }
   if (_.isNumber(value)) {
     return (
-      <Text classes='font-monospace' style={{ color: 'mediumblue' }} numberOfLines={1}>{value}</Text>
+      <Text classes='font-monospace' style={{ color: 'mediumblue' }} numberOfLines={1}>{value.toString()}</Text>
     );
   }
   if (_.isString(value)) {
