@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { DataSheet as _DataSheet } from '@o2ter/react-ui';
+import { DataSheet as _DataSheet, Text } from '@o2ter/react-ui';
 import { Decimal, serialize } from 'proto.io/dist/client';
 
 const typeOf = (x) => _.isString(x) ? x : x.type;
