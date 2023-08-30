@@ -70,7 +70,7 @@ const DataSheetCell = ({ value, type, isEditing }) => {
       );
     case 'pointer':
       return (
-        <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.objectId ?? 0}</Text>
+        <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.objectId}</Text>
       );
     case 'relation':
       return (
