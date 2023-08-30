@@ -29,7 +29,7 @@ import { DataSheet as _DataSheet, Text } from '@o2ter/react-ui';
 import { Decimal, serialize } from 'proto.io/dist/client';
 
 const typeOf = (x) => _.isString(x) ? x : x.type;
-const DataSheetCell = ({ value, type, isEditing }) => {
+const DataSheetCell = ({ value, type }) => {
 
   if (_.isNil(value)) {
     return (
@@ -97,7 +97,7 @@ export const DataSheet = ({
       data={_data}
       columns={columns}
       renderItem={({ item, isEditing }) => (
-        <DataSheetCell isEditing={isEditing} {...item} />
+        <DataSheetCell {...item} />
       )}
       {...props}
     />
