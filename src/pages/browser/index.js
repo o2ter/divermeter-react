@@ -59,7 +59,7 @@ export const Browser = ({ schema }) => {
             data={[{ test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }]}
             columns={['test', 'test', 'test', 'test', 'test']}
             renderItem={({ item }) => <Text>{item}</Text>}
-            onPasteCells={(cells, clipboard) => console.log(cells, clipboard.read())}
+            onPasteCells={(cells, clipboard) => console.log(cells, clipboard.read(), clipboard.readText())}
           />
         </div>
       </View>
