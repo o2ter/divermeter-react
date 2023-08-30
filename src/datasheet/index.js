@@ -84,6 +84,7 @@ export const DataSheet = ({
   data,
   columns,
   schema,
+  showEmptyLastRow = true,
   ...props
 }) => {
 
@@ -96,6 +97,7 @@ export const DataSheet = ({
     <_DataSheet
       data={_data}
       columns={columns}
+      showEmptyLastRow={showEmptyLastRow}
       renderItem={({ item, isEditing }) => (
         <DataSheetCell {...item} />
       )}
