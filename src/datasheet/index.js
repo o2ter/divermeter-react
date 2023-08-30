@@ -33,32 +33,32 @@ const DataSheetCell = ({ value, type, isEditing }) => {
 
   if (_.isNil(value)) {
     return (
-      <Text style={{ color: 'lightgray', fontFamily: 'monospace' }} numberOfLines={1}>null</Text>
+      <Text classes='font-monospace' style={{ color: 'lightgray' }} numberOfLines={1}>null</Text>
     );
   }
   if (_.isBoolean(value)) {
     return (
-      <Text style={{ color: 'darkblue', fontFamily: 'monospace' }} numberOfLines={1}>{value}</Text>
+      <Text classes='font-monospace' style={{ color: 'darkblue' }} numberOfLines={1}>{value}</Text>
     );
   }
   if (_.isNumber(value)) {
     return (
-      <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value}</Text>
+      <Text classes='font-monospace' style={{ color: 'mediumblue' }} numberOfLines={1}>{value}</Text>
     );
   }
   if (_.isString(value)) {
     return (
-      <Text style={{ color: 'darkred', fontFamily: 'monospace' }} numberOfLines={1}>{JSON.stringify(value)}</Text>
+      <Text classes='font-monospace' style={{ color: 'darkred' }} numberOfLines={1}>{JSON.stringify(value)}</Text>
     );
   }
   if (_.isDate(value)) {
     return (
-      <Text style={{ color: 'darkslateblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.toLocaleString()}</Text>
+      <Text classes='font-monospace' style={{ color: 'darkslateblue' }} numberOfLines={1}>{value.toLocaleString()}</Text>
     );
   }
   if (value instanceof Decimal) {
     return (
-      <Text style={{ color: 'mediumblue', fontFamily: 'monospace' }} numberOfLines={1}>{value.toString()}</Text>
+      <Text classes='font-monospace' style={{ color: 'mediumblue' }} numberOfLines={1}>{value.toString()}</Text>
     );
   }
 
@@ -66,15 +66,15 @@ const DataSheetCell = ({ value, type, isEditing }) => {
     case 'object':
     case 'array':
       return (
-        <Text style={{ fontFamily: 'monospace' }} numberOfLines={1}>{serialize(value)}</Text>
+        <Text classes='font-monospace' style={{ fontFamily: 'monospace' }} numberOfLines={1}>{serialize(value)}</Text>
       );
     case 'pointer':
       return (
-        <Text style={{ color: 'gray', fontFamily: 'monospace' }} numberOfLines={1}>{value.objectId}</Text>
+        <Text classes='font-monospace' style={{ color: 'gray' }} numberOfLines={1}>{value.objectId}</Text>
       );
     case 'relation':
       return (
-        <Text style={{ color: 'gray', fontFamily: 'monospace' }} numberOfLines={1}>{_.castArray(value).length} objects</Text>
+        <Text classes='font-monospace' style={{ color: 'gray' }} numberOfLines={1}>{_.castArray(value).length} objects</Text>
       );
     default: return;
   }
