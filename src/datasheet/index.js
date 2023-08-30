@@ -27,22 +27,18 @@ import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet } from '@o2ter/react-ui';
 
-type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet>, 'renderItem'> & {
-  schema: any;
-};
-
-export const DataSheet: React.FC<DataSheetProps> = ({
+export const DataSheet = ({
   data,
   columns,
   schema,
   ...props
 }) => {
 
-  const _data = React.useMemo(() => _.map(data, (x: any) => _.fromPairs(_.map(columns, c => [c, x.get(c)]))), [data]);
+  const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, x.get(c)]))), [data]);
 
   return (
     <_DataSheet
-      data={_data as any[]}
+      data={_data}
       columns={columns}
       renderItem={({ item }) => {
         return (
