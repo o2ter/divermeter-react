@@ -37,13 +37,15 @@ export const Browser = ({ schema }) => {
   const _schema = schema?.[_class];
   const columns = _.keys(_schema?.fields ?? {});
 
+  const limit = 100;
+
   const { resource: objCount } = useAsyncResource(() => {
     return Proto.Query(_class, { master: true }).count();
   }, null, [_class]);
 
   const { resource: objs } = useAsyncResource(async () => {
     try {
-      return await Proto.Query(_class, { master: true }).find();
+      return await Proto.Query(_class, { master: true }).limit(limit).find();
     } catch (e) {
       console.error(e);
       throw e;
