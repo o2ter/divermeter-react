@@ -48,7 +48,7 @@ const DataSheetCell = ({ value, type }) => {
   }
   if (_.isString(value)) {
     return (
-      <Text classes='font-monospace' style={{ color: 'darkred' }} numberOfLines={1}>{JSON.stringify(value)}</Text>
+      <Text classes='font-monospace' style={{ color: 'darkred' }} numberOfLines={1}>{value}</Text>
     );
   }
   if (_.isDate(value)) {
