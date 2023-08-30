@@ -25,17 +25,24 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, DataSheet } from '@o2ter/react-ui';
+import { View, Text, useParams } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
+import { DataSheet } from '../../datasheet';
 
 export const Browser = ({ schema }) => {
 
   const Proto = useProto();
   const { class: _class } = useParams();
+  const _schema = schema[_class];
+  const columns = _.keys(_schema?.fields ?? {});
 
   const { resource: objCount } = useAsyncResource(() => {
     return Proto.Query(_class, { master: true }).count();
+  }, null, [_class]);
+
+  const { resource: objs } = useAsyncResource(() => {
+    return Proto.Query(_class, { master: true }).find();
   }, null, [_class]);
 
   return (
@@ -56,10 +63,9 @@ export const Browser = ({ schema }) => {
       <View classes='flex-fill p-1 bg-secondary-100'>
         <div className='overflow-auto'>
           <DataSheet
-            data={[{ test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }, { test: 'a' }]}
-            columns={['test', 'test', 'test', 'test', 'test']}
-            renderItem={({ item }) => <Text>{item}</Text>}
-            onPasteCells={(cells, clipboard) => console.log(cells, clipboard, navigator.clipboard.read(), navigator.clipboard.readText())}
+            data={objs}
+            schema={_schema}
+            columns={columns}
           />
         </div>
       </View>

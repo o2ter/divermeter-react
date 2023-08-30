@@ -27,7 +27,12 @@ import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet } from '@o2ter/react-ui';
 
-export const DataSheet: React.FC<React.ComponentPropsWithoutRef<typeof _DataSheet>> = ({
+type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet>, 'renderItem'> & {
+  schema: any;
+};
+
+export const DataSheet: React.FC<DataSheetProps> = ({
+  schema,
   ...props
 }) => {
 
