@@ -66,7 +66,7 @@ const DataSheetCell = ({ value, type }) => {
     case 'object':
     case 'array':
       return (
-        <Text classes='font-monospace' style={{ fontFamily: 'monospace' }} numberOfLines={1}>{serialize(value)}</Text>
+        <Text classes='font-monospace' numberOfLines={1}>{serialize(value)}</Text>
       );
     case 'pointer':
       return (
