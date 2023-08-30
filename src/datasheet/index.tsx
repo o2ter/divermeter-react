@@ -32,12 +32,22 @@ type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet>, 'r
 };
 
 export const DataSheet: React.FC<DataSheetProps> = ({
+  data,
+  columns,
   schema,
   ...props
 }) => {
 
+  const _data = React.useMemo(() => _.map(data, (x: any) => _.fromPairs(_.map(columns, c => [c, x.get(c)]))), [data]);
+
   return (
     <_DataSheet
+      data={_data}
+      renderItem={({ item }) => {
+        return (
+          <></>
+        )
+      }}
       {...props}
     />
   );
