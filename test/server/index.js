@@ -24,7 +24,7 @@
 //
 
 import _ from 'lodash';
-import ProtoRoute, { ProtoService } from 'proto.io';
+import ProtoRoute, { Decimal, ProtoService } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
 
@@ -97,6 +97,8 @@ export default async (app, env) => {
   app.use('/proto', await ProtoRoute({
     proto: Proto,
   }));
+
+  const date = new Date();
 
   await Proto.Query('Test').insert({
     boolean: true,
