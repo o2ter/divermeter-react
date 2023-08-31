@@ -50,7 +50,7 @@ export const Browser = ({ schema }) => {
   const { resource: objCount } = useAsyncResource(() => query.count(), null, [_class, query]);
   const { resource: objs } = useAsyncResource(async () => {
     try {
-      return query.sort(sort).limit(limit).find();
+      return query.clone().sort(sort).limit(limit).find();
     } catch (e) {
       console.error(e);
       throw e;
