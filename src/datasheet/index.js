@@ -98,7 +98,7 @@ export const DataSheet = ({
       data={_data}
       columns={columns}
       showEmptyLastRow={showEmptyLastRow}
-      renderItem={({ item, isEditing }) => (
+      renderItem={({ item, rowIdx, columnIdx, isEditing }) => (
         <DataSheetCell {...item} />
       )}
       {...props}
