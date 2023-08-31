@@ -40,6 +40,7 @@ export const Dashboard = () => {
     try {
       return await proto.schema({ master: true });
     } catch (e) {
+      console.error(e);
       showError(e);
     }
   });

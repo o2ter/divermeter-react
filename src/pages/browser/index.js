@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams } from '@o2ter/react-ui';
+import { View, Text, useParams, useToast } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
@@ -36,6 +36,8 @@ export const Browser = ({ schema }) => {
   const { class: _class } = useParams();
   const _schema = schema?.[_class];
   const columns = _.keys(_schema?.fields ?? {});
+
+  const { showError } = useToast();
 
   const [filter, setFilter] = React.useState([]);
   const [sort, setSort] = React.useState({ _id: 1 });
@@ -53,7 +55,7 @@ export const Browser = ({ schema }) => {
       return query.clone().sort(sort).limit(limit).find();
     } catch (e) {
       console.error(e);
-      throw e;
+      showError(e);
     }
   }, null, [_class, query, sort, limit]);
 
