@@ -1,5 +1,5 @@
 //
-//  index.js
+//  index.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -27,24 +27,24 @@ import _ from 'lodash';
 import React from 'react';
 import { View, Text, useParams, useToast } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
+import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
 import { useConfig } from '../../config';
 
-const BrowserBody = ({ schema, className }) => {
+const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema, className }) => {
 
   const Proto = useProto();
   const _schema = schema?.[className];
   const _fields = _schema?.fields ?? {};
   const _columns = _.keys(_fields);
 
-  const [config, setConfig] = useConfig();
+  const [config, setConfig] = useConfig() as any;
   const _columnWidths = config['column-widths']?.[className] ?? {};
 
   const { showError } = useToast();
 
   const [filter, setFilter] = React.useState([]);
-  const [sort, setSort] = React.useState({ _id: 1 });
+  const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
 
   const query = React.useMemo(() => {
@@ -59,20 +59,20 @@ const BrowserBody = ({ schema, className }) => {
     return query;
   }, [className, filter]);
 
-  const { resource: objCount } = useAsyncResource(() => query.count(), null, [className, query]);
+  const { resource: objCount } = useAsyncResource(() => query.count(), undefined, [className, query]);
   const { resource: objs } = useAsyncResource(async () => {
     try {
       return await query.clone().sort(sort).limit(limit).find();
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
       showError(e);
     }
-  }, null, [query, sort, limit]);
+  }, undefined, [query, sort, limit]);
 
-  const [updatedObjs, setUpdatedObjs] = React.useState({});
+  const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
   React.useEffect(() => setUpdatedObjs({}), [objs]);
 
-  const _objs = React.useMemo(() => _.map(objs, obj => updatedObjs[obj.objectId] ?? obj), [objs, updatedObjs]);
+  const _objs = React.useMemo(() => _.map(objs, obj => updatedObjs[obj.objectId!] ?? obj), [objs, updatedObjs]);
 
   return (
     <View classes='flex-fill'>
@@ -96,7 +96,7 @@ const BrowserBody = ({ schema, className }) => {
             schema={_schema}
             columns={_columns}
             columnWidth={_columns.map(c => _columnWidths[c])}
-            onColumnWidthChange={(col, width) => setConfig(c => ({
+            onColumnWidthChange={(col, width) => setConfig((c: any) => ({
               ...c,
               'column-widths': {
                 ...c['column-widths'],
@@ -113,8 +113,8 @@ const BrowserBody = ({ schema, className }) => {
   );
 };
 
-export const Browser = ({ schema }) => {
-  const { class: className } = useParams();
+export const Browser: React.FC<{ schema: TSchema; }> = ({ schema }) => {
+  const { class: className = '' } = useParams();
   return (
     <BrowserBody key={className} className={className} schema={schema} />
   );
