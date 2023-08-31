@@ -45,3 +45,7 @@ export const ProtoProvider = (props: React.PropsWithChildren<{
 
 export const useProto = () => React.useContext(ProtoContext);
 
+export type TProto = ReturnType<typeof useProto>;
+export type TSchema = Awaited<ReturnType<TProto['schema']>>;
+export type TObject = ReturnType<TProto['Object']>;
+export type TDataType = TSchema[string]['fields'][string];

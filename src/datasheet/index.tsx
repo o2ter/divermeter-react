@@ -1,5 +1,5 @@
 //
-//  index.js
+//  index.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -27,9 +27,15 @@ import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet, Text } from '@o2ter/react-ui';
 import { Decimal, serialize } from 'proto.io/dist/client';
+import { TDataType, TObject, TSchema } from '../proto';
 
-const typeOf = (x) => _.isString(x) ? x : x.type;
-const DataSheetCell = ({ value, type }) => {
+type DataSheetCellProps = {
+  value?: any;
+  type?: TDataType;
+};
+
+const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
+const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
 
   if (_.isNil(value)) {
     return (
@@ -80,7 +86,13 @@ const DataSheetCell = ({ value, type }) => {
   }
 }
 
-export const DataSheet = ({
+type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'> & {
+  data: TObject[];
+  columns: string[];
+  schema: TSchema[string];
+}
+
+export const DataSheet: React.FC<DataSheetProps> = ({
   data,
   columns,
   schema,
