@@ -29,12 +29,17 @@ import { View, Text, useParams, useToast } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
+import { useConfig } from '../../config';
 
 const BrowserBody = ({ schema, className }) => {
 
   const Proto = useProto();
   const _schema = schema?.[className];
   const _fields = _schema?.fields ?? {};
+  const _columns = _.keys(_fields);
+
+  const [config, setConfig] = useConfig();
+  const _columnWidths = config['column-widths']?.[className] ?? {};
 
   const { showError } = useToast();
 
@@ -84,7 +89,18 @@ const BrowserBody = ({ schema, className }) => {
           <DataSheet
             data={objs ?? []}
             schema={_schema}
-            columns={_.keys(_fields)}
+            columns={_columns}
+            columnWidth={_columns.map(c => _columnWidths[c])}
+            onColumnWidthChange={(col, width) => setConfig(c => ({
+              ...c,
+              'column-widths': {
+                ...c['column-widths'],
+                [className]: {
+                  ...c['column-widths']?.[className] ?? {},
+                  [_columns[col]]: width,
+                }
+              }
+            }))}
           />
         </div>}
       </View>
