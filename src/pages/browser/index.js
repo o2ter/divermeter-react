@@ -44,18 +44,18 @@ export const Browser = ({ schema }) => {
   const query = React.useMemo(() => {
     const query = Proto.Query(_class, { master: true });
     for (const f of filter) query.filter(f);
-    return query.sort(sort);
-  }, [filter, sort]);
+    return query;
+  }, [filter]);
 
   const { resource: objCount } = useAsyncResource(() => query.count(), null, [_class, query]);
   const { resource: objs } = useAsyncResource(async () => {
     try {
-      return query.limit(limit).find();
+      return query.sort(sort).limit(limit).find();
     } catch (e) {
       console.error(e);
       throw e;
     }
-  }, null, [_class, query, limit]);
+  }, null, [_class, query, sort, limit]);
 
   return (
     <View classes='flex-fill'>
