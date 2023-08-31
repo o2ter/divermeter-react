@@ -69,6 +69,11 @@ const BrowserBody = ({ schema, className }) => {
     }
   }, null, [query, sort, limit]);
 
+  const [updatedObjs, setUpdatedObjs] = React.useState({});
+  React.useEffect(() => setUpdatedObjs({}), [objs]);
+
+  const _objs = React.useMemo(() => _.map(objs, obj => updatedObjs[obj.objectId] ?? obj), [objs, updatedObjs]);
+
   return (
     <View classes='flex-fill'>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
@@ -87,7 +92,7 @@ const BrowserBody = ({ schema, className }) => {
       <View classes='flex-fill p-1 bg-secondary-100'>
         {_schema && <div className='overflow-auto h-100'>
           <DataSheet
-            data={objs ?? []}
+            data={_objs}
             schema={_schema}
             columns={_columns}
             columnWidth={_columns.map(c => _columnWidths[c])}
