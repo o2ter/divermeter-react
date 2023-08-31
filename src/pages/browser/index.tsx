@@ -43,7 +43,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
   const { showError } = useToast();
 
-  const [filter, setFilter] = React.useState([]);
+  const [filter, setFilter] = React.useState<any[]>([]);
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
 
