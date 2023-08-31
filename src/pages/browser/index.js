@@ -46,6 +46,12 @@ export const Browser = ({ schema }) => {
   const query = React.useMemo(() => {
     const query = Proto.Query(_class, { master: true });
     for (const f of filter) query.filter(f);
+    query.includes([
+      '*',
+      ..._.toPairs(_fields)
+        .filter(([, type]) => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'))
+        .map(([key]) => `${key}._id`)
+    ]);
     return query;
   }, [filter]);
 
