@@ -52,8 +52,6 @@ export const Browser = ({ schema }) => {
     }
   }, null, [_class]);
 
-  console.log({ _class, _schema, objs })
-
   return (
     <View classes='flex-fill'>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
