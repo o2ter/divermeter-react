@@ -96,7 +96,9 @@ export const DataSheet = ({
   return (
     <_DataSheet
       data={_data}
-      columns={columns}
+      columns={_.map(columns, c => ({ key: c, label: (
+        <Text style={[{ flex: 1, padding: 4 }]} numberOfLines={1}>{c}<Text classes='font-monospace fs-small ml-1' style={{ color: 'gray' }}>({typeOf(schema.fields[c])})</Text></Text>
+      ) }))}
       showEmptyLastRow={showEmptyLastRow}
       renderItem={({ item, rowIdx, columnIdx, isEditing }) => (
         <DataSheetCell {...item} />
