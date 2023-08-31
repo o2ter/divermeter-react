@@ -30,11 +30,10 @@ import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
 
-export const Browser = ({ schema }) => {
+const BrowserBody = ({ schema, className }) => {
 
   const Proto = useProto();
-  const { class: _class } = useParams();
-  const _schema = schema?.[_class];
+  const _schema = schema?.[className];
   const _fields = _schema?.fields ?? {};
 
   const { showError } = useToast();
@@ -44,7 +43,7 @@ export const Browser = ({ schema }) => {
   const [limit, setLimit] = React.useState(100);
 
   const query = React.useMemo(() => {
-    const query = Proto.Query(_class, { master: true });
+    const query = Proto.Query(className, { master: true });
     for (const f of filter) query.filter(f);
     query.includes(
       '*',
@@ -53,9 +52,9 @@ export const Browser = ({ schema }) => {
         .map(([key]) => `${key}._id`)
     );
     return query;
-  }, [filter]);
+  }, [className, filter]);
 
-  const { resource: objCount } = useAsyncResource(() => query.count(), null, [_class, query]);
+  const { resource: objCount } = useAsyncResource(() => query.count(), null, [className, query]);
   const { resource: objs } = useAsyncResource(async () => {
     try {
       return query.clone().sort(sort).limit(limit).find();
@@ -63,7 +62,7 @@ export const Browser = ({ schema }) => {
       console.error(e);
       showError(e);
     }
-  }, null, [_class, query, sort, limit]);
+  }, null, [query, sort, limit]);
 
   return (
     <View classes='flex-fill'>
@@ -71,7 +70,7 @@ export const Browser = ({ schema }) => {
         <View>
           <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
           <Text>
-            <Text classes='h1 text-white'>{_class}</Text>
+            <Text classes='h1 text-white'>{className}</Text>
             {!_.isNil(objCount) && <Text
               classes='fs-small ml-3 text-secondary-200 font-monospace'
             >{objCount} objects</Text>}
@@ -90,5 +89,12 @@ export const Browser = ({ schema }) => {
         </div>}
       </View>
     </View>
+  );
+};
+
+export const Browser = ({ schema }) => {
+  const { class: className } = useParams();
+  return (
+    <BrowserBody key={className} className={className} schema={schema} />
   );
 };
