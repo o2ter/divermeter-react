@@ -35,7 +35,7 @@ export const Browser = ({ schema }) => {
   const Proto = useProto();
   const { class: _class } = useParams();
   const _schema = schema?.[_class];
-  const columns = _.keys(_schema?.fields ?? {});
+  const _fields = _schema?.fields ?? {};
 
   const { showError } = useToast();
 
@@ -79,7 +79,7 @@ export const Browser = ({ schema }) => {
           <DataSheet
             data={objs ?? []}
             schema={_schema}
-            columns={columns}
+            columns={_.keys(_fields)}
           />
         </div>}
       </View>
