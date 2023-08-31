@@ -62,7 +62,7 @@ const BrowserBody = ({ schema, className }) => {
   const { resource: objCount } = useAsyncResource(() => query.count(), null, [className, query]);
   const { resource: objs } = useAsyncResource(async () => {
     try {
-      return query.clone().sort(sort).limit(limit).find();
+      return await query.clone().sort(sort).limit(limit).find();
     } catch (e) {
       console.error(e);
       showError(e);
