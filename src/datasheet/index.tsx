@@ -27,8 +27,10 @@ import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
 import { TObject, TSchema } from '../proto';
-import { DataSheetCellProps, typeOf, DataSheetCell } from './cell';
+import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
+import { typeOf } from './type';
+import { DataSheetEditCell } from './editCell';
 
 type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'> & {
   data: TObject[];
@@ -36,6 +38,7 @@ type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Reco
   schema: TSchema[string];
   sort: Record<string, 1 | -1>;
   onColumnPressed: (e: GestureResponderEvent, column: string) => void;
+  onValueChanged: (value: any, row: number, column: string, ref: React.ComponentRef<typeof _DataSheet>) => void;
 }
 
 export const DataSheet: React.FC<DataSheetProps> = ({
@@ -45,6 +48,7 @@ export const DataSheet: React.FC<DataSheetProps> = ({
   sort,
   showEmptyLastRow = true,
   onColumnPressed,
+  onValueChanged,
   ...props
 }) => {
 
@@ -53,8 +57,12 @@ export const DataSheet: React.FC<DataSheetProps> = ({
     type: schema.fields[c],
   }]))), [data]);
 
+  const ref = React.useRef<React.ComponentRef<typeof _DataSheet>>(null);
+  const editCell = React.useRef<React.ComponentRef<typeof DataSheetEditCell>>({});
+
   return (
     <_DataSheet
+      ref={ref}
       data={_data}
       columns={_.map(columns, c => ({
         key: c, label: (
@@ -76,8 +84,11 @@ export const DataSheet: React.FC<DataSheetProps> = ({
         )
       }))}
       showEmptyLastRow={showEmptyLastRow}
-      renderItem={({ item, rowIdx, columnIdx, isEditing }) => (
-        <DataSheetCell {...item} />
+      onEndEditing={(row, column) => {
+        if (ref.current) onValueChanged(editCell.current.value, row, columns[column], ref.current);
+      }}
+      renderItem={({ item, isEditing }) => (
+        isEditing ? <DataSheetEditCell ref={editCell} {...item} /> : <DataSheetCell {...item} />
       )}
       {...props}
     />

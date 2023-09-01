@@ -28,13 +28,13 @@ import React from 'react';
 import { Text } from '@o2ter/react-ui';
 import { Decimal, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../proto';
+import { typeOf } from './type';
 
 export type DataSheetCellProps = {
   value?: any;
   type?: TDataType;
 };
 
-export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
 export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
 
   if (_.isNil(value)) {

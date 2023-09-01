@@ -25,11 +25,13 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useToast } from '@o2ter/react-ui';
+import { View, Text, useParams, useToast, useActivity } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
 import { useConfig } from '../../config';
+
+const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
 const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema, className }) => {
 
@@ -41,6 +43,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
   const [config, setConfig] = useConfig() as any;
   const _columnWidths = config['column-widths']?.[className] ?? {};
 
+  const startActivity = useActivity();
   const { showError } = useToast();
 
   const [filter, setFilter] = React.useState<any[]>([]);
@@ -59,20 +62,20 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     return query;
   }, [className, filter]);
 
-  const { resource: objCount } = useAsyncResource(() => query.count(), undefined, [className, query]);
-  const { resource: objs } = useAsyncResource(async () => {
+  const { resource: count } = useAsyncResource(() => query.count(), undefined, [className, query]);
+  const { resource: objects } = useAsyncResource(() => startActivity(async () => {
     try {
       return await query.clone().sort(sort).limit(limit).find();
     } catch (e: any) {
       console.error(e);
       showError(e);
     }
-  }, undefined, [query, sort, limit]);
+  }), undefined, [query, sort, limit]);
 
   const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
-  React.useEffect(() => setUpdatedObjs({}), [objs]);
+  React.useEffect(() => setUpdatedObjs({}), [objects]);
 
-  const _objs = React.useMemo(() => _.map(objs, obj => updatedObjs[obj.objectId!] ?? obj), [objs, updatedObjs]);
+  const _objs = React.useMemo(() => _.map(objects, obj => updatedObjs[obj.objectId!] ?? obj), [objects, updatedObjs]);
 
   return (
     <>
@@ -81,9 +84,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
           <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
           <Text>
             <Text classes='h1 text-white'>{className}</Text>
-            {!_.isNil(objCount) && <Text
+            {!_.isNil(count) && <Text
               classes='fs-small ml-3 text-secondary-200 font-monospace'
-            >{objCount} objects</Text>}
+            >{count} objects</Text>}
           </Text>
         </View>
         <View>
@@ -97,6 +100,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             columns={_columns}
             columnWidth={_columns.map(c => _columnWidths[c])}
             sort={sort}
+            allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
             onColumnPressed={(e: any, column) => {
               setSort(sort => ({
                 ...e.shiftKey ? _.omit(sort, column) : {},
@@ -113,6 +117,19 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 }
               }
             }))}
+            onValueChanged={(value, row, column, handle) => startActivity(async () => {
+              try {
+                let obj = objects?.[row]?.clone() ?? Proto.Object(className);
+                if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
+                obj.set(column, value);
+                await obj.save({ master: true });
+                setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
+                handle.endEditing();
+              } catch (e: any) {
+                console.error(e);
+                showError(e);
+              }
+            })}
           />
         </div>}
       </View>
