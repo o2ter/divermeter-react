@@ -30,6 +30,7 @@ import { Decimal, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../proto';
 import { typeOf } from './type';
 import { JSCode } from '../JSCode';
+import { encodeObject } from './encode';
 
 export type DataSheetEditCellProps = {
   value?: any;
@@ -128,7 +129,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
           <JSCode
             classes='w-100 h-100'
             style={{ outline: 'none' } as any}
-            initialValue={_.isNil(_value) ? '' : serialize(_value, { space: 4 })}
+            initialValue={_.isNil(_value) ? '' : encodeObject(_value)}
             onChangeValue={(code) => {
 
             }}
