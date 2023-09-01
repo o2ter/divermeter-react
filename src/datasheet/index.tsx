@@ -28,11 +28,13 @@ import React from 'react';
 import { DataSheet as _DataSheet, Text } from '@o2ter/react-ui';
 import { TObject, TSchema } from '../proto';
 import { DataSheetCellProps, typeOf, DataSheetCell } from './cell';
+import { GestureResponderEvent, Pressable } from 'react-native';
 
 type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'> & {
   data: TObject[];
   columns: string[];
   schema: TSchema[string];
+  onColumnPressed: (e: GestureResponderEvent, column: string) => void;
 }
 
 export const DataSheet: React.FC<DataSheetProps> = ({
@@ -40,6 +42,7 @@ export const DataSheet: React.FC<DataSheetProps> = ({
   columns,
   schema,
   showEmptyLastRow = true,
+  onColumnPressed,
   ...props
 }) => {
 
@@ -53,13 +56,18 @@ export const DataSheet: React.FC<DataSheetProps> = ({
       data={_data}
       columns={_.map(columns, c => ({
         key: c, label: (
-          <Text
-            style={[{ flex: 1, padding: 4 }]}
-            numberOfLines={1}
-          >{c}<Text
-            classes='font-monospace fs-small ml-1'
-            style={{ color: 'gray' }}
-          >({typeOf(schema.fields[c])})</Text></Text>
+          <Pressable
+            onPress={(e) => onColumnPressed(e, c)}
+            style={{ cursor: 'default' } as any}
+          >
+            <Text
+              style={[{ flex: 1, padding: 4 }]}
+              numberOfLines={1}
+            >{c}<Text
+              classes='font-monospace fs-small ml-1'
+              style={{ color: 'gray' }}
+            >({typeOf(schema.fields[c])})</Text></Text>
+          </Pressable>
         )
       }))}
       showEmptyLastRow={showEmptyLastRow}
