@@ -69,12 +69,20 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
       );
     case 'string':
       return (
-        <TextInput
-          classes='border-0 rounded-0'
-          value={_value ?? ''}
-          onChangeText={(text) => setValue(text)}
-          multiline
-        />
+        <div style={{
+          resize: 'both',
+          overflow: 'auto',
+          minWidth: '100%',
+          minHeight: '100%',
+          backgroundColor: 'white',
+        }}>
+          <TextInput
+            classes='border-0 rounded-0'
+            value={_value ?? ''}
+            onChangeText={(text) => setValue(text)}
+            multiline
+          />
+        </div>
       );
     case 'date':
     case 'object':
