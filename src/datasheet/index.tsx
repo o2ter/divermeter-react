@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { DataSheet as _DataSheet, Text } from '@o2ter/react-ui';
+import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
 import { TObject, TSchema } from '../proto';
 import { DataSheetCellProps, typeOf, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
@@ -34,6 +34,7 @@ type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Reco
   data: TObject[];
   columns: string[];
   schema: TSchema[string];
+  sort: Record<string, 1 | -1>;
   onColumnPressed: (e: GestureResponderEvent, column: string) => void;
 }
 
@@ -41,6 +42,7 @@ export const DataSheet: React.FC<DataSheetProps> = ({
   data,
   columns,
   schema,
+  sort,
   showEmptyLastRow = true,
   onColumnPressed,
   ...props
@@ -64,9 +66,12 @@ export const DataSheet: React.FC<DataSheetProps> = ({
               style={[{ flex: 1, padding: 4 }]}
               numberOfLines={1}
             >{c}<Text
-              classes='font-monospace fs-small ml-1'
+              classes='font-monospace fs-small mx-1'
               style={{ color: 'gray' }}
-            >({typeOf(schema.fields[c])})</Text></Text>
+            >({typeOf(schema.fields[c])})</Text>
+            {sort[c] === -1 && <Icon icon='Octicons' name='triangle-down' />}
+            {sort[c] === 1 && <Icon icon='Octicons' name='triangle-up' />}
+            </Text>
           </Pressable>
         )
       }))}

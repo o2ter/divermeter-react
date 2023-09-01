@@ -96,6 +96,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             schema={_schema}
             columns={_columns}
             columnWidth={_columns.map(c => _columnWidths[c])}
+            sort={sort}
             onColumnPressed={(e: any, column) => {
               setSort(sort => ({
                 ...e.shiftKey ? _.omit(sort, column) : {},
