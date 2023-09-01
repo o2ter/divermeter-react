@@ -32,16 +32,17 @@ import { GestureResponderEvent, Pressable } from 'react-native';
 import { typeOf } from './type';
 import { DataSheetEditCell } from './editCell';
 
-type DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'> & {
+type _DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'>;
+type DataSheetProps = _DataSheetProps & {
   data: TObject[];
   columns: string[];
   schema: TSchema[string];
   sort: Record<string, 1 | -1>;
   onColumnPressed: (e: GestureResponderEvent, column: string) => void;
-  onValueChanged: (value: any, row: number, column: string, ref: React.ComponentRef<typeof _DataSheet>) => void;
+  onValueChanged: (value: any, row: number, column: string) => void;
 }
 
-export const DataSheet: React.FC<DataSheetProps> = ({
+export const DataSheet = React.forwardRef(({
   data,
   columns,
   schema,
@@ -50,19 +51,18 @@ export const DataSheet: React.FC<DataSheetProps> = ({
   onColumnPressed,
   onValueChanged,
   ...props
-}) => {
+}: DataSheetProps, forwardRef: React.ForwardedRef<React.ComponentRef<typeof _DataSheet>>) => {
 
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
     value: x.get(c),
     type: schema.fields[c],
   }]))), [data]);
 
-  const ref = React.useRef<React.ComponentRef<typeof _DataSheet>>(null);
   const editCell = React.useRef<React.ComponentRef<typeof DataSheetEditCell>>({});
 
   return (
     <_DataSheet
-      ref={ref}
+      ref={forwardRef}
       data={_data}
       columns={_.map(columns, c => ({
         key: c, label: (
@@ -84,13 +84,11 @@ export const DataSheet: React.FC<DataSheetProps> = ({
         )
       }))}
       showEmptyLastRow={showEmptyLastRow}
-      onEndEditing={(row, column) => {
-        if (ref.current) onValueChanged(editCell.current.value, row, columns[column], ref.current);
-      }}
+      onEndEditing={(row, column) => onValueChanged(editCell.current.value, row, columns[column])}
       renderItem={({ item, isEditing }) => (
         isEditing ? <DataSheetEditCell ref={editCell} {...item} /> : <DataSheetCell {...item} />
       )}
       {...props}
     />
   );
-};
+});

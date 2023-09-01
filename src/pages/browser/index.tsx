@@ -83,6 +83,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     _.map(_.filter(objects, obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj)
   ), [objects, updatedObjs, deletedObjs]);
 
+  const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
+
   return (
     <>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
@@ -101,6 +103,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
       <View classes='flex-fill p-1 bg-secondary-100'>
         {_schema && <div className='flex-fill overflow-auto'>
           <DataSheet
+            ref={ref}
             data={_objs}
             schema={_schema}
             columns={_columns}
@@ -123,14 +126,14 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 }
               }
             }))}
-            onValueChanged={(value, row, column, handle) => startActivity(async () => {
+            onValueChanged={(value, row, column) => startActivity(async () => {
               try {
                 let obj = objects?.[row]?.clone() ?? Proto.Object(className);
                 if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                 obj.set(column, value);
                 await obj.save({ master: true });
                 setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
-                handle.endEditing();
+                ref.current?.endEditing();
               } catch (e: any) {
                 console.error(e);
                 showError(e);
@@ -142,6 +145,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
                 setDeletedObjs(_objs => [..._objs, ...ids]);
                 setUpdatedObjs(objs => _.omit(objs, ...ids));
+                ref.current?.clearSelection();
               } catch (e: any) {
                 console.error(e);
                 showError(e);
@@ -164,6 +168,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                   ...objs,
                   ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
                 }));
+                ref.current?.clearSelection();
               } catch (e: any) {
                 console.error(e);
                 showError(e);
