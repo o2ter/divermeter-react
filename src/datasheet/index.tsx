@@ -69,8 +69,8 @@ export const DataSheet: React.FC<DataSheetProps> = ({
               classes='font-monospace fs-small mx-1'
               style={{ color: 'gray' }}
             >({typeOf(schema.fields[c])})</Text>
-            {sort[c] === -1 && <Icon icon='Octicons' name='triangle-down' />}
-            {sort[c] === 1 && <Icon icon='Octicons' name='triangle-up' />}
+              {sort[c] === -1 && <Icon icon='Octicons' name='triangle-down' />}
+              {sort[c] === 1 && <Icon icon='Octicons' name='triangle-up' />}
             </Text>
           </Pressable>
         )
