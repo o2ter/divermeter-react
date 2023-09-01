@@ -49,10 +49,12 @@ export const Dashboard = () => {
       <View classes='bg-primary-900'>
         <SideMenu schema={schema} />
       </View>
-      <Navigator>
-        <Route path='/browser/:class' component={Browser} schema={schema} />
-        <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
-      </Navigator>
+      <View classes='flex-fill' style={{ height: 0, minHeight: '100%' }}>
+        <Navigator>
+          <Route path='/browser/:class' component={Browser} schema={schema} />
+          <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
+        </Navigator>
+      </View>
     </View>
   );
 };

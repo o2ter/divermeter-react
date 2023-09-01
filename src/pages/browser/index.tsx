@@ -75,7 +75,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
   const _objs = React.useMemo(() => _.map(objs, obj => updatedObjs[obj.objectId!] ?? obj), [objs, updatedObjs]);
 
   return (
-    <View classes='flex-fill' style={{ height: 0, minHeight: '100%' }}>
+    <>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
         <View>
           <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
@@ -116,7 +116,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
           />
         </div>}
       </View>
-    </View>
+    </>
   );
 };
 
