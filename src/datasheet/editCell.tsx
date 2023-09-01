@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { TextInput, Switch, View } from '@o2ter/react-ui';
-import { Decimal, serialize } from 'proto.io/dist/client';
+import { Decimal } from 'proto.io/dist/client';
 import { TDataType } from '../proto';
 import { typeOf } from './type';
 import { JSCode } from '../JSCode';
@@ -125,13 +125,16 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'object':
     case 'array':
       return (
-        <Resizable style={{ paddingRight: 12 }}>
+        <Resizable style={{ paddingRight: 12, width: 300, height: 200 }}>
           <JSCode
             classes='w-100 h-100'
             style={{ outline: 'none' } as any}
             initialValue={_.isNil(_value) ? '' : encodeObject(_value)}
             onChangeValue={(code) => {
-
+              try {
+                const func = new Function('Decimal', `return (${code})`);
+                setValue(func(Decimal));
+              } catch {};
             }}
           />
         </Resizable>
