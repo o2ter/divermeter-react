@@ -26,14 +26,38 @@
 import _ from 'lodash';
 import React from 'react';
 import { TextInput, Switch, View } from '@o2ter/react-ui';
-import { Decimal } from 'proto.io/dist/client';
+import { Decimal, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../proto';
 import { typeOf } from './type';
+import { JSCode } from '../JSCode';
 
 export type DataSheetEditCellProps = {
   value?: any;
   type?: TDataType;
 };
+
+const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
+  style,
+  children,
+}) => (
+  <div className='position-relative w-100 h-100'>
+    <div className='position-absolute' style={{
+      resize: 'both',
+      overflow: 'auto',
+      width: 0,
+      height: 0,
+      minWidth: '100%',
+      minHeight: '100%',
+      backgroundColor: 'white',
+      top: -1,
+      left: -1,
+      border: 1,
+      borderStyle: 'solid',
+      borderColor: '#DDD',
+      ...style,
+    }}>{children}</div>
+  </div>
+);
 
 export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEditCellProps>(({
   value,
@@ -79,38 +103,38 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
       );
     case 'string':
       return (
-        <div className='position-relative w-100 h-100'>
-          <div className='position-absolute' style={{
-            resize: 'both',
-            overflow: 'auto',
-            width: 0,
-            height: 0,
-            minWidth: '100%',
-            minHeight: '100%',
-            backgroundColor: 'white',
-            top: -1,
-            left: -1,
-            border: 1,
-            borderStyle: 'solid',
-            borderColor: '#DDD',
+        <Resizable
+          style={{
             paddingTop: 6,
             paddingBottom: 6,
             paddingLeft: 12,
             paddingRight: 12,
-          }}>
-            <TextInput
-              classes='border-0 rounded-0 p-0 w-100 h-100'
-              style={{ outline: 'none' } as any}
-              value={_value ?? ''}
-              onChangeText={(text) => setValue(text)}
-              multiline
-            />
-          </div>
-        </div>
+          }}
+        >
+          <TextInput
+            classes='border-0 rounded-0 p-0 w-100 h-100'
+            style={{ outline: 'none' } as any}
+            value={_value ?? ''}
+            onChangeText={(text) => setValue(text)}
+            multiline
+          />
+        </Resizable>
       );
     case 'date': return;
     case 'object':
     case 'array':
+      return (
+        <Resizable style={{ paddingRight: 12 }}>
+          <JSCode
+            classes='w-100 h-100'
+            style={{ outline: 'none' } as any}
+            initialValue={_.isNil(_value) ? '' : serialize(_value, { space: 4 })}
+            onChangeValue={(code) => {
+
+            }}
+          />
+        </Resizable>
+      );
     case 'pointer': return;
     case 'relation': return;
     default: return;
