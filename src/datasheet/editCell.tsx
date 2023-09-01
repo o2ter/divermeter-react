@@ -48,8 +48,8 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'boolean':
       return (
         <View style={{
-          paddingHorizontal: 12,
           paddingVertical: 6,
+          paddingHorizontal: 12,
           alignItems: 'flex-end',
         }}>
           <Switch
