@@ -69,7 +69,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
       );
     case 'string':
       return (
-        <div style={{
+        <div className='position-relative' style={{
           resize: 'both',
           overflow: 'auto',
           minWidth: '100%',
