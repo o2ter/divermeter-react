@@ -73,9 +73,15 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
   }), undefined, [query, sort, limit]);
 
   const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
-  React.useEffect(() => setUpdatedObjs({}), [objects]);
+  const [deletedObjs, setDeletedObjs] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    setUpdatedObjs({});
+    setDeletedObjs([])
+  }, [objects]);
 
-  const _objs = React.useMemo(() => _.map(objects, obj => updatedObjs[obj.objectId!] ?? obj), [objects, updatedObjs]);
+  const _objs = React.useMemo(() => (
+    _.map(_.filter(objects, obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj)
+  ), [objects, updatedObjs, deletedObjs]);
 
   return (
     <>
@@ -125,6 +131,39 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 await obj.save({ master: true });
                 setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
                 handle.endEditing();
+              } catch (e: any) {
+                console.error(e);
+                showError(e);
+              }
+            })}
+            onDeleteRows={(rows) => startActivity(async () => {
+              try {
+                const ids = _.compact(_.map(rows, row => objects?.[row]?.objectId));
+                await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
+                setDeletedObjs(_objs => [..._objs, ...ids]);
+                setUpdatedObjs(objs => _.omit(objs, ...ids));
+              } catch (e: any) {
+                console.error(e);
+                showError(e);
+              }
+            })}
+            onDeleteCells={(cells) => startActivity(async () => {
+              try {
+                const _rows = _.range(cells.start.row, cells.end.row + 1);
+                const _cols = _.range(cells.start.col, cells.end.col + 1)
+                  .map(c => _columns[c])
+                  .filter(c => !_.includes(defaultObjectReadonlyKeys, c));
+                const updated = await Promise.all(_.map(_rows, row => {
+                  let obj = objects?.[row]?.clone();
+                  if (!obj?.objectId) return;
+                  obj = updatedObjs[obj.objectId]?.clone() ?? obj;
+                  for (const _col of _cols) obj.set(_col, null);
+                  return obj.save({ master: true });
+                }));
+                setUpdatedObjs(objs => ({
+                  ...objs,
+                  ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
+                }));
               } catch (e: any) {
                 console.error(e);
                 showError(e);
