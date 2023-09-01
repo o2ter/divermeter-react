@@ -48,6 +48,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'number':
       return (
         <TextInput
+          classes='border-0 rounded-0'
           value={_value?.toString() ?? ''}
           onChangeText={(text) => {
             const number = parseFloat(text);
@@ -58,6 +59,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'decimal':
       return (
         <TextInput
+          classes='border-0 rounded-0'
           value={_value?.toString() ?? ''}
           onChangeText={(text) => {
             const number = new Decimal(text);
@@ -68,6 +70,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'string':
       return (
         <TextInput
+          classes='border-0 rounded-0'
           value={_value ?? ''}
           onChangeText={(text) => setValue(text)}
           multiline
