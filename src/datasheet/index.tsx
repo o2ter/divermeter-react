@@ -31,6 +31,8 @@ import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
 import { typeOf } from './type';
 import { DataSheetEditCell } from './editCell';
+import { tsvFormatRows } from 'd3-dsv';
+import { Decimal, serialize } from 'proto.io/dist/client';
 
 type _DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'>;
 type DataSheetProps = _DataSheetProps & {
@@ -41,6 +43,19 @@ type DataSheetProps = _DataSheetProps & {
   onColumnPressed: (e: GestureResponderEvent, column: string) => void;
   onValueChanged: (value: any, row: number, column: string) => void;
 }
+
+const encodeValue = (x: any) => {
+  if (_.isNil(x)) return '';
+  if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
+  if (x instanceof Decimal) return x.toString();
+  if (_.isDate(x)) return x.toLocaleString();
+  return serialize(x);
+}
+
+const encoders = {
+  'text/plain': (data: any[][]) => tsvFormatRows(_.map(data, row => _.map(row, val => encodeValue(val)))),
+  'application/json': (data: any[][]) => serialize(data),
+};
 
 export const DataSheet = React.forwardRef(({
   data,
@@ -65,6 +80,7 @@ export const DataSheet = React.forwardRef(({
       ref={forwardRef}
       data={_data}
       encodeValue={({ value }) => value}
+      encoders={encoders}
       columns={_.map(columns, c => ({
         key: c, label: (
           <Pressable
