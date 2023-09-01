@@ -108,11 +108,11 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
           </div>
         </div>
       );
-    case 'date':
+    case 'date': return;
     case 'object':
     case 'array':
-    case 'pointer':
-    case 'relation':
+    case 'pointer': return;
+    case 'relation': return;
     default: return;
   }
 });
