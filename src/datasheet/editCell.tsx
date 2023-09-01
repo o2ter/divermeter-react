@@ -25,11 +25,10 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { TextInput, View } from '@o2ter/react-ui';
+import { TextInput, Switch, View } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
 import { TDataType } from '../proto';
 import { typeOf } from './type';
-import { Switch } from 'react-native';
 
 export type DataSheetEditCellProps = {
   value?: any;
@@ -47,14 +46,10 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
   switch (typeOf(type)) {
     case 'boolean':
       return (
-        <View style={{
-          paddingVertical: 6,
-          paddingHorizontal: 12,
-          alignItems: 'flex-end',
-        }}>
+        <View classes='p-1 align-items-end'>
           <Switch
-            value={_value ?? false}
-            onValueChange={(value) => setValue(value)}
+            selected={_value ?? false}
+            onPress={() => setValue((v: any) => !v)}
           />
         </View>
       );
