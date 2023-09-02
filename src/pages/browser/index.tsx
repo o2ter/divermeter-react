@@ -172,7 +172,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     if (!_.isEmpty(_inserted)) setInsertedObjs(objs => [...objs, ..._inserted]);
     if (!_.isEmpty(_updated)) setUpdatedObjs(objs => ({
       ...objs,
-      ..._.fromPairs(_.map(_inserted, v => [v.objectId, v])),
+      ..._.fromPairs(_.map(_updated, v => [v.objectId, v])),
     }));
   }
 
