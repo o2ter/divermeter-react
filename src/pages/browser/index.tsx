@@ -53,19 +53,16 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
   const query = React.useMemo(() => {
     const query = Proto.Query(className, { master: true });
     for (const f of filter) query.filter(f);
-    query.includes(
-      '*',
-      ..._.toPairs(_fields)
-        .filter(([, type]) => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'))
-        .map(([key]) => `${key}._id`)
-    );
     return query;
-  }, [className, filter]);
+  }, [className, schema, filter]);
 
   const { resource: count } = useAsyncResource(() => query.count(), undefined, [className, query]);
   const { resource: objects } = useAsyncResource(() => startActivity(async () => {
     try {
-      return await query.clone().sort(sort).limit(limit).find();
+      const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
+      const _query = query.clone();
+      _query.includes('*', ..._.map(relation, (type, key) => `${key}._id`));
+      return await _query.sort(sort).limit(limit).find();
     } catch (e: any) {
       console.error(e);
       showError(e);
