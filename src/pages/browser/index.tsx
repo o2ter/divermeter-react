@@ -30,8 +30,31 @@ import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
 import { useConfig } from '../../config';
+import { tsvParseRows } from 'd3-dsv';
+import { deserialize } from 'proto.io/dist/client';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
+
+const decodeClipboardJsonData = (
+  clipboard: DataTransfer | Clipboard,
+) => {
+  if (clipboard instanceof DataTransfer) {
+    const json = clipboard.getData('application/json');
+    if (!_.isEmpty(json)) return { type: 'json', data: deserialize(json) as Record<string, any>[] } as const;
+  }
+}
+const decodeClipboardData = async (
+  clipboard: DataTransfer | Clipboard,
+) => {
+  if (clipboard instanceof DataTransfer) {
+    const text = clipboard.getData('text/plain');
+    if (!_.isEmpty(text)) return { type: 'raw', data: tsvParseRows(text) } as const;
+  }
+  if (clipboard instanceof Clipboard) {
+    const text = await clipboard.readText();
+    if (!_.isEmpty(text)) return { type: 'raw', data: tsvParseRows(text) } as const;
+  }
+}
 
 const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema, className }) => {
 
@@ -85,6 +108,28 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
+  const setValue = async (obj: TObject, column: string, value: any) => {
+    if (Proto.isObject(value)) {
+      obj.set(column, await value.fetch());
+    } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
+      obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
+    } else {
+      obj.set(column, value);
+    }
+  }
+
+  const saveUpdates = async (updates: TObject[]) => {
+    const ids = _.compact(_.map(updates, v => v.objectId));
+    await Promise.all(_.map(updates, v => v.save({ master: true })));
+    const _inserted = _.filter(updates, v => !_.includes(ids, v.objectId));
+    const _updated = _.filter(updates, v => _.includes(ids, v.objectId));
+    if (!_.isEmpty(_inserted)) setInsertedObjs(objs => [...objs, ..._inserted]);
+    if (!_.isEmpty(_updated)) setUpdatedObjs(objs => ({
+      ...objs,
+      ..._.fromPairs(_.map(_inserted, v => [v.objectId, v])),
+    }));
+  }
+
   return (
     <>
       <View classes='py-3 px-4 flex-row bg-secondary-600'>
@@ -129,21 +174,47 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             onValueChanged={(value, row, column) => startActivity(async () => {
               try {
                 let obj = _objs[row]?.clone() ?? Proto.Object(className);
-                const insert = !obj.objectId;
-                if (Proto.isObject(value)) {
-                  obj.set(column, await value.fetch());
-                } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
-                  obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
-                } else {
-                  obj.set(column, value);
-                }
-                await obj.save({ master: true });
-                if (insert) {
-                  setInsertedObjs(objs => [...objs, obj]);
-                } else {
-                  setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
-                }
+                await setValue(obj, column, value);
+                await saveUpdates([obj]);
                 ref.current?.endEditing();
+              } catch (e: any) {
+                console.error(e);
+                showError(e);
+              }
+            })}
+            onPasteRows={(rows, clipboard) => startActivity(async () => {
+              try {
+                const { type, data } = decodeClipboardJsonData(clipboard) ?? await decodeClipboardData(clipboard) ?? {};
+                const objects = _.compact(_.map(rows, row => _objs[row]));
+                const updates: TObject[] = [];
+                if (type === 'json') {
+                  for (const [obj, values] of _.zip(objects, data)) {
+                    const _obj = obj?.clone() ?? Proto.Object(className);
+                    for (const [column, value] of _.toPairs(values)) {
+                      if (!_.includes(defaultObjectReadonlyKeys, column)) {
+                        await setValue(_obj, column, value);
+                      }
+                    }
+                    updates.push(_obj);
+                  }
+                } else if (type === 'raw') {
+
+                }
+                await saveUpdates(updates);
+                ref.current?.endEditing();
+              } catch (e: any) {
+                console.error(e);
+                showError(e);
+              }
+            })}
+            onPasteCells={(cells, clipboard) => startActivity(async () => {
+              try {
+                const { data } = await decodeClipboardData(clipboard) ?? {};
+                const _rows = _.range(cells.start.row, cells.end.row + 1);
+                const objects = _.compact(_.map(_rows, row => _objs[row]));
+                const updates: TObject[] = [];
+
+                await saveUpdates(updates);
               } catch (e: any) {
                 console.error(e);
                 showError(e);

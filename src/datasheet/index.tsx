@@ -53,8 +53,10 @@ const encodeValue = (x: any) => {
 }
 
 const encoders = {
-  'text/plain': (data: any[][]) => tsvFormatRows(_.map(data, row => _.map(row, val => encodeValue(val)))),
-  'application/json': (data: any[][]) => serialize(data),
+  'text/plain': (data: any[][]) => tsvFormatRows(_.map(data, row => _.map(row, val => encodeValue(val?.value)))),
+  'application/json': (data: any[][]) => serialize(_.map(data, row => _.fromPairs(_.compact(_.map(row, (
+    item => item ? [item.column, item.value] : undefined
+  )))))),
 };
 
 export const DataSheet = React.forwardRef(({
@@ -69,6 +71,7 @@ export const DataSheet = React.forwardRef(({
 }: DataSheetProps, forwardRef: React.ForwardedRef<React.ComponentRef<typeof _DataSheet>>) => {
 
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
+    column: c,
     value: x.get(c),
     type: schema.fields[c],
   }]))), [data]);
@@ -79,7 +82,6 @@ export const DataSheet = React.forwardRef(({
     <_DataSheet
       ref={forwardRef}
       data={_data}
-      encodeValue={(item) => item?.value}
       encoders={encoders}
       columns={_.map(columns, c => ({
         key: c, label: (
