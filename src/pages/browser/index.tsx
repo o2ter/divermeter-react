@@ -269,11 +269,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
               try {
                 const { data } = await decodeClipboardData(clipboard) ?? {};
                 const _rows = _.range(cells.start.row, cells.end.row + 1);
+                const _cols = _.range(cells.start.col, cells.end.col + 1).map(c => _columns[c]);
                 const objects = _.compact(_.map(_rows, row => _objs[row]));
                 const updates: TObject[] = [];
                 for (const [obj, values] of _.zip(objects, data ?? [])) {
                   const _obj = obj?.clone() ?? Proto.Object(className);
-                  for (const [column = '', value] of _.zip(_columns, values)) {
+                  for (const [column = '', value] of _.zip(_cols, values)) {
                     if (!_.includes(readonlyKeys, column)) {
                       if (_.isNil(value)) {
                         if (_obj.objectId) _obj.set(column, null);
