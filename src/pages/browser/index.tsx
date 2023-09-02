@@ -129,6 +129,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                 if (Proto.isObject(value)) {
                   obj.set(column, await value.fetch());
+                } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
+                  obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
                 } else {
                   obj.set(column, value);
                 }
