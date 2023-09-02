@@ -76,7 +76,7 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
       );
     case 'pointer':
       return (
-        <Text classes='font-monospace text-right' style={{ color: 'gray' }} numberOfLines={1}>{value.objectId}</Text>
+        <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>{value.objectId}</Text>
       );
     case 'relation':
       return (
