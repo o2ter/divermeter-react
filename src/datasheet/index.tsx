@@ -102,8 +102,12 @@ export const DataSheet = React.forwardRef(({
       }))}
       showEmptyLastRow={showEmptyLastRow}
       onEndEditing={(row, column) => onValueChanged(editCell.current.value, row, columns[column])}
-      renderItem={({ item, isEditing }) => (
-        isEditing ? <DataSheetEditCell ref={editCell} {...item} /> : <DataSheetCell {...item} />
+      renderItem={({ item, columnIdx, isEditing }) => (
+        isEditing ? <DataSheetEditCell
+          ref={editCell}
+          value={item?.value}
+          type={schema.fields[columns[columnIdx]]}
+        /> : <DataSheetCell {...item} />
       )}
       {...props}
     />
