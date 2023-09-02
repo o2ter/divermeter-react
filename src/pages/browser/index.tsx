@@ -69,16 +69,19 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     }
   }), undefined, [query, sort, limit]);
 
+  const [insertedObjs, setInsertedObjs] = React.useState<TObject[]>([]);
   const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
   const [deletedObjs, setDeletedObjs] = React.useState<string[]>([]);
   React.useEffect(() => {
+    setInsertedObjs([]);
     setUpdatedObjs({});
     setDeletedObjs([]);
   }, [objects]);
 
-  const _objs = React.useMemo(() => (
-    _.map(_.filter(objects, obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj)
-  ), [objects, updatedObjs, deletedObjs]);
+  const _objs = React.useMemo(() => _.map(_.filter(
+    [...objects ?? [], ...insertedObjs],
+    obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj,
+  ), [objects, insertedObjs, updatedObjs, deletedObjs]);
 
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
@@ -126,6 +129,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             onValueChanged={(value, row, column) => startActivity(async () => {
               try {
                 let obj = objects?.[row]?.clone() ?? Proto.Object(className);
+                const insert = !obj.objectId;
                 if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                 if (Proto.isObject(value)) {
                   obj.set(column, await value.fetch());
@@ -135,7 +139,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                   obj.set(column, value);
                 }
                 await obj.save({ master: true });
-                setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
+                if (insert) {
+                  setInsertedObjs(objs => [...objs, obj]);
+                } else {
+                  setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
+                }
                 ref.current?.endEditing();
               } catch (e: any) {
                 console.error(e);
