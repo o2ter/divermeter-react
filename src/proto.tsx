@@ -34,12 +34,15 @@ export const createProto = (
 
 const ProtoContext = React.createContext(createProto());
 
-export const ProtoProvider = (props: React.PropsWithChildren<{
+export const ProtoProvider: React.FC<React.PropsWithChildren<{
   auth?: { user: string; pass: string; };
-}>) => {
-  const proto = React.useMemo(() => createProto(props.auth), [props.auth?.user, props.auth?.pass]);
+}>> = ({
+  auth,
+  children,
+}) => {
+  const proto = React.useMemo(() => createProto(auth), [auth?.user, auth?.pass]);
   return (
-    <ProtoContext.Provider value={proto}>{props.children}</ProtoContext.Provider>
+    <ProtoContext.Provider value={proto}>{children}</ProtoContext.Provider>
   );
 };
 
