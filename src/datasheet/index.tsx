@@ -95,7 +95,7 @@ export const DataSheet = React.forwardRef(({
               style={[{ flex: 1, padding: 4 }]}
               numberOfLines={1}
             >{c}<Text
-              classes='font-monospace fs-small mx-1'
+              classes='font-monospace fs-small ml-1'
               style={{ color: 'gray' }}
             >({typeOf(schema.fields[c])})</Text>
             </Text>
