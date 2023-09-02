@@ -79,7 +79,7 @@ export const DataSheet = React.forwardRef(({
     <_DataSheet
       ref={forwardRef}
       data={_data}
-      encodeValue={({ value }) => value}
+      encodeValue={(item) => item?.value}
       encoders={encoders}
       columns={_.map(columns, c => ({
         key: c, label: (

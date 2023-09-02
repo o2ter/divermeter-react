@@ -1299,10 +1299,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.219":
-  version "0.0.219"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.219.tgz#a4c69e7438a6e397db08ce45a2de367ef6b7d281"
-  integrity sha512-B58Ww5a6qRuHsrI8XAzdRNEJ/pK6LOiDzM1uWMf8E5qwxpuc4yS0afU6zujcWdjIv151IPrTf2J7Q4vn1He41A==
+"@o2ter/react-ui@^0.0.220":
+  version "0.0.220"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.220.tgz#d4441e104755e5d11216a49d714f386889eb70e8"
+  integrity sha512-ahdbdrgv9g3N16Z8GGaNedl3hRl7iKw0YAPMRhSOrbyn2u+ThFR/6hg+71Kds2Q66l1CBTagxbpGJzOg7790dw==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     codemirror "^6.0.1"
