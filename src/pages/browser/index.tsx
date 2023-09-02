@@ -128,9 +128,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             }))}
             onValueChanged={(value, row, column) => startActivity(async () => {
               try {
-                let obj = objects?.[row]?.clone() ?? Proto.Object(className);
+                let obj = _objs[row]?.clone() ?? Proto.Object(className);
                 const insert = !obj.objectId;
-                if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                 if (Proto.isObject(value)) {
                   obj.set(column, await value.fetch());
                 } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
@@ -152,7 +151,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             })}
             onDeleteRows={(rows) => startActivity(async () => {
               try {
-                const ids = _.compact(_.map(rows, row => objects?.[row]?.objectId));
+                const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
                 await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
                 setDeletedObjs(_objs => [..._objs, ...ids]);
                 setUpdatedObjs(objs => _.omit(objs, ...ids));
@@ -169,7 +168,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                   .map(c => _columns[c])
                   .filter(c => !_.includes(defaultObjectReadonlyKeys, c));
                 const updated = await Promise.all(_.map(_rows, row => {
-                  let obj = objects?.[row]?.clone();
+                  let obj = _objs[row]?.clone();
                   if (!obj?.objectId) return;
                   obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                   for (const _col of _cols) obj.set(_col, null);
