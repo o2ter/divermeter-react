@@ -27,9 +27,9 @@ import _ from 'lodash';
 import React from 'react';
 import { TextInput, Switch, View } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
-import { TDataType, useProto } from '../proto';
+import { TDataType, useProto } from '../../proto';
 import { typeOf } from './type';
-import { JSCode } from '../JSCode';
+import { JSCode } from '../jscode';
 import { encodeObject } from './encode';
 
 export type DataSheetEditCellProps = {

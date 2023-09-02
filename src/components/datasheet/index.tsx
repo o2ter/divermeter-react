@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
-import { TObject, TSchema, useProto } from '../proto';
+import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
 import { typeOf } from './type';

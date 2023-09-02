@@ -28,11 +28,11 @@ import React from 'react';
 import { View, Text, useParams, useToast, useActivity } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
-import { DataSheet } from '../../datasheet';
+import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize } from 'proto.io/dist/client';
-import { typeOf } from '../../datasheet/type';
+import { typeOf } from '../../components/datasheet/type';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 

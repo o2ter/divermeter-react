@@ -26,8 +26,8 @@
 import _ from 'lodash';
 import React from 'react';
 import { Icon, View, Text, useNavigate } from '@o2ter/react-ui';
-import Localization from '../i18n/sidemenu';
-import { useAuth } from '../config';
+import Localization from '../../i18n/sidemenu';
+import { useAuth } from '../../config';
 import { Pressable } from 'react-native';
 
 const Link = ({

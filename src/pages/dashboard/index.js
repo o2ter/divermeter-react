@@ -29,7 +29,7 @@ import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
 
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
-import { SideMenu } from '../../sidemenu';
+import { SideMenu } from '../../components/sidemenu';
 import { Browser } from '../browser';
 import NotFound from '../NotFound';
 
