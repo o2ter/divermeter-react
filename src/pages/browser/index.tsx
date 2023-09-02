@@ -249,7 +249,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                     for (const [column = '', value] of _.zip(_columns, values)) {
                       if (!_.includes(readonlyKeys, column)) {
                         if (_.isNil(value)) {
-                          _obj.set(column, null);
+                          if (_obj.objectId) _obj.set(column, null);
                         } else {
                           const _value = await decodeRawValue(typeOf(_fields[column]) ?? '', value);
                           if (!_.isNil(_value)) _obj.set(column, _value as any);
@@ -276,7 +276,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                   for (const [column = '', value] of _.zip(_columns, values)) {
                     if (!_.includes(readonlyKeys, column)) {
                       if (_.isNil(value)) {
-                        _obj.set(column, null);
+                        if (_obj.objectId) _obj.set(column, null);
                       } else {
                         const _value = await decodeRawValue(typeOf(_fields[column]) ?? '', value);
                         if (!_.isNil(_value)) _obj.set(column, _value as any);
