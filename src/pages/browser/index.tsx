@@ -198,7 +198,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             data={_objs}
             schema={_schema}
             columns={_columns}
-            columnWidth={_columns.map(c => _columnWidths[c])}
+            columnWidth={_columns.map(c => _columnWidths[c] ?? 160)}
             sort={sort}
             allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
             onColumnPressed={(e: any, column) => {

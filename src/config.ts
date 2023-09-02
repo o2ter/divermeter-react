@@ -31,11 +31,11 @@ import { useSessionStorage } from 'sugax';
 export const useConfig = () => {
   const [config, setConfig] = useSessionStorage('X-PROTO-CONFIG');
   const _setConfig = React.useCallback((
-    v: Record<string, TSerializable | undefined>
-  ) => setConfig((x) => serialize(_.pickBy({
-    ...x ? deserialize(x) as any : {},
-    ...v,
-  }, x => !_.isNil(x)))), []);
+    v: React.SetStateAction<Record<string, TSerializable | undefined>>
+  ) => setConfig((x) => {
+    const _x = x ? deserialize(x) as any : {};
+    return serialize(_.pickBy({ ..._x, ..._.isFunction(v) ? v(_x) : v }, x => !_.isNil(x)));
+  }), []);
   return [
     config ? deserialize(config) as Record<string, TSerializable> : {},
     _setConfig,
