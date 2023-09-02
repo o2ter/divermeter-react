@@ -89,7 +89,7 @@ export const DataSheet = React.forwardRef(({
         key: c, label: (
           <Pressable
             onPress={(e) => onColumnPressed(e, c)}
-            style={{ cursor: 'default' } as any}
+            style={{ flexDirection: 'row', alignItems: 'center', cursor: 'default' } as any}
           >
             <Text
               style={[{ flex: 1, padding: 4 }]}
@@ -98,9 +98,9 @@ export const DataSheet = React.forwardRef(({
               classes='font-monospace fs-small mx-1'
               style={{ color: 'gray' }}
             >({typeOf(schema.fields[c])})</Text>
-              {sort[c] === -1 && <Icon icon='Octicons' name='triangle-down' />}
-              {sort[c] === 1 && <Icon icon='Octicons' name='triangle-up' />}
             </Text>
+            {sort[c] === -1 && <Icon classes='mx-1' icon='Octicons' name='triangle-down' />}
+            {sort[c] === 1 && <Icon classes='mx-1' icon='Octicons' name='triangle-up' />}
           </Pressable>
         )
       }))}
