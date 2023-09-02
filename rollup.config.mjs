@@ -22,14 +22,18 @@ const rollupPlugins = [
   }),
 ];
 
+const rollupConfig = {
+  input: 'src/index',
+  external: [
+    /node_modules/,
+    /^react$/,
+    /^react-native$/,
+  ],
+};
+
 export default [
   {
-    input: `src/index`,
-    external: [
-      /node_modules/,
-      /^react$/,
-      /^react-native$/,
-    ],
+    ...rollupConfig,
     output: [
       {
         file: 'dist/index.js',
@@ -53,12 +57,7 @@ export default [
     ],
   },
   {
-    input: `src/index`,
-    external: [
-      /node_modules/,
-      /^react$/,
-      /^react-native$/,
-    ],
+    ...rollupConfig,
     output: [
       {
         file: `dist/index.d.ts`,
