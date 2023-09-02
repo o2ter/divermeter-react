@@ -80,8 +80,6 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     _.map(_.filter(objects, obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj)
   ), [objects, updatedObjs, deletedObjs]);
 
-  console.log(_objs)
-
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
   return (
