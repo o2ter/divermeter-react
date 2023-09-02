@@ -68,7 +68,7 @@ export const DataSheet = React.forwardRef(({
     if (_.isNil(x)) return '';
     if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
     if (x instanceof Decimal) return x.toString();
-    if (_.isDate(x)) return x.toLocaleString();
+    if (_.isDate(x)) return x.toISOString();
     if (Proto.isObject(x)) return x.objectId ?? '';
     return serialize(x);
   }
