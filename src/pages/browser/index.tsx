@@ -73,7 +73,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
   const [deletedObjs, setDeletedObjs] = React.useState<string[]>([]);
   React.useEffect(() => {
     setUpdatedObjs({});
-    setDeletedObjs([])
+    setDeletedObjs([]);
   }, [objects]);
 
   const _objs = React.useMemo(() => (
