@@ -31,7 +31,8 @@ import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
-import { deserialize } from 'proto.io/dist/client';
+import { Decimal, deserialize } from 'proto.io/dist/client';
+import { typeOf } from '../../datasheet/type';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -68,6 +69,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
   const startActivity = useActivity();
   const { showError } = useToast();
+
+  const readonlyKeys = [
+    ...defaultObjectReadonlyKeys,
+    ..._.keys(_.pickBy(_fields, type => !_.isString(type) && type.type === 'relation' && !_.isNil(type.foreignField))),
+  ];
 
   const [filter, setFilter] = React.useState<any[]>([]);
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
@@ -115,6 +121,46 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
       obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
     } else {
       obj.set(column, value);
+    }
+  }
+
+  const decodeRawValue = async (type: string, value: string) => {
+    switch (type) {
+      case 'boolean':
+        if (value.toLowerCase() === 'true') return true;
+        if (value.toLowerCase() === 'false') return false;
+        break;
+      case 'number':
+        {
+          const number = parseFloat(value);
+          if (_.isFinite(number)) return number;
+          break;
+        }
+      case 'decimal':
+        {
+          const number = new Decimal(value);
+          if (number.isFinite()) return number;
+          break;
+        }
+      case 'string': return value;
+      case 'date':
+        {
+          const date = new Date(value);
+          if (_.isFinite(date.valueOf())) return date;
+          break;
+        }
+      case 'object': return deserialize(value);
+      case 'array': return deserialize(value);
+      case 'pointer':
+        if (!_.isEmpty(value)) return Proto.Object(className, value).fetch();
+        break;
+      case 'relation':
+        const _value = JSON.parse(value);
+        if (_.isArray(_value) && _.every(_value, v => !_.isEmpty(v) && _.isString(v))) {
+          return await Promise.all(_.map(_value, v => Proto.Object(className, v).fetch()));
+        }
+        break;
+      default: break;
     }
   }
 
@@ -188,17 +234,30 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 const objects = _.compact(_.map(rows, row => _objs[row]));
                 const updates: TObject[] = [];
                 if (type === 'json') {
-                  for (const [obj, values] of _.zip(objects, data)) {
+                  for (const [obj, values] of _.zip(objects, data ?? [])) {
                     const _obj = obj?.clone() ?? Proto.Object(className);
                     for (const [column, value] of _.toPairs(values)) {
-                      if (!_.includes(defaultObjectReadonlyKeys, column)) {
+                      if (!_.includes(readonlyKeys, column)) {
                         await setValue(_obj, column, value);
                       }
                     }
                     updates.push(_obj);
                   }
                 } else if (type === 'raw') {
-
+                  for (const [obj, values] of _.zip(objects, data ?? [])) {
+                    const _obj = obj?.clone() ?? Proto.Object(className);
+                    for (const [column = '', value] of _.zip(_columns, values)) {
+                      if (!_.includes(readonlyKeys, column)) {
+                        if (_.isNil(value)) {
+                          _obj.set(column, null);
+                        } else {
+                          const _value = await decodeRawValue(typeOf(_fields[column]) ?? '', value);
+                          if (!_.isNil(_value)) _obj.set(column, _value as any);
+                        }
+                      }
+                    }
+                    updates.push(_obj);
+                  }
                 }
                 await saveUpdates(updates);
               } catch (e: any) {
@@ -236,7 +295,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
                 const _rows = _.range(cells.start.row, cells.end.row + 1);
                 const _cols = _.range(cells.start.col, cells.end.col + 1)
                   .map(c => _columns[c])
-                  .filter(c => !_.includes(defaultObjectReadonlyKeys, c));
+                  .filter(c => !_.includes(readonlyKeys, c));
                 const updated = await Promise.all(_.map(_rows, row => {
                   let obj = _objs[row]?.clone();
                   if (!obj?.objectId) return;

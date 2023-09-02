@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
-import { TObject, TSchema } from '../proto';
+import { TObject, TSchema, useProto } from '../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
 import { typeOf } from './type';
@@ -44,21 +44,6 @@ type DataSheetProps = _DataSheetProps & {
   onValueChanged: (value: any, row: number, column: string) => void;
 }
 
-const encodeValue = (x: any) => {
-  if (_.isNil(x)) return '';
-  if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
-  if (x instanceof Decimal) return x.toString();
-  if (_.isDate(x)) return x.toLocaleString();
-  return serialize(x);
-}
-
-const encoders = {
-  'text/plain': (data: any[][]) => tsvFormatRows(_.map(data, row => _.map(row, val => encodeValue(val?.value)))),
-  'application/json': (data: any[][]) => serialize(_.map(data, row => _.fromPairs(_.compact(_.map(row, (
-    item => item ? [item.column, item.value] : undefined
-  )))))),
-};
-
 export const DataSheet = React.forwardRef(({
   data,
   columns,
@@ -70,6 +55,7 @@ export const DataSheet = React.forwardRef(({
   ...props
 }: DataSheetProps, forwardRef: React.ForwardedRef<React.ComponentRef<typeof _DataSheet>>) => {
 
+  const Proto = useProto();
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
     column: c,
     value: x.get(c),
@@ -77,6 +63,22 @@ export const DataSheet = React.forwardRef(({
   }]))), [data]);
 
   const editCell = React.useRef<React.ComponentRef<typeof DataSheetEditCell>>({});
+
+  const encodeValue = (x: any) => {
+    if (_.isNil(x)) return '';
+    if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
+    if (x instanceof Decimal) return x.toString();
+    if (_.isDate(x)) return x.toLocaleString();
+    if (Proto.isObject(x)) return x.objectId ?? '';
+    return serialize(x);
+  }
+
+  const encoders = {
+    'text/plain': (data: any[][]) => tsvFormatRows(_.map(data, row => _.map(row, val => encodeValue(val?.value)))),
+    'application/json': (data: any[][]) => serialize(_.map(data, row => _.fromPairs(_.compact(_.map(row, (
+      item => item ? [item.column, item.value] : undefined
+    )))))),
+  };
 
   return (
     <_DataSheet
