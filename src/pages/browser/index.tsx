@@ -130,7 +130,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
               try {
                 let obj = objects?.[row]?.clone() ?? Proto.Object(className);
                 if (obj.objectId) obj = updatedObjs[obj.objectId]?.clone() ?? obj;
-                obj.set(column, value);
+                if (Proto.isObject(value)) {
+                  obj.set(column, await value.fetch());
+                } else {
+                  obj.set(column, value);
+                }
                 await obj.save({ master: true });
                 setUpdatedObjs(objs => ({ ...objs, [obj.objectId!]: obj }));
                 ref.current?.endEditing();

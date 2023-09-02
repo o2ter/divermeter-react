@@ -27,7 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { TextInput, Switch, View } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
-import { TDataType } from '../proto';
+import { TDataType, useProto } from '../proto';
 import { typeOf } from './type';
 import { JSCode } from '../JSCode';
 import { encodeObject } from './encode';
@@ -68,6 +68,8 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
   const [_value, setValue] = React.useState(value);
   React.useImperativeHandle(forwardRef, () => ({ value: _value }), [_value]);
 
+  const Proto = useProto();
+
   switch (typeOf(type)) {
     case 'boolean':
       return (
@@ -88,6 +90,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
             const number = parseFloat(text);
             if (_.isFinite(number)) setValue(number);
           }}
+          autoFocus
         />
       );
     case 'decimal':
@@ -100,6 +103,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
             const number = new Decimal(text);
             if (number.isFinite()) setValue(number);
           }}
+          autoFocus
         />
       );
     case 'string':
@@ -118,6 +122,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
             value={_value ?? ''}
             onChangeText={(text) => setValue(text)}
             multiline
+            autoFocus
           />
         </Resizable>
       );
@@ -134,12 +139,24 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
               try {
                 const func = new Function('Decimal', `return (${code})`);
                 setValue(func(Decimal));
-              } catch {};
+              } catch { };
             }}
           />
         </Resizable>
       );
-    case 'pointer': return;
+    case 'pointer':
+      return (
+        <TextInput
+          classes='border-0 rounded-0'
+          style={{ outline: 'none' } as any}
+          value={_value?.objectId ?? ''}
+          onChangeText={(text) => {
+            if (_.isString(type) || type?.type !== 'pointer') return;
+            setValue(_.isEmpty(text) ? null : Proto.Object(type.target, text));
+          }}
+          autoFocus
+        />
+      );
     case 'relation': return;
     default: return;
   }
