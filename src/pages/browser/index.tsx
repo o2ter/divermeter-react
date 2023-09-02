@@ -201,7 +201,6 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
                 }
                 await saveUpdates(updates);
-                ref.current?.endEditing();
               } catch (e: any) {
                 console.error(e);
                 showError(e);
