@@ -70,6 +70,8 @@ const Proto = new ProtoService({
         array: 'array',
         pointer: { type: 'pointer', target: 'Test' },
         relation: { type: 'relation', target: 'Test' },
+        relation2: { type: 'relation', target: 'Test', foreignField: 'pointer' },
+        relation3: { type: 'relation', target: 'Test', foreignField: 'relation' },
       },
     }
   },
