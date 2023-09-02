@@ -71,9 +71,6 @@ const Proto = new ProtoService({
         pointer: { type: 'pointer', target: 'Test' },
         relation: { type: 'relation', target: 'Test' },
       },
-      fieldLevelPermissions: {
-        no_permission: { read: ['role:admin'], create: ['role:admin'], update: ['role:admin'] }
-      }
     }
   },
 });
