@@ -8,13 +8,13 @@ import dts from 'rollup-plugin-dts';
 
 const rollupPlugins = [
   typescript({ declaration: false }),
-  commonjs({
-    transformMixedEsModules: true,
-  }),
   babel({
     babelrc: false,
     exclude: 'node_modules/**',
     babelHelpers: 'bundled',
+  }),
+  commonjs({
+    transformMixedEsModules: true,
   }),
   json(),
   sass({
