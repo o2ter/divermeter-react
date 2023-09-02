@@ -106,14 +106,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             columns={_columns}
             columnWidth={_columns.map(c => _columnWidths[c])}
             sort={sort}
-            allowEditForCell={(row, col) => {
-              const _col = _columns[col];
-              const _field = _fields[_col];
-              if (_field && !_.isString(_field) && _field.type === 'relation' && _field.foreignField) {
-                return false;
-              }
-              return !_.includes(defaultObjectReadonlyKeys, _col);
-            }}
+            allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
             onColumnPressed={(e: any, column) => {
               setSort(sort => ({
                 ...e.shiftKey ? _.omit(sort, column) : {},
