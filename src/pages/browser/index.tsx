@@ -189,12 +189,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             >{count} objects</Text>}
           </Text>
         </View>
-        <View classes='flex-row text-white'>
+        <View classes='flex-row text-white align-content-end'>
           <FilterButton filter={filter} setFilter={setFilter} />
           <Text>Limit</Text>
           <UncontrolledTextInput
-            classes='ml-1 border-0 rounded-0'
-            style={{ outline: 'none' } as any}
+            classes='ml-1 border-0 rounded-0 bg-secondary-600'
+            style={{ outline: 'none', color: 'white' } as any}
             value={`${limit}`}
             onChangeText={(text) => {
               const number = parseFloat(text);
