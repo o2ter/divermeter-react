@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text } from '@o2ter/react-ui';
+import { Text, View } from '@o2ter/react-ui';
 import { Pressable } from 'react-native';
 
 export const FilterButton: React.FC<{
@@ -41,6 +41,11 @@ export const FilterButton: React.FC<{
   return (
     <Pressable onPress={() => setShowMenu(v => !v)}>
       <Text>Filter</Text>
+      {showMenu && (
+        <View classes='position-absolute'>
+
+        </View>
+      )}
     </Pressable>
   );
 }
