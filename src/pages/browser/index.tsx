@@ -189,18 +189,20 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             >{count} objects</Text>}
           </Text>
         </View>
-        <View classes='flex-row text-white align-content-end'>
-          <FilterButton filter={filter} setFilter={setFilter} />
-          <Text>Limit</Text>
-          <UncontrolledTextInput
-            classes='ml-1 border-0 rounded-0 bg-secondary-600'
-            style={{ outline: 'none', color: 'white' } as any}
-            value={`${limit}`}
-            onChangeText={(text) => {
-              const number = parseFloat(text);
-              if (_.isFinite(number)) setLimit(number);
-            }}
-          />
+        <View classes='justify-content-end'>
+          <View classes='flex-row text-white'>
+            <FilterButton filter={filter} setFilter={setFilter} />
+            <Text>Limit</Text>
+            <UncontrolledTextInput
+              classes='ml-1 p-0 border-0 rounded-0 bg-secondary-600'
+              style={{ outline: 'none', color: 'white' } as any}
+              value={`${limit}`}
+              onChangeText={(text) => {
+                const number = parseFloat(text);
+                if (_.isFinite(number)) setLimit(number);
+              }}
+            />
+          </View>
         </View>
       </View>
       <View classes='flex-fill p-1 bg-secondary-100'>
