@@ -192,6 +192,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
         <View classes='justify-content-end'>
           <View classes='flex-row text-white'>
             <FilterButton filter={filter} setFilter={setFilter} />
+            <View classes='bg-secondary-200 h-100 mx-3' style={{ width: 1 }} />
             <Text>Limit</Text>
             <UncontrolledTextInput
               classes='ml-1 p-0 border-0 rounded-0 bg-secondary-600'
