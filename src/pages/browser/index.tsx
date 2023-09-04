@@ -179,7 +179,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
   return (
     <>
-      <View classes='py-3 px-4 flex-row bg-secondary-600 text-secondary-200 font-monospace'>
+      <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>CLASS</Text>
           <Text>
