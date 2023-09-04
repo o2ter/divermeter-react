@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useToast, useActivity } from '@o2ter/react-ui';
+import { View, Text, useParams, useToast, useActivity, UncontrolledTextInput } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -189,8 +189,13 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
             >{count} objects</Text>}
           </Text>
         </View>
-        <View>
+        <View classes='flex-row'>
           <FilterButton filter={filter} setFilter={setFilter} />
+          <Text>Limit</Text>
+          <UncontrolledTextInput value={`${limit}`} onChangeText={(text) => {
+            const number = parseFloat(text);
+            if (_.isFinite(number)) setLimit(number);
+          }} />
         </View>
       </View>
       <View classes='flex-fill p-1 bg-secondary-100'>
