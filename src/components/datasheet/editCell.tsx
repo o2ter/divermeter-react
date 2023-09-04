@@ -66,6 +66,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
 }, forwardRef) => {
 
   const [_value, setValue] = React.useState(value);
+  const [str, setStr] = React.useState<string>();
   React.useImperativeHandle(forwardRef, () => ({ value: _value }), [_value]);
 
   const Proto = useProto();
@@ -85,8 +86,9 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
         <TextInput
           classes='border-0 rounded-0'
           style={{ outline: 'none' } as any}
-          value={_value?.toString() ?? ''}
+          value={str ?? _value?.toString() ?? ''}
           onChangeText={(text) => {
+            setStr(text);
             const number = parseFloat(text);
             if (_.isFinite(number)) setValue(number);
           }}
@@ -98,8 +100,9 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
         <TextInput
           classes='border-0 rounded-0'
           style={{ outline: 'none' } as any}
-          value={_value?.toString() ?? ''}
+          value={str ?? _value?.toString() ?? ''}
           onChangeText={(text) => {
+            setStr(text);
             const number = new Decimal(text);
             if (number.isFinite()) setValue(number);
           }}
