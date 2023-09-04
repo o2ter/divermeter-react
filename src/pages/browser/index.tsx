@@ -33,6 +33,7 @@ import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize } from 'proto.io/dist/client';
 import { typeOf } from '../../components/datasheet/type';
+import { FilterButton } from './filter';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -189,6 +190,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
           </Text>
         </View>
         <View>
+          <FilterButton filter={filter} setFilter={setFilter} />
         </View>
       </View>
       <View classes='flex-fill p-1 bg-secondary-100'>
