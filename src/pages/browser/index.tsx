@@ -179,17 +179,17 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
   return (
     <>
-      <View classes='py-3 px-4 flex-row bg-secondary-600'>
+      <View classes='py-3 px-4 flex-row bg-secondary-600 text-secondary-200 font-monospace'>
         <View>
-          <Text classes='text-secondary-200 font-monospace' style={{ fontSize: 10 }}>CLASS</Text>
+          <Text style={{ fontSize: 10 }}>CLASS</Text>
           <Text>
             <Text classes='h1 text-white'>{className}</Text>
             {!_.isNil(count) && <Text
-              classes='fs-small ml-3 text-secondary-200 font-monospace'
+              classes='fs-small ml-3'
             >{count} objects</Text>}
           </Text>
         </View>
-        <View classes='flex-row'>
+        <View classes='flex-row text-white'>
           <FilterButton filter={filter} setFilter={setFilter} />
           <Text>Limit</Text>
           <UncontrolledTextInput value={`${limit}`} onChangeText={(text) => {
