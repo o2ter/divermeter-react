@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useToast, useActivity, UncontrolledTextInput } from '@o2ter/react-ui';
+import { View, Text, useParams, useToast, useActivity, UncontrolledTextInput, useLocation } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -58,7 +58,7 @@ const decodeClipboardData = async (
   }
 }
 
-const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema, className }) => {
+const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }> = ({ schema, className, state }) => {
 
   const Proto = useProto();
   const _schema = schema?.[className];
@@ -76,7 +76,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
     ..._.keys(_.pickBy(_fields, type => !_.isString(type) && type.type === 'relation' && !_.isNil(type.foreignField))),
   ];
 
-  const [filter, setFilter] = React.useState<any[]>([]);
+  const { filter: initialFilter } = state ?? {};
+
+  const [filter, setFilter] = React.useState<any[]>(_.castArray(initialFilter ?? []));
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
 
@@ -351,7 +353,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; }> = ({ schema
 
 export const Browser: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const { class: className = '' } = useParams();
+  const { state } = useLocation();
+  const id = React.useMemo(() => _.uniqueId(), [state, className]);
   return (
-    <BrowserBody key={className} className={className} schema={schema} />
+    <BrowserBody key={id} className={className} schema={schema} state={state} />
   );
 };

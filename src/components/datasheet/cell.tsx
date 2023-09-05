@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text } from '@o2ter/react-ui';
+import { Icon, Text, useNavigate } from '@o2ter/react-ui';
 import { Decimal, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../../proto';
 import { typeOf } from './type';
@@ -36,6 +36,8 @@ export type DataSheetCellProps = {
 };
 
 export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
+
+  const navigate = useNavigate();
 
   if (_.isNil(value)) {
     return (
@@ -76,7 +78,22 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
       );
     case 'pointer':
       return (
-        <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>{value.objectId}</Text>
+        <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>
+          {value.objectId}
+          <Icon
+            classes='ml-1'
+            icon='Ionicons'
+            name='arrow-redo-circle'
+            onPress={() => {
+              const className = value?.className;
+              if (className) {
+                navigate(`/browser/${className}`, {
+                  state: { filter: [{ _id: { $eq: value.objectId } }] }
+                });
+              }
+            }}
+          />
+        </Text>
       );
     case 'relation':
       return (
