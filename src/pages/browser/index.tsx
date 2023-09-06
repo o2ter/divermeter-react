@@ -31,7 +31,7 @@ import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
-import { Decimal, deserialize } from 'proto.io/dist/client';
+import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { typeOf } from '../../components/datasheet/type';
 import { FilterButton } from './filter';
 
@@ -118,9 +118,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
   const setValue = async (obj: TObject, column: string, value: any) => {
-    if (Proto.isObject(value)) {
+    if (isObject(value)) {
       obj.set(column, await value.fetch());
-    } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
+    } else if (_.isArray(value) && _.every(value, v => isObject(v))) {
       obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
     } else {
       obj.set(column, value);

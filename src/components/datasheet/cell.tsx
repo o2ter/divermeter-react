@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { Icon, Text, useNavigate } from '@o2ter/react-ui';
-import { Decimal, serialize } from 'proto.io/dist/client';
+import { Decimal, isFile, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../../proto';
 import { typeOf } from './type';
 
@@ -77,6 +77,11 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
         <Text classes='font-monospace text-right' numberOfLines={1}>{serialize(value)}</Text>
       );
     case 'pointer':
+
+      if (isFile(value)) {
+
+      }
+
       return (
         <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>
           {value.objectId}

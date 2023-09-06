@@ -26,13 +26,13 @@
 import _ from 'lodash';
 import React from 'react';
 import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
-import { TObject, TSchema, useProto } from '../../proto';
+import { TObject, TSchema } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent, Pressable } from 'react-native';
 import { typeOf } from './type';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
-import { Decimal, serialize } from 'proto.io/dist/client';
+import { Decimal, isObject, serialize } from 'proto.io/dist/client';
 
 type _DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'>;
 type DataSheetProps = _DataSheetProps & {
@@ -55,7 +55,6 @@ export const DataSheet = React.forwardRef(({
   ...props
 }: DataSheetProps, forwardRef: React.ForwardedRef<React.ComponentRef<typeof _DataSheet>>) => {
 
-  const Proto = useProto();
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
     column: c,
     value: x.get(c),
@@ -69,7 +68,7 @@ export const DataSheet = React.forwardRef(({
     if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
     if (x instanceof Decimal) return x.toString();
     if (_.isDate(x)) return x.toISOString();
-    if (Proto.isObject(x)) return x.objectId ?? '';
+    if (isObject(x)) return x.objectId ?? '';
     return serialize(x);
   }
 
