@@ -60,6 +60,18 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
   </div>
 );
 
+const UploadButton: React.FC<{
+  children: (input: React.RefObject<HTMLInputElement>) => React.ReactNode | undefined;
+}> = ({ children }) => {
+  const ref = React.useRef<React.ComponentRef<'input'>>(null);
+  return (
+    <>
+      <input ref={ref} type='file' style={{ display: 'none' }} />
+      {children(ref)}
+    </>
+  );
+}
+
 export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEditCellProps>(({
   value,
   type,
@@ -152,13 +164,15 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
       if (!_.isString(type) && type?.type === 'pointer' && type.target === 'File') {
         return (
           <View classes='g-1'>
-            <Text
-              classes='text-white text-center rounded'
-              style={{ backgroundColor: 'rebeccapurple' }}
-              onPress={() => {
-
-              }}
-            >Upload</Text>
+            <UploadButton>
+              {(input) => (
+                <Text
+                  classes='text-white text-center rounded'
+                  style={{ backgroundColor: 'rebeccapurple' }}
+                  onPress={() => { input.current?.click(); }}
+                >Upload</Text>
+              )}
+            </UploadButton>
             <Text
               classes='text-white text-center rounded'
               style={{ backgroundColor: 'rebeccapurple' }}
