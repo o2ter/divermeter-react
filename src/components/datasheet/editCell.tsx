@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { TextInput, Switch, View } from '@o2ter/react-ui';
+import { TextInput, Switch, View, Text } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
 import { TDataType, useProto } from '../../proto';
 import { typeOf } from './type';
@@ -150,7 +150,22 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'pointer':
 
       if (!_.isString(type) && type?.type === 'pointer' && type.target === 'File') {
-        
+        return (
+          <View classes='g-1'>
+            <Text
+              classes='text-white text-center rounded'
+              style={{ backgroundColor: 'rebeccapurple' }}
+              onPress={() => {
+
+              }}
+            >Upload</Text>
+            <Text
+              classes='text-white text-center rounded'
+              style={{ backgroundColor: 'rebeccapurple' }}
+              onPress={() => { window.open(value.url, '_blank'); }}
+            >Download</Text>
+          </View>
+        );
       }
 
       return (
