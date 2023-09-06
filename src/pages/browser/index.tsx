@@ -119,9 +119,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const setValue = async (obj: TObject, column: string, value: any) => {
     if (isObject(value)) {
-      obj.set(column, await value.fetch({ master: true }));
+      obj.set(column, value.objectId ? await value.fetch({ master: true }) : value);
     } else if (_.isArray(value) && _.every(value, v => isObject(v))) {
-      obj.set(column, await Promise.all(_.map(value, v => v.fetch({ master: true }))));
+      obj.set(column, await Promise.all(_.map(value, v => v.objectId ? v.fetch({ master: true }) : v)));
     } else {
       obj.set(column, value);
     }
