@@ -111,8 +111,8 @@ export const DataSheet = React.forwardRef(({
             top: -1,
             left: -1,
             border: 1,
-            borderStyle: 'solid',
             borderColor: '#DDD',
+            borderStyle: 'solid',
             backgroundColor: 'white',
           }}>
             <DataSheetEditCell
