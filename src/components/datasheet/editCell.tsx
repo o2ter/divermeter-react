@@ -37,6 +37,17 @@ export type DataSheetEditCellProps = {
   type?: TDataType;
 };
 
+const borderStyle = {
+  top: -1,
+  left: -1,
+  borderWidth: 1,
+  borderColor: '#DDD',
+  borderStyle: 'solid',
+  backgroundColor: 'white',
+  minWidth: 'calc(100% + 2px)' as any,
+  minHeight: 'calc(100% + 2px)' as any,
+} as const;
+
 const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
   style,
   children,
@@ -47,8 +58,7 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
       overflow: 'auto',
       width: 0,
       height: 0,
-      minWidth: '100%',
-      minHeight: '100%',
+      ...borderStyle,
       ...style,
     }}>{children}</div>
   </div>
@@ -68,7 +78,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
   switch (typeOf(type)) {
     case 'boolean':
       return (
-        <View classes='p-1 align-items-end'>
+        <View classes='p-1 align-items-end' style={borderStyle}>
           <Switch
             selected={_value ?? false}
             onPress={() => setValue((v: any) => !v)}
@@ -152,6 +162,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
               paddingBottom: 6,
               paddingLeft: 12,
               paddingRight: 12,
+              ...borderStyle,
             }}
           >
             <UploadInput onChange={(e) => {

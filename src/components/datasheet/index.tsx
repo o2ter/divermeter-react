@@ -107,20 +107,11 @@ export const DataSheet = React.forwardRef(({
       onEndEditing={(row, column) => onValueChanged(editCell.current.value, row, columns[column])}
       renderItem={({ item, columnIdx, isEditing }) => (
         isEditing ? (
-          <div className='position-absolute' style={{
-            top: -1,
-            left: -1,
-            border: 1,
-            borderColor: '#DDD',
-            borderStyle: 'solid',
-            backgroundColor: 'white',
-          }}>
-            <DataSheetEditCell
-              ref={editCell}
-              value={item?.value}
-              type={schema.fields[columns[columnIdx]]}
-            />
-          </div>
+          <DataSheetEditCell
+            ref={editCell}
+            value={item?.value}
+            type={schema.fields[columns[columnIdx]]}
+          />
         ) : <DataSheetCell {...item} />
       )}
       {...props}
