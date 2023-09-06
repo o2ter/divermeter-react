@@ -49,12 +49,6 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
       height: 0,
       minWidth: '100%',
       minHeight: '100%',
-      backgroundColor: 'white',
-      top: -1,
-      left: -1,
-      border: 1,
-      borderStyle: 'solid',
-      borderColor: '#DDD',
       ...style,
     }}>{children}</div>
   </div>
