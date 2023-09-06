@@ -175,11 +175,11 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
                 >Upload</Text>
               )}
             </UploadInput>
-            <Text
+            {value.url && <Text
               classes='text-white text-center rounded'
               style={{ backgroundColor: 'rebeccapurple' }}
               onPress={() => { window.open(value.url, '_blank'); }}
-            >Download</Text>
+            >Download</Text>}
           </View>
         );
       }
