@@ -160,7 +160,10 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
               paddingRight: 12,
             }}
           >
-            <UploadInput onChange={(e) => { console.log(e); }}>
+            <UploadInput onChange={(e) => {
+              const [file] = e.target.files ?? [];
+              console.log(file);
+            }}>
               {(input) => (
                 <Text
                   classes='text-white text-center rounded'
