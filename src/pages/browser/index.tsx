@@ -92,8 +92,13 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const { resource: objects } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
+      const files = _.pickBy(_fields, type => !_.isString(type) && type.type === 'pointer' && type.target === 'File');
       const _query = query.clone();
-      _query.includes('*', ..._.map(relation, (type, key) => `${key}._id`));
+      _query.includes(
+        '*',
+        ..._.map(_.keys(relation), key => `${key}._id`),
+        ..._.map(_.keys(files), key => `${key}.filename`),
+      );
       return await _query.sort(sort).limit(limit).find();
     } catch (e: any) {
       console.error(e);
