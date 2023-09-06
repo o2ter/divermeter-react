@@ -82,7 +82,7 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
         return (
           <Text
             classes='text-white text-center rounded'
-            style={{ backgroundColor: 'rebeccapurple' }}
+            style={{ backgroundColor: 'mediumblue' }}
             onPress={() => { window.open(value.url, '_blank'); }}
           >Download</Text>
         );
