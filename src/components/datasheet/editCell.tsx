@@ -60,7 +60,7 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
   </div>
 );
 
-const UploadButton: React.FC<React.ComponentPropsWithoutRef<'input'> & {
+const UploadButton: React.FC<Omit<React.ComponentPropsWithoutRef<'input'>, 'children'> & {
   children: (input: React.RefObject<HTMLInputElement>) => React.ReactNode | undefined;
 }> = ({ children, style, ...props }) => {
   const ref = React.useRef<React.ComponentRef<'input'>>(null);
