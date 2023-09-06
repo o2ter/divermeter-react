@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { TextInput, Switch, View, Text } from '@o2ter/react-ui';
+import { TextInput, Switch, View, Text, UploadInput } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
 import { TDataType, useProto } from '../../proto';
 import { typeOf } from './type';
@@ -59,18 +59,6 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
     }}>{children}</div>
   </div>
 );
-
-const UploadInput: React.FC<Omit<React.ComponentPropsWithoutRef<'input'>, 'children'> & {
-  children: (input: React.RefObject<HTMLInputElement>) => React.ReactNode | undefined;
-}> = ({ children, style, ...props }) => {
-  const ref = React.useRef<React.ComponentRef<'input'>>(null);
-  return (
-    <>
-      <input ref={ref} type='file' style={{ display: 'none', ...style ?? {} }} {...props} />
-      {children(ref)}
-    </>
-  );
-}
 
 export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEditCellProps>(({
   value,
