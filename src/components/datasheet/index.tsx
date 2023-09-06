@@ -108,12 +108,12 @@ export const DataSheet = React.forwardRef(({
       renderItem={({ item, columnIdx, isEditing }) => (
         isEditing ? (
           <div className='position-absolute' style={{
-            backgroundColor: 'white',
             top: -1,
             left: -1,
             border: 1,
             borderStyle: 'solid',
             borderColor: '#DDD',
+            backgroundColor: 'white',
           }}>
             <DataSheetEditCell
               ref={editCell}
