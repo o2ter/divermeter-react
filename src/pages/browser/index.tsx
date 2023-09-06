@@ -119,9 +119,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const setValue = async (obj: TObject, column: string, value: any) => {
     if (isObject(value)) {
-      obj.set(column, await value.fetch());
+      obj.set(column, await value.fetch({ master: true }));
     } else if (_.isArray(value) && _.every(value, v => isObject(v))) {
-      obj.set(column, await Promise.all(_.map(value, v => v.fetch())));
+      obj.set(column, await Promise.all(_.map(value, v => v.fetch({ master: true }))));
     } else {
       obj.set(column, value);
     }
@@ -155,12 +155,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
       case 'object': return deserialize(value);
       case 'array': return deserialize(value);
       case 'pointer':
-        if (!_.isEmpty(value)) return Proto.Object(className, value).fetch();
+        if (!_.isEmpty(value)) return Proto.Object(className, value).fetch({ master: true });
         break;
       case 'relation':
         const _value = JSON.parse(value);
         if (_.isArray(_value) && _.every(_value, v => !_.isEmpty(v) && _.isString(v))) {
-          return await Promise.all(_.map(_value, v => Proto.Object(className, v).fetch()));
+          return await Promise.all(_.map(_value, v => Proto.Object(className, v).fetch({ master: true })));
         }
         break;
       default: break;
