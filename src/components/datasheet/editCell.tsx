@@ -151,44 +151,41 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
           />
         </Resizable>
       );
+    case 'file':
+      return (
+        <View
+          classes='g-1 bg-white'
+          style={{
+            paddingTop: 6,
+            paddingBottom: 6,
+            paddingLeft: 12,
+            paddingRight: 12,
+            ...borderStyle,
+          }}
+        >
+          <UploadInput onChange={(e) => {
+            const [file] = e.target.files ?? [];
+            if (file) {
+              const _file = Proto.File(file.name, file, file.type);
+              setValue(_file);
+            }
+          }}>
+            {(input) => (
+              <Text
+                classes='text-white text-center rounded'
+                style={{ backgroundColor: 'mediumblue' }}
+                onPress={() => { input.current?.click(); }}
+              >Upload</Text>
+            )}
+          </UploadInput>
+          {value?.url && <Text
+            classes='text-white text-center rounded'
+            style={{ backgroundColor: 'mediumblue' }}
+            onPress={() => { window.open(value.url, '_blank'); }}
+          >Download</Text>}
+        </View>
+      );
     case 'pointer':
-
-      if (!_.isString(type) && type?.type === 'pointer' && type.target === 'File') {
-        return (
-          <View
-            classes='g-1 bg-white'
-            style={{
-              paddingTop: 6,
-              paddingBottom: 6,
-              paddingLeft: 12,
-              paddingRight: 12,
-              ...borderStyle,
-            }}
-          >
-            <UploadInput onChange={(e) => {
-              const [file] = e.target.files ?? [];
-              if (file) {
-                const _file = Proto.File(file.name, file, file.type);
-                setValue(_file);
-              }
-            }}>
-              {(input) => (
-                <Text
-                  classes='text-white text-center rounded'
-                  style={{ backgroundColor: 'mediumblue' }}
-                  onPress={() => { input.current?.click(); }}
-                >Upload</Text>
-              )}
-            </UploadInput>
-            {value?.url && <Text
-              classes='text-white text-center rounded'
-              style={{ backgroundColor: 'mediumblue' }}
-              onPress={() => { window.open(value.url, '_blank'); }}
-            >Download</Text>}
-          </View>
-        );
-      }
-
       return (
         <TextInput
           classes='border-0 rounded-0'

@@ -26,4 +26,5 @@
 import _ from 'lodash';
 import { TDataType } from '../../proto';
 
-export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
+export const _typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
+export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type === 'pointer' && x.target === 'File' ? 'file' : x?.type;

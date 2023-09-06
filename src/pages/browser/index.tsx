@@ -32,7 +32,7 @@ import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
-import { typeOf } from '../../components/datasheet/type';
+import { _typeOf } from '../../components/datasheet/type';
 import { FilterButton } from './filter';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
@@ -273,7 +273,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         if (_.isNil(value)) {
                           if (_obj.objectId) _obj.set(column, null);
                         } else {
-                          const _value = await decodeRawValue(typeOf(_fields[column]) ?? '', value);
+                          const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
                           if (!_.isNil(_value)) _obj.set(column, _value as any);
                         }
                       }
@@ -301,7 +301,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                       if (_.isNil(value)) {
                         if (_obj.objectId) _obj.set(column, null);
                       } else {
-                        const _value = await decodeRawValue(typeOf(_fields[column]) ?? '', value);
+                        const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
                         if (!_.isNil(_value)) _obj.set(column, _value as any);
                       }
                     }

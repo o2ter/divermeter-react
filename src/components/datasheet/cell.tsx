@@ -76,18 +76,15 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
       return (
         <Text classes='font-monospace text-right' numberOfLines={1}>{serialize(value)}</Text>
       );
+    case 'file':
+      return (
+        <Text
+          classes='text-white text-center rounded'
+          style={{ backgroundColor: 'mediumblue' }}
+          onPress={() => { window.open(value.url, '_blank'); }}
+        >Download</Text>
+      );
     case 'pointer':
-
-      if (isFile(value)) {
-        return (
-          <Text
-            classes='text-white text-center rounded'
-            style={{ backgroundColor: 'mediumblue' }}
-            onPress={() => { window.open(value.url, '_blank'); }}
-          >Download</Text>
-        );
-      }
-
       return (
         <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>
           {value.objectId}
