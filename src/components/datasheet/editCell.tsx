@@ -148,6 +148,11 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
         </Resizable>
       );
     case 'pointer':
+
+      if (!_.isString(type) && type?.type === 'pointer' && type.target === 'File') {
+        
+      }
+
       return (
         <TextInput
           classes='border-0 rounded-0'
