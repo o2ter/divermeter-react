@@ -160,11 +160,10 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
               paddingRight: 12,
             }}
           >
-            <UploadInput onChange={async (e) => {
+            <UploadInput onChange={(e) => {
               const [file] = e.target.files ?? [];
               if (file) {
                 const _file = Proto.File(file.name, file.stream(), file.type);
-                await _file.save({ master: true });
                 setValue(_file);
               }
             }}>
