@@ -163,8 +163,16 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
 
       if (!_.isString(type) && type?.type === 'pointer' && type.target === 'File') {
         return (
-          <View classes='g-1'>
-            <UploadInput>
+          <View
+            classes='g-1 bg-white'
+            style={{
+              paddingTop: 6,
+              paddingBottom: 6,
+              paddingLeft: 12,
+              paddingRight: 12,
+            }}
+          >
+            <UploadInput onChange={(e) => { console.log(e); }}>
               {(input) => (
                 <Text
                   classes='text-white text-center rounded'
