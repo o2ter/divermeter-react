@@ -165,10 +165,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
         >
           <UploadInput onChange={(e) => {
             const [file] = e.target.files ?? [];
-            if (file) {
-              const _file = Proto.File(file.name, file, file.type);
-              setValue(_file);
-            }
+            if (file) setValue(Proto.File(file.name, file, file.type));
           }}>
             {(input) => (
               <Text
