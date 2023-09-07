@@ -79,10 +79,10 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
     case 'file':
       return (
         <Text
-          classes='text-white text-center rounded'
+          classes='font-monospace text-white text-center rounded'
           style={{ backgroundColor: 'mediumblue' }}
           onPress={() => { window.open(value.url, '_blank'); }}
-        >Download</Text>
+        >{value.filename}</Text>
       );
     case 'pointer':
       return (
