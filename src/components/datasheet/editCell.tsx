@@ -37,6 +37,13 @@ export type DataSheetEditCellProps = {
   type?: TDataType;
 };
 
+const paddingStyle = {
+  paddingTop: 6,
+  paddingBottom: 6,
+  paddingLeft: 12,
+  paddingRight: 12,
+} as const;
+
 const borderStyle = {
   top: -1,
   left: -1,
@@ -115,14 +122,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
       );
     case 'string':
       return (
-        <Resizable
-          style={{
-            paddingTop: 6,
-            paddingBottom: 6,
-            paddingLeft: 12,
-            paddingRight: 12,
-          }}
-        >
+        <Resizable style={paddingStyle}>
           <TextInput
             classes='border-0 rounded-0 p-0 w-100 h-100'
             style={{ outline: 'none' } as any}
@@ -156,10 +156,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
         <View
           classes='g-1 bg-white'
           style={{
-            paddingTop: 6,
-            paddingBottom: 6,
-            paddingLeft: 12,
-            paddingRight: 12,
+            ...paddingStyle,
             ...borderStyle,
           }}
         >
