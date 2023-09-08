@@ -4408,10 +4408,10 @@ prop-types@^15.5.7, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.39:
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.39.tgz#b57cb683ed0f454be12a7bb6a55af5db4db7a1e9"
-  integrity sha512-AjPfVPTriqviR4tgyXyYQ/JyMzoWtegtoJFp1fY2xzJmCnlNZcx3olabTFUI+ogvAdrKq0hTNmGSY1SQjkkFzg==
+proto.io@^0.0.40:
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.40.tgz#e387c55f97612f731b45eebf6b9e70216fbebee5"
+  integrity sha512-cRXSvEzniPEH11Tu52dTHR46+mI/WdJYmgA4Zp02Mz49o3aJyND4MJwE+GYdPG4ftlHM640hibXeE6U24eUrfg==
   dependencies:
     axios "^1.2.2"
     busboy "^1.6.0"
