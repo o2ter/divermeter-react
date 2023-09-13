@@ -1887,7 +1887,7 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-axios@^1.2.2:
+axios@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.5.0.tgz#f02e4af823e2e46a9768cfc74691fdd0517ea267"
   integrity sha512-D4DdjDo5CY50Qms0qGQTTw6Q44jl7zRwY7bthds06pUGfChBCTcQs+N743eFWGEd6pRTMd6A+I87aWyFV5wiZQ==
@@ -3614,7 +3614,7 @@ json5@^2.1.2, json5@^2.2.3:
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
-jsonwebtoken@^9.0.1:
+jsonwebtoken@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz#65ff91f4abef1784697d40952bb1998c504caaf3"
   integrity sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==
@@ -4408,17 +4408,17 @@ prop-types@^15.5.7, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.40:
-  version "0.0.40"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.40.tgz#e387c55f97612f731b45eebf6b9e70216fbebee5"
-  integrity sha512-cRXSvEzniPEH11Tu52dTHR46+mI/WdJYmgA4Zp02Mz49o3aJyND4MJwE+GYdPG4ftlHM640hibXeE6U24eUrfg==
+proto.io@^0.0.41:
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.41.tgz#f9a1e61a98bd1c7fd49802b9706b698f5395b343"
+  integrity sha512-HgA79gWWZQ970Fjj1iIZQZJvdD0hVRC+Q1RtofxSgNFmnSeDlzbPjQ+JsCJvxCpIyuQBIFuFMfRcQsW37ble/g==
   dependencies:
-    axios "^1.2.2"
+    axios "^1.5.0"
     busboy "^1.6.0"
     cookie-parser "^1.4.6"
     csrf "^3.1.0"
     decimal.js "^10.4.3"
-    jsonwebtoken "^9.0.1"
+    jsonwebtoken "^9.0.2"
     lodash ">=4.17.21"
     pg "^8.11.1"
     pg-query-stream "^4.5.1"
