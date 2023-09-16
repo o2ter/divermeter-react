@@ -26,9 +26,34 @@
 import _ from 'lodash';
 import React from 'react';
 import { View, Text } from '@o2ter/react-ui';
+import { useProto } from '../../proto';
+import { useAsyncResource } from 'sugax/dist/index.web';
+import { Decimal, serialize } from 'proto.io/dist/client';
+
+const valueToType = (value: any) => {
+  if (_.isNil(value)) return 'null';
+  if (_.isBoolean(value)) return 'boolean';
+  if (_.isNumber(value)) return 'number';
+  if (_.isString(value)) return 'string';
+  if (_.isDate(value)) return 'date';
+  if (value instanceof Decimal) return 'decimal';
+  if (_.isArray(value)) return 'array';
+  return 'object';
+}
+
+const valueToString = (value: any) => {
+  if (_.isNil(value)) return 'null';
+  if (_.isBoolean(value)) return value ? 'true' : 'false';
+  if (_.isNumber(value)) return value.toString();
+  if (_.isString(value)) return value;
+  if (_.isDate(value)) return value.toLocaleString();
+  if (value instanceof Decimal) return value.toString();
+  return serialize(value);
+}
 
 export const Config: React.FC<{}> = () => {
-
+  const Proto = useProto();
+  const { resource: config, refresh } = useAsyncResource(() => Proto.config());
   return (
     <>
       <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
@@ -38,15 +63,22 @@ export const Config: React.FC<{}> = () => {
         </View>
       </View>
       <View classes='flex-fill bg-secondary-100'>
-        <table>
+        <table className='table-striped flex-fill overflow-auto'>
           <thead className='bg-secondary-400 text-white'>
             <tr>
-              <th>Key</th>
-              <th>Value</th>
+              <th>key</th>
+              <th>type</th>
+              <th>value</th>
             </tr>
           </thead>
           <tbody>
-
+            {_.map(config, (value, key) => (
+              <tr>
+                <td>{key}</td>
+                <td>{valueToType(value)}</td>
+                <td>{valueToString(value)}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </View>
