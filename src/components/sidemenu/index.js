@@ -90,8 +90,8 @@ export const SideMenu = ({ schema }) => {
     <View classes='flex-fill' style={{ height: '100vh' }}>
       <View classes='flex-fill bg-primary-700 py-3 pl-4 pr-5 overflow-auto'>
         {_.map(sections, (section, i) => (
-          <View classes={i === 0 ? '' : 'mt-2'}>
-            <Section key={section.header} {...section} />
+          <View key={section.header} classes={i === 0 ? '' : 'mt-2'}>
+            <Section {...section} />
           </View>
         ))}
       </View>

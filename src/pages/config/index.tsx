@@ -37,7 +37,18 @@ export const Config: React.FC<{}> = () => {
           <Text classes='h1 text-white'>Config</Text>
         </View>
       </View>
-      <View classes='flex-fill p-1 bg-secondary-100'>
+      <View classes='flex-fill bg-secondary-100'>
+        <table>
+          <thead className='bg-secondary-400 text-white'>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </View>
     </>
   );
