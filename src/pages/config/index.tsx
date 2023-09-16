@@ -63,24 +63,26 @@ export const Config: React.FC<{}> = () => {
         </View>
       </View>
       <View classes='flex-fill bg-secondary-100'>
-        <table className='table-striped flex-fill overflow-auto'>
-          <thead className='bg-secondary-400 text-white'>
-            <tr>
-              <th>key</th>
-              <th>type</th>
-              <th>value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {_.map(config, (value, key) => (
+        <div className='flex-fill overflow-auto'>
+          <table className='table-striped'>
+            <thead className='bg-secondary-400 text-white'>
               <tr>
-                <td>{key}</td>
-                <td>{valueToType(value)}</td>
-                <td>{valueToString(value)}</td>
+                <th>key</th>
+                <th>type</th>
+                <th>value</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {_.map(config, (value, key) => (
+                <tr>
+                  <td>{key}</td>
+                  <td>{valueToType(value)}</td>
+                  <td>{valueToString(value)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </View>
     </>
   );
