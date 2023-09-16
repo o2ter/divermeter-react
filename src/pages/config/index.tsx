@@ -1,5 +1,5 @@
 //
-//  index.js
+//  index.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -25,40 +25,13 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
+import { View } from '@o2ter/react-ui';
 
-import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
-import { SideMenu } from '../../components/sidemenu';
-import { Browser } from '../browser';
-import { Config } from '../config';
-import NotFound from '../NotFound';
+export const Config: React.FC<{}> = () => {
 
-export const Dashboard = () => {
-  const proto = useProto();
-  const { showError } = useToast();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e) {
-      console.error(e);
-      showError(e);
-    }
-  });
   return (
-    <View classes='flex-row flex-fill'>
-      <View classes='bg-primary-900'>
-        <SideMenu schema={schema} />
-      </View>
-      <View classes='flex-fill' style={{ height: 0, minHeight: '100%' }}>
-        <Navigator>
-          <Route path='/browser/:class' component={Browser} schema={schema} />
-          <Route path='/config' component={Config} />
-          <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
-        </Navigator>
-      </View>
+    <View>
+
     </View>
   );
-};
-
-export default Dashboard;
+}

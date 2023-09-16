@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Icon, View, Text, useNavigate } from '@o2ter/react-ui';
+import { Icon, View, Text, useNavigate, useLocation } from '@o2ter/react-ui';
 import Localization from '../../i18n/sidemenu';
 import { useAuth } from '../../config';
 import { Pressable } from 'react-native';
@@ -33,19 +33,19 @@ import { Pressable } from 'react-native';
 const Link = ({
   icon,
   iconName,
+  selected,
+  classes,
   onPress,
   label,
 }) => {
-
   const [focus, setFocus] = React.useState(false);
-
   return (
     <Pressable
       onPress={onPress}
       onHoverIn={() => setFocus(true)}
       onHoverOut={() => setFocus(false)}
     >
-      <Text classes={[focus ? 'text-white' : 'text-primary-200']}>
+      <Text classes={[focus || selected ? 'text-white' : 'text-primary-200', classes]}>
         {icon && iconName && <Icon classes='mr-2' icon={icon} name={iconName} />}
         {label}
       </Text>
@@ -53,22 +53,47 @@ const Link = ({
   );
 }
 
-export const SideMenu = ({ schema }) => {
+const Section = ({ header, link, children }) => {
+  const location = useLocation();
+  const selected = link === location.pathname || _.includes(_.map(children, x => x.link), location.pathname);
+  const navigate = useNavigate();
+  return (
+    <>
+      {link ? (
+        <Link classes='h4' selected={selected} label={header} onPress={() => navigate(link)} />
+      ) : (
+        <Text classes={[selected ? 'text-white' : 'text-primary-200', 'h4']}>{header}</Text>
+      )}
+      <View classes='border-left border-primary-200 pl-3'>
+        {_.map(children, ({ key, link }) => (
+          <Link key={key} label={key} selected={location.pathname === link} onPress={() => navigate(link)} />
+        ))}
+      </View>
+    </>
+  );
+}
 
+export const SideMenu = ({ schema }) => {
   const [, setAuth] = useAuth();
   const localization = Localization.useLocalize();
-
-  const navigate = useNavigate();
-
+  const sections = [
+    {
+      header: 'Browser',
+      children: _.map(_.keys(schema).sort(), key => ({ key, link: `/browser/${encodeURIComponent(key)}` })),
+    },
+    {
+      header: 'Config',
+      link: '/config',
+    },
+  ];
   return (
     <View classes='flex-fill' style={{ height: '100vh' }}>
       <View classes='flex-fill bg-primary-700 py-3 pl-4 pr-5 overflow-auto'>
-        <Text classes='text-white h4'>Browser</Text>
-        <View classes='border-left border-primary-200 pl-3'>
-          {_.map(_.keys(schema).sort(), key => (
-            <Link key={key} label={key} onPress={() => navigate(`/browser/${encodeURIComponent(key)}`)} />
-          ))}
-        </View>
+        {_.map(sections, (section, i) => (
+          <View classes={i === 0 ? '' : 'mt-2'}>
+            <Section key={section.header} {...section} />
+          </View>
+        ))}
       </View>
       <View classes='align-items-center py-2'>
         <Link
