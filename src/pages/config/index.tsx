@@ -25,13 +25,20 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View } from '@o2ter/react-ui';
+import { View, Text } from '@o2ter/react-ui';
 
 export const Config: React.FC<{}> = () => {
 
   return (
-    <View>
-
-    </View>
+    <>
+      <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+        <View>
+          <Text style={{ fontSize: 10 }}>SYSTEM</Text>
+          <Text classes='h1 text-white'>Config</Text>
+        </View>
+      </View>
+      <View classes='flex-fill p-1 bg-secondary-100'>
+      </View>
+    </>
   );
 }
