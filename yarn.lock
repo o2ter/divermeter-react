@@ -1245,6 +1245,13 @@
     htmlparser2 "^7.1.2"
     ramda "^0.27.2"
 
+"@o2ter/crypto-js@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@o2ter/crypto-js/-/crypto-js-0.0.3.tgz#cc9a2bdadfd2e333a3ce0460fe814ac29abb90b6"
+  integrity sha512-uLpRiETZleoYfd4xrH6O9URnwW7YwJFynijR5NdaKu5iTfMZfl4K+6TnTKsJkGQcaC7+JA4hRqHG68aPRsUurA==
+  dependencies:
+    lodash ">=4.17.21"
+
 "@o2ter/i18n@^0.0.10":
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@o2ter/i18n/-/i18n-0.0.10.tgz#5f966a518def93e10824dc8ed26f1c3641280562"
@@ -4408,11 +4415,12 @@ prop-types@^15.5.7, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.42:
-  version "0.0.42"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.42.tgz#ffe2ed6ec44f0231277b48aa2d793403d8c40fbf"
-  integrity sha512-UEAU31X4Jd8E3gcZzcOhqZDvYMkkVANAfi/1omIXo6FrP0Y5a32FXnbfLChSI1rb/fHkeROYwCXBWcSeonk6Mw==
+proto.io@^0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.48.tgz#ecff41f033786fe684c4150112225d02452a76fe"
+  integrity sha512-/CeaMzlt6fyOY61c5Ua7IdZPPwECFx+ikftVflcFWoiicXCbnwZHNrLjt5jqRLXbaYdiPyInif7VHACYSLOO/A==
   dependencies:
+    "@o2ter/crypto-js" "^0.0.3"
     axios "^1.5.0"
     busboy "^1.6.0"
     cookie-parser "^1.4.6"
