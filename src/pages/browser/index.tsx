@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useToast, useActivity, UncontrolledTextInput, useLocation } from '@o2ter/react-ui';
+import { View, Text, useParams, useToast, useActivity, UncontrolledTextInput, useLocation, useModal } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -34,6 +34,7 @@ import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf } from '../../components/datasheet/type';
 import { FilterButton } from './filter';
+import { ConfirmModal } from '../../components/modal';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -67,6 +68,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const [config, setConfig] = useConfig() as any;
   const _columnWidths = config['column-widths']?.[className] ?? {};
+
+  const setModal = useModal();
 
   const startActivity = useActivity();
   const { showError } = useToast();
@@ -314,41 +317,71 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 showError(e);
               }
             })}
-            onDeleteRows={(rows) => startActivity(async () => {
-              try {
-                const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
-                await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
-                setDeletedObjs(_objs => [..._objs, ...ids]);
-                setUpdatedObjs(objs => _.omit(objs, ...ids));
-                ref.current?.clearSelection();
-              } catch (e: any) {
-                console.error(e);
-                showError(e);
-              }
-            })}
-            onDeleteCells={(cells) => startActivity(async () => {
-              try {
-                const _rows = _.range(cells.start.row, cells.end.row + 1);
-                const _cols = _.range(cells.start.col, cells.end.col + 1)
-                  .map(c => _columns[c])
-                  .filter(c => !_.includes(readonlyKeys, c));
-                const updated = await Promise.all(_.map(_rows, row => {
-                  let obj = _objs[row]?.clone();
-                  if (!obj?.objectId) return;
-                  obj = updatedObjs[obj.objectId]?.clone() ?? obj;
-                  for (const _col of _cols) obj.set(_col, null);
-                  return obj.save({ master: true });
-                }));
-                setUpdatedObjs(objs => ({
-                  ...objs,
-                  ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
-                }));
-                ref.current?.clearSelection();
-              } catch (e: any) {
-                console.error(e);
-                showError(e);
-              }
-            })}
+            onDeleteRows={(rows) => {
+              const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
+              const deleteAction = () => startActivity(async () => {
+                try {
+                  await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
+                  setDeletedObjs(_objs => [..._objs, ...ids]);
+                  setUpdatedObjs(objs => _.omit(objs, ...ids));
+                  ref.current?.clearSelection();
+                } catch (e: any) {
+                  console.error(e);
+                  showError(e);
+                }
+              });
+              if (ids.length <= 3) return deleteAction();
+              setModal(
+                <ConfirmModal
+                  title='Delete selected rows'
+                  comfirmMessage='To comfirm, type the class name in the box bellow'
+                  comfirmAnswer={className}
+                  onCancel={() => setModal()}
+                  onConfirm={() => {
+                    setModal();
+                    deleteAction();
+                  }}
+                />
+              );
+            }}
+            onDeleteCells={(cells) => {
+              const _rows = _.range(cells.start.row, cells.end.row + 1);
+              const _cols = _.range(cells.start.col, cells.end.col + 1)
+                .map(c => _columns[c])
+                .filter(c => !_.includes(readonlyKeys, c));
+              const deleteAction = () => startActivity(async () => {
+                try {
+                  const updated = await Promise.all(_.map(_rows, row => {
+                    let obj = _objs[row]?.clone();
+                    if (!obj?.objectId) return;
+                    obj = updatedObjs[obj.objectId]?.clone() ?? obj;
+                    for (const _col of _cols) obj.set(_col, null);
+                    return obj.save({ master: true });
+                  }));
+                  setUpdatedObjs(objs => ({
+                    ...objs,
+                    ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
+                  }));
+                  ref.current?.clearSelection();
+                } catch (e: any) {
+                  console.error(e);
+                  showError(e);
+                }
+              });
+              if (_rows.length * _cols.length <= 3) return deleteAction();
+              setModal(
+                <ConfirmModal
+                  title='Delete selected data'
+                  comfirmMessage='To comfirm, type the class name in the box bellow'
+                  comfirmAnswer={className}
+                  onCancel={() => setModal()}
+                  onConfirm={() => {
+                    setModal();
+                    deleteAction();
+                  }}
+                />
+              );
+            }}
           />
         </div>}
       </View>

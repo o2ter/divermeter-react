@@ -25,36 +25,78 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, Button } from '@o2ter/react-ui';
+import { View, Text, Button, TextInput } from '@o2ter/react-ui';
 
-export const Modal: React.FC<React.PropsWithChildren<{
+type ModalProps = React.PropsWithChildren<{
   title: string;
+  variant?: string;
+  confirmed?: boolean;
   onCancel: () => void;
-  onSubmit: () => void;
-}>> = ({
+  onSubmit?: () => void;
+  onConfirm?: () => void;
+}>;
+
+export const Modal: React.FC<ModalProps> = ({
   title,
+  variant = 'primary',
+  confirmed = true,
   onCancel,
   onSubmit,
+  onConfirm,
   children,
-}) => {
+}) => (
+  <View classes='rounded-2 overflow-hidden w-50'>
+    <View classes={`bg-${variant}-600 p-3 text-white`}>
+      <Text classes='h2'>{title}</Text>
+    </View>
+    {!_.isEmpty(children) && <View classes='bg-body p-3'>{children}</View>}
+    <View classes='bg-body flex-row g-2 p-3 border-top justify-content-end'>
+      <Button
+        outline={variant !== 'danger'}
+        title='Cancel'
+        variant={variant}
+        onPress={onCancel}
+      />
+      {onSubmit && <Button
+        title='Submit'
+        variant={variant}
+        onPress={onSubmit}
+      />}
+      {onConfirm && <Button
+        title='Confirm'
+        outline={variant === 'danger'}
+        disabled={!confirmed}
+        variant={variant}
+        onPress={onConfirm}
+      />}
+    </View>
+  </View>
+);
 
-    return (
-      <View classes='rounded-2 overflow-hidden w-50'>
-        <View classes='bg-primary-600 p-3 text-white'>
-          <Text classes='h2'>{title}</Text>
-        </View>
-        <View classes='bg-body p-3'>{children}</View>
-        <View classes='bg-body flex-row g-2 p-3 border-top justify-content-end'>
-          <Button
-            outline
-            title='Cancel'
-            onPress={onCancel}
-          />
-          <Button
-            title='Submit'
-            onPress={onSubmit}
-          />
-        </View>
-      </View>
-    );
-  }
+type ConfirmModalProps = {
+  title: string;
+  variant?: string;
+  comfirmMessage: string;
+  comfirmAnswer: string;
+  onCancel: () => void;
+  onConfirm: () => void;
+};
+
+export const ConfirmModal: React.FC<ConfirmModalProps> = ({
+  variant = 'danger',
+  comfirmMessage,
+  comfirmAnswer,
+  ...props
+}) => {
+  const [value, setValue] = React.useState('');
+  return (
+    <Modal
+      variant={variant}
+      confirmed={value === comfirmAnswer}
+      {...props}
+    >
+      <Text>{comfirmMessage}</Text>
+      <TextInput value={value} onChangeText={setValue} />
+    </Modal>
+  );
+}
