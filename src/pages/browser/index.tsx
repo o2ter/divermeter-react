@@ -291,31 +291,46 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
               }
             })}
             onPasteCells={(cells, clipboard) => startActivity(async () => {
-              try {
-                const { data } = await decodeClipboardData(clipboard) ?? {};
-                const _rows = _.range(cells.start.row, cells.end.row + 1);
-                const _cols = _.range(cells.start.col, cells.end.col + 1).map(c => _columns[c]);
-                const objects = _.compact(_.map(_rows, row => _objs[row]));
-                const updates: TObject[] = [];
-                for (const [obj, values] of _.zip(objects, data ?? [])) {
-                  const _obj = obj?.clone() ?? Proto.Object(className);
-                  for (const [column = '', value] of _.zip(_cols, values)) {
-                    if (!_.includes(readonlyKeys, column)) {
-                      if (_.isNil(value)) {
-                        if (_obj.objectId) _obj.set(column, null);
-                      } else {
-                        const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
-                        if (!_.isNil(_value)) _obj.set(column, _value as any);
+              const _rows = _.range(cells.start.row, cells.end.row + 1);
+              const _cols = _.range(cells.start.col, cells.end.col + 1).map(c => _columns[c]);
+              const { data } = await decodeClipboardData(clipboard) ?? {};
+              const replaceAction = () => startActivity(async () => {
+                try {
+                  const objects = _.compact(_.map(_rows, row => _objs[row]));
+                  const updates: TObject[] = [];
+                  for (const [obj, values] of _.zip(objects, data ?? [])) {
+                    const _obj = obj?.clone() ?? Proto.Object(className);
+                    for (const [column = '', value] of _.zip(_cols, values)) {
+                      if (!_.includes(readonlyKeys, column)) {
+                        if (_.isNil(value)) {
+                          if (_obj.objectId) _obj.set(column, null);
+                        } else {
+                          const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
+                          if (!_.isNil(_value)) _obj.set(column, _value as any);
+                        }
                       }
                     }
+                    updates.push(_obj);
                   }
-                  updates.push(_obj);
+                  await saveUpdates(updates);
+                } catch (e: any) {
+                  console.error(e);
+                  showError(e);
                 }
-                await saveUpdates(updates);
-              } catch (e: any) {
-                console.error(e);
-                showError(e);
-              }
+              });
+              if (_rows.length * _cols.length <= 3) return replaceAction();
+              setModal(
+                <ConfirmModal
+                  title='Replace selected data'
+                  comfirmMessage='To comfirm, type the class name in the box bellow'
+                  comfirmAnswer={className}
+                  onCancel={() => setModal()}
+                  onConfirm={() => {
+                    setModal();
+                    replaceAction();
+                  }}
+                />
+              );
             })}
             onDeleteRows={(rows) => {
               const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
