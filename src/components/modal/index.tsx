@@ -26,6 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { View, Text, Button, TextInput } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 
 type ModalProps = React.PropsWithChildren<{
   title: string;
@@ -50,7 +51,7 @@ export const Modal: React.FC<ModalProps> = ({
       <Text classes='h2'>{title}</Text>
     </View>
     {!_.isEmpty(children) && <View classes='bg-body p-3'>{children}</View>}
-    <View classes='bg-body flex-row g-2 p-3 border-top justify-content-end'>
+    <Row classes='bg-body g-2 p-3 border-top justify-content-end'>
       <Button
         outline={variant !== 'danger'}
         title='Cancel'
@@ -69,7 +70,7 @@ export const Modal: React.FC<ModalProps> = ({
         variant={variant}
         onPress={onConfirm}
       />}
-    </View>
+    </Row>
   </View>
 );
 

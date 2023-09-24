@@ -35,6 +35,7 @@ import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf } from '../../components/datasheet/type';
 import { FilterButton } from './filter';
 import { ConfirmModal } from '../../components/modal';
+import { Row } from '@o2ter/wireframe';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -189,7 +190,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   return (
     <>
-      <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>CLASS</Text>
           <Text>
@@ -200,7 +201,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           </Text>
         </View>
         <View classes='justify-content-end'>
-          <View classes='flex-row text-white'>
+          <Row classes='text-white'>
             <FilterButton filter={filter} setFilter={setFilter} />
             <View classes='bg-secondary-200 h-100 mx-3' style={{ width: 1 }} />
             <Text>Limit</Text>
@@ -213,9 +214,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 if (_.isFinite(number)) setLimit(number);
               }}
             />
-          </View>
+          </Row>
         </View>
-      </View>
+      </Row>
       <View classes='flex-fill p-1 bg-secondary-100'>
         {_schema && <div className='flex-fill overflow-auto'>
           <DataSheet

@@ -1,5 +1,5 @@
 //
-//  index.js
+//  modal.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2023 O2ter Limited. All rights reserved.
@@ -25,41 +25,39 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
-
-import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
-import { SideMenu } from '../../components/sidemenu';
-import { Browser } from '../browser';
-import { Config } from '../config';
-import NotFound from '../NotFound';
+import { Modal } from '../../components/modal';
+import { View } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
-export const Dashboard = () => {
-  const proto = useProto();
-  const { showError } = useToast();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e) {
-      console.error(e);
-      showError(e);
-    }
-  });
-  return (
-    <Row classes='flex-fill'>
-      <View classes='bg-primary-900'>
-        <SideMenu schema={schema} />
-      </View>
-      <View classes='flex-fill' style={{ height: 0, minHeight: '100%' }}>
-        <Navigator>
-          <Route path='/browser/:class' component={Browser} schema={schema} />
-          <Route path='/config' component={Config} />
-          <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
-        </Navigator>
-      </View>
-    </Row>
-  );
+type ParameterModalProps = {
+  title: string;
+  name?: string;
+  initialValue?: any;
+  onCancel: () => void;
+  onSubmit?: (value: any) => void;
 };
 
-export default Dashboard;
+export const ParameterModal: React.FC<ParameterModalProps> = ({
+  title,
+  name,
+  initialValue,
+  onCancel,
+  onSubmit,
+}) => {
+
+  const [_name, setName] = React.useState(name);
+  const [value, setValue] = React.useState(initialValue);
+
+  return (
+    <Modal
+      title={title}
+      onCancel={onCancel}
+      onSubmit={() => {
+      }}
+    >
+      <Row>
+
+      </Row>
+    </Modal>
+  );
+};

@@ -27,9 +27,11 @@ import _ from 'lodash';
 import React from 'react';
 import { View, Text, Button, useModal } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
-import { useAsyncResource } from 'sugax/dist/index.web';
+import { useAsyncResource } from 'sugax';
 import { Decimal, serialize } from 'proto.io/dist/client';
 import { Modal } from '../../components/modal';
+import { ParameterModal } from './modal';
+import { Row } from '@o2ter/wireframe';
 
 const valueToType = (value: any) => {
   if (_.isNil(value)) return 'null';
@@ -60,19 +62,19 @@ export const Config: React.FC<{}> = () => {
 
   return (
     <>
-      <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>SYSTEM</Text>
           <Text classes='h1 text-white'>Config</Text>
         </View>
         <View classes='justify-content-end'>
-          <View classes='flex-row text-white'>
+          <Row classes='text-white'>
             <Button
               outline
               variant='light'
               title='Create a parameter'
               onPress={() => setModal(
-                <Modal
+                <ParameterModal
                   title='Create a parameter'
                   onCancel={() => setModal()}
                   onSubmit={() => {
@@ -81,15 +83,15 @@ export const Config: React.FC<{}> = () => {
                 />
               )}
             />
-          </View>
+          </Row>
         </View>
-      </View>
+      </Row>
       <View classes='flex-fill bg-secondary-100'>
         <div className='flex-fill overflow-auto'>
           <table className='table-striped'>
             <thead className='bg-secondary-400 text-white'>
               <tr>
-                <th>key</th>
+                <th>name</th>
                 <th>type</th>
                 <th>value</th>
               </tr>

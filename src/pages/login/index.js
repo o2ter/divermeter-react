@@ -26,6 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { View, Form, Text, useActivity, useToast } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 
 import Localization from '../../i18n/login';
 import { string } from '@o2ter/valid.js';
@@ -59,17 +60,17 @@ export const Login = () => {
           }}
         >
           <View classes='py-1'>
-            <View classes='flex-row justify-content-between'>
+            <Row classes='justify-content-between'>
               <Text>{localization.string('username')}</Text>
               <Form.ErrorMessage name='user' />
-            </View>
+            </Row>
             <Form.TextField name='user' />
           </View>
           <View classes='py-1'>
-            <View classes='flex-row justify-content-between'>
+            <Row classes='justify-content-between'>
               <Text>{localization.string('password')}</Text>
               <Form.ErrorMessage name='pass' />
-            </View>
+            </Row>
             <Form.TextField secureTextEntry name='pass' />
           </View>
           <View classes='py-1'>
