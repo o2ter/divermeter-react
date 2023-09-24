@@ -100,7 +100,21 @@ export const Config: React.FC<{}> = () => {
             </thead>
             <tbody>
               {_.map(config, (value, key) => (
-                <tr>
+                <tr onClick={() => {
+                  setModal(
+                    <ParameterModal
+                      title='Update parameter'
+                      name={key}
+                      initialValue={value}
+                      onCancel={() => setModal()}
+                      onSubmit={(name, value) => startActivity(async () => {
+                        await Proto.setConfig({ [name]: value }, { master: true });
+                        await refresh();
+                        setModal();
+                      })}
+                    />
+                  )
+                }}>
                   <td>{key}</td>
                   <td>{valueToType(value)}</td>
                   <td>{valueToString(value)}</td>
