@@ -25,10 +25,11 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text } from '@o2ter/react-ui';
+import { View, Text, Button, useModal } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
 import { useAsyncResource } from 'sugax/dist/index.web';
 import { Decimal, serialize } from 'proto.io/dist/client';
+import { Modal } from '../../components/modal';
 
 const valueToType = (value: any) => {
   if (_.isNil(value)) return 'null';
@@ -54,12 +55,27 @@ const valueToString = (value: any) => {
 export const Config: React.FC<{}> = () => {
   const Proto = useProto();
   const { resource: config, refresh } = useAsyncResource(() => Proto.config());
+
+  const setModal = useModal();
+
   return (
     <>
       <View classes='py-3 px-4 flex-row justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>SYSTEM</Text>
           <Text classes='h1 text-white'>Config</Text>
+        </View>
+        <View classes='justify-content-end'>
+          <View classes='flex-row text-white'>
+            <Button
+              outline
+              variant='light'
+              title='Create a parameter'
+              onPress={() => setModal(
+                <Modal refresh={refresh} />
+              )}
+            />
+          </View>
         </View>
       </View>
       <View classes='flex-fill bg-secondary-100'>

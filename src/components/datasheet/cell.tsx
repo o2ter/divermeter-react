@@ -35,7 +35,7 @@ export type DataSheetCellProps = {
   type?: TDataType;
 };
 
-export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
+const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
 
   const navigate = useNavigate();
 
@@ -110,3 +110,5 @@ export const DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => 
     default: return;
   }
 };
+
+export const DataSheetCell = React.memo(_DataSheetCell);
