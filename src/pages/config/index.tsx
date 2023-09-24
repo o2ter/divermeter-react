@@ -72,7 +72,13 @@ export const Config: React.FC<{}> = () => {
               variant='light'
               title='Create a parameter'
               onPress={() => setModal(
-                <Modal refresh={refresh} />
+                <Modal
+                  title='Create a parameter'
+                  onCancel={() => setModal()}
+                  onSubmit={() => {
+                    refresh();
+                  }}
+                />
               )}
             />
           </View>

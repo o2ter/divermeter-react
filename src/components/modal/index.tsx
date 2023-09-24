@@ -25,17 +25,36 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View } from '@o2ter/react-ui';
+import { View, Text, Button } from '@o2ter/react-ui';
 
-export const Modal: React.FC<{
-  refresh: () => Promise<void>;
-}> = ({
-  refresh,
+export const Modal: React.FC<React.PropsWithChildren<{
+  title: string;
+  onCancel: () => void;
+  onSubmit: () => void;
+}>> = ({
+  title,
+  onCancel,
+  onSubmit,
+  children,
 }) => {
 
     return (
-      <View>
-
+      <View classes='rounded-2 overflow-hidden w-50'>
+        <View classes='bg-primary-600 p-3 text-white'>
+          <Text classes='h2'>{title}</Text>
+        </View>
+        <View classes='bg-body p-3'>{children}</View>
+        <View classes='bg-body flex-row g-2 p-3 border-top justify-content-end'>
+          <Button
+            outline
+            title='Cancel'
+            onPress={onCancel}
+          />
+          <Button
+            title='Submit'
+            onPress={onSubmit}
+          />
+        </View>
       </View>
     );
   }
