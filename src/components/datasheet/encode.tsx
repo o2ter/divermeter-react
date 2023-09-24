@@ -39,7 +39,7 @@ const _encodeObject = (value: any, space: number, padding: number): string => {
     `${_.padStart('', padding, ' ')}${_encodeObject(v, space, padding + space)}`
   )).join(',\n')}\n${_.padStart('', padding - space, ' ')}]`;
   return _.isEmpty(value) ? '{}' : `{\n${_.map(value, (v, k) => (
-    `${_.padStart('', padding, ' ')}${k.match(normalName) ? k : `'${k}`}: ${_encodeObject(v, space, padding + space)}`
+    `${_.padStart('', padding, ' ')}${k.match(normalName) ? k : `'${k}'`}: ${_encodeObject(v, space, padding + space)}`
   )).join(',\n')}\n${_.padStart('', padding - space, ' ')}}`;
 };
 
