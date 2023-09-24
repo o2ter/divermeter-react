@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, Button, useModal, useActivity } from '@o2ter/react-ui';
+import { View, Text, Button, useModal, useActivity, useToast } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
 import { useAsyncResource } from 'sugax';
 import { Decimal, serialize } from 'proto.io/dist/client';
@@ -60,6 +60,8 @@ export const Config: React.FC<{}> = () => {
   const setModal = useModal();
   const startActivity = useActivity();
 
+  const { showError } = useToast();
+
   return (
     <>
       <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
@@ -78,6 +80,9 @@ export const Config: React.FC<{}> = () => {
                   title='Create a parameter'
                   onCancel={() => setModal()}
                   onSubmit={(name, value) => startActivity(async () => {
+                    if (_.isEmpty(name)) {
+                      return showError('Empty parameter name is not allowed.');
+                    }
                     await Proto.setConfig({ [name]: value }, { master: true });
                     await refresh();
                     setModal();
