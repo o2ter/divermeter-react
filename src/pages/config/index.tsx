@@ -29,7 +29,6 @@ import { View, Text, Button, useModal } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
 import { useAsyncResource } from 'sugax';
 import { Decimal, serialize } from 'proto.io/dist/client';
-import { Modal } from '../../components/modal';
 import { ParameterModal } from './modal';
 import { Row } from '@o2ter/wireframe';
 

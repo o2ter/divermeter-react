@@ -26,16 +26,33 @@
 import _ from 'lodash';
 import React from 'react';
 import { Modal } from '../../components/modal';
-import { View } from '@o2ter/react-ui';
+import { Text, TextInput, View } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
+import { encodeObject } from '../../components/datasheet/encode';
+import { Decimal } from 'proto.io/dist/client';
+import { JSCode } from '../../components/jscode';
 
 type ParameterModalProps = {
   title: string;
   name?: string;
   initialValue?: any;
   onCancel: () => void;
-  onSubmit?: (value: any) => void;
+  onSubmit?: (name: string, value: any) => void;
 };
+
+const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
+  style,
+  children,
+}) => (
+  <div style={{
+    resize: 'vertical',
+    overflow: 'auto',
+    height: 0,
+    paddingRight: 12,
+    minHeight: 'calc(100%)' as any,
+    ...style,
+  }}>{children}</div>
+);
 
 export const ParameterModal: React.FC<ParameterModalProps> = ({
   title,
@@ -45,19 +62,50 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
   onSubmit,
 }) => {
 
-  const [_name, setName] = React.useState(name);
-  const [value, setValue] = React.useState(initialValue);
+  const [_name, setName] = React.useState(name ?? '');
+  const [value, setValue] = React.useState(_.isNil(initialValue) ? '' : encodeObject(initialValue));
 
   return (
     <Modal
       title={title}
       onCancel={onCancel}
       onSubmit={() => {
+        if (onSubmit) onSubmit(_name, value);
       }}
     >
-      <Row>
-
-      </Row>
+      <View classes='bg-body'>
+        <Row>
+          <View classes='border-right-1 w-25 p-3'>
+            <Text>Parameter name</Text>
+          </View>
+          <TextInput
+            classes='border-0 rounded-0 flex-fill'
+            value={_name}
+            editable={_.isNil(name)}
+            onChangeText={setName}
+          />
+        </Row>
+        <Row classes='border-top-1'>
+          <View classes='border-right-1 w-25 p-3'>
+            <Text>Value</Text>
+          </View>
+          <View classes='flex-fill'>
+            <Resizable>
+              <JSCode
+                classes='w-100 h-100'
+                style={{ outline: 'none' } as any}
+                initialValue={_.isNil(initialValue) ? '' : encodeObject(initialValue)}
+                onChangeValue={(code) => {
+                  try {
+                    const func = new Function('Decimal', `return (${code})`);
+                    setValue(func(Decimal));
+                  } catch { };
+                }}
+              />
+            </Resizable>
+          </View>
+        </Row>
+      </View>
     </Modal>
   );
 };

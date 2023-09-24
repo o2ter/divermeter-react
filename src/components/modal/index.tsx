@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = ({
     <View classes={`bg-${variant}-600 p-3 text-white`}>
       <Text classes='h2'>{title}</Text>
     </View>
-    {!_.isEmpty(children) && <View classes='bg-body p-3'>{children}</View>}
+    {children}
     <Row classes='bg-body g-2 p-3 border-top justify-content-end'>
       <Button
         outline={variant !== 'danger'}
@@ -96,8 +96,10 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       confirmed={value === comfirmAnswer}
       {...props}
     >
-      <Text>{comfirmMessage}</Text>
-      <TextInput value={value} onChangeText={setValue} />
+      <View classes='bg-body p-3'>
+        <Text>{comfirmMessage}</Text>
+        <TextInput value={value} onChangeText={setValue} />
+      </View>
     </Modal>
   );
 }
