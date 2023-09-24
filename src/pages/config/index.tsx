@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, Button, useModal } from '@o2ter/react-ui';
+import { View, Text, Button, useModal, useActivity } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
 import { useAsyncResource } from 'sugax';
 import { Decimal, serialize } from 'proto.io/dist/client';
@@ -58,6 +58,7 @@ export const Config: React.FC<{}> = () => {
   const { resource: config, refresh } = useAsyncResource(() => Proto.config());
 
   const setModal = useModal();
+  const startActivity = useActivity();
 
   return (
     <>
@@ -76,9 +77,11 @@ export const Config: React.FC<{}> = () => {
                 <ParameterModal
                   title='Create a parameter'
                   onCancel={() => setModal()}
-                  onSubmit={() => {
-                    refresh();
-                  }}
+                  onSubmit={(name, value) => startActivity(async () => {
+                    await Proto.setConfig({ [name]: value }, { master: true });
+                    await refresh();
+                    setModal();
+                  })}
                 />
               )}
             />

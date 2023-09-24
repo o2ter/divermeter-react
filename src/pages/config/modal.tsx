@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { Modal } from '../../components/modal';
-import { Text, TextInput, View } from '@o2ter/react-ui';
+import { Text, TextInput, View, useToast } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { encodeObject } from '../../components/datasheet/encode';
 import { Decimal } from 'proto.io/dist/client';
@@ -64,13 +64,17 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
 
   const [_name, setName] = React.useState(name ?? '');
   const [value, setValue] = React.useState(_.isNil(initialValue) ? '' : encodeObject(initialValue));
+  const [error, setError] = React.useState(null);
+
+  const { showError } = useToast();
 
   return (
     <Modal
       title={title}
       onCancel={onCancel}
       onSubmit={() => {
-        if (onSubmit) onSubmit(_name, value);
+        if (error) showError(error);
+        else if (onSubmit) onSubmit(_name, value);
       }}
     >
       <View classes='bg-body'>
@@ -99,7 +103,10 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
                   try {
                     const func = new Function('Decimal', `return (${code})`);
                     setValue(func(Decimal));
-                  } catch { };
+                    setError(null);
+                  } catch (e: any) {
+                    setError(e);
+                  };
                 }}
               />
             </Resizable>
