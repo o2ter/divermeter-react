@@ -63,7 +63,7 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
 }) => {
 
   const [_name, setName] = React.useState(name ?? '');
-  const [value, setValue] = React.useState(_.isNil(initialValue) ? '' : encodeObject(initialValue));
+  const [value, setValue] = React.useState(initialValue);
   const [error, setError] = React.useState(null);
 
   const { showError } = useToast();
