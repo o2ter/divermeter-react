@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { Text, View } from '@o2ter/react-ui';
-import { Pressable } from 'react-native';
+import { Row } from '@o2ter/wireframe';
 
 export const FilterButton: React.FC<{
   filter: any[];
@@ -39,13 +39,19 @@ export const FilterButton: React.FC<{
   const [showMenu, setShowMenu] = React.useState(false);
 
   return (
-    <Pressable onPress={() => setShowMenu(v => !v)}>
-      <Text>Filter</Text>
+    <View>
+      <Text onPress={() => setShowMenu(v => !v)}>Filter</Text>
       {showMenu && (
-        <View classes='position-absolute'>
+        <Row
+          classes='position-absolute'
+          style={{
+            top: '100%',
+            right: 0,
+          }}
+        >
 
-        </View>
+        </Row>
       )}
-    </Pressable>
+    </View>
   );
 }

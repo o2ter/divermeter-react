@@ -25,8 +25,8 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, View } from '@o2ter/react-ui';
-import { Pressable } from 'react-native';
+import { Text, View, UncontrolledTextInput } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 
 export const LimitButton: React.FC<{
   limit: number;
@@ -39,13 +39,28 @@ export const LimitButton: React.FC<{
   const [showMenu, setShowMenu] = React.useState(false);
 
   return (
-    <Pressable onPress={() => setShowMenu(v => !v)}>
-      <Text>Limit</Text>
+    <View>
+      <Text onPress={() => setShowMenu(v => !v)}>Limit</Text>
       {showMenu && (
-        <View classes='position-absolute'>
-
-        </View>
+        <Row
+          classes='position-absolute bg-secondary-400'
+          style={{
+            top: '100%',
+            right: 0,
+          }}
+        >
+          <Text>Limit</Text>
+          <UncontrolledTextInput
+            classes='ml-1 p-0 border-0 rounded-0 bg-secondary-400'
+            style={{ outline: 'none', color: 'white' } as any}
+            value={`${limit}`}
+            onChangeText={(text) => {
+              const number = parseFloat(text);
+              if (_.isFinite(number)) setLimit(number);
+            }}
+          />
+        </Row>
       )}
-    </Pressable>
+    </View>
   );
 }
