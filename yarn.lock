@@ -1260,10 +1260,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.37":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.37.tgz#6b5871b0c03a7fc1c690c973febda45d0690c051"
-  integrity sha512-MiVVeq8KhYIZfpG9ChaeiFCbepAJR19+Sd+9KwxvpLzRSNAlrO90gL0pi5suTPFHv58tth1MMM+Mqnb+878W6A==
+"@o2ter/react-booster@^0.0.40":
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.40.tgz#b1d1542f758868d7e7897026c4f9c6afdadbd1ff"
+  integrity sha512-j6T5Od2JOt8w0g/PycPPAWgDifCI+AcsYssHqs0sLYBMwX0s4zBNQtrpPmaZvaoTwMOFwchd0/LwAwOEYf8R6A==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -1297,12 +1297,13 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.233":
-  version "0.0.233"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.233.tgz#92048b3700ecf69041576fae52f647a07b905b06"
-  integrity sha512-Wy0PFd+bwNQUpnAvuD0vCJwWYC/KUcUzr7G3D+nud0Dub4z1QdwZTsSCxsj1dC902tEWiCMALgL9154eaYDO4Q==
+"@o2ter/react-ui@^0.0.251":
+  version "0.0.251"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.251.tgz#8b2373e666cae598ade988349b9c5659286a8c03"
+  integrity sha512-1zTPMpc/P0K4Oz0adWY6k0FrfIYnAXeZxSZcYHKEPJx7Yg7Q/HAKCoTia0j4FYMGBk7latPV0R5k/c7L7YrLKQ==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
+    "@react-native/normalize-color" "^2.1.0"
     codemirror "^6.0.1"
     d3-dsv "^3.0.1"
     jsbarcode ">=3.11.5"
@@ -1311,7 +1312,6 @@
     lottie-react-native ">=5.1.4"
     lottie-web ">=5.10.1"
     luxon ">=3.2.1"
-    normalize-css-color ">=1.0.2"
     qrcode ">=1.5.1"
     react-dom ">=18.2.0"
     react-native-fast-image ">=8.6.3"
@@ -3978,11 +3978,6 @@ nopt@~1.0.10:
   integrity sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==
   dependencies:
     abbrev "1"
-
-normalize-css-color@>=1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/normalize-css-color/-/normalize-css-color-1.0.2.tgz#02991e97cccec6623fe573afbbf0de6a1f3e9f8d"
-  integrity sha512-jPJ/V7Cp1UytdidsPqviKEElFQJs22hUUgK5BOPHTwOonNCk7/2qOxhhqzEajmFrWJowADFfOFh1V+aWkRfy+w==
 
 normalize-package-data@^2.3.2:
   version "2.5.0"
