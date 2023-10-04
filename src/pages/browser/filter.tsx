@@ -25,13 +25,15 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, View } from '@o2ter/react-ui';
+import { Text, Overlay } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
-export const FilterButton: React.FC<{
+type FilterButtonProps = {
   filter: any[];
   setFilter: React.Dispatch<React.SetStateAction<any[]>>;
-}> = ({
+};
+
+export const FilterButton: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
 }) => {
@@ -39,9 +41,9 @@ export const FilterButton: React.FC<{
   const [showMenu, setShowMenu] = React.useState(false);
 
   return (
-    <View>
-      <Text onPress={() => setShowMenu(v => !v)}>Filter</Text>
-      {showMenu && (
+    <Overlay
+      extraData={showMenu}
+      render={(layout) => showMenu && (
         <Row
           classes='position-absolute'
           style={{
@@ -52,6 +54,8 @@ export const FilterButton: React.FC<{
 
         </Row>
       )}
-    </View>
+    >
+      <Text onPress={() => setShowMenu(v => !v)}>Filter</Text>
+    </Overlay>
   );
 }

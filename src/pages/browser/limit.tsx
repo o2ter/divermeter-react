@@ -25,13 +25,15 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, View, UncontrolledTextInput } from '@o2ter/react-ui';
+import { Text, Overlay, UncontrolledTextInput } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
-export const LimitButton: React.FC<{
+type LimitButtonProps = {
   limit: number;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
-}> = ({
+};
+
+export const LimitButton: React.FC<LimitButtonProps> = ({
   limit,
   setLimit,
 }) => {
@@ -39,9 +41,9 @@ export const LimitButton: React.FC<{
   const [showMenu, setShowMenu] = React.useState(false);
 
   return (
-    <View>
-      <Text onPress={() => setShowMenu(v => !v)}>Limit</Text>
-      {showMenu && (
+    <Overlay
+      extraData={showMenu}
+      render={(layout) => showMenu && (
         <Row
           classes='position-absolute bg-secondary-400'
           style={{
@@ -61,6 +63,8 @@ export const LimitButton: React.FC<{
           />
         </Row>
       )}
-    </View>
+    >
+      <Text onPress={() => setShowMenu(v => !v)}>Limit</Text>
+    </Overlay>
   );
 }
