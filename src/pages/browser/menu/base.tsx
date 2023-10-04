@@ -72,7 +72,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       render={(layout) => showMenu && (
         <Row
           ref={ref2}
-          classes='position-absolute py-1 px-3 rounded-2 bg-primary-600'
+          classes='position-absolute py-2 px-3 rounded-2 bg-primary-600'
           onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
           style={{
             top: layout.y + layout.height,
@@ -83,7 +83,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       )}
     >
       <Text
-        classes={['py-1 px-3', showMenu ? 'rounded-top-2 bg-primary-600' : '']}
+        classes={['py-2 px-3', showMenu ? 'rounded-top-2 bg-primary-600' : '']}
         onPress={() => setShowMenu(v => !v)}
       >{title}</Text>
     </Overlay>
