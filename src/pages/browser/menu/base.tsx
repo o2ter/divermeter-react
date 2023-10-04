@@ -53,12 +53,17 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
 }) => {
   const theme = useTheme();
   const ref = React.useRef<React.ComponentRef<typeof Overlay>>(null);
+  const ref2 = React.useRef<React.ComponentRef<typeof Row>>(null);
   const [showMenu, setShowMenu] = React.useState(false);
   const [containerLayout, setContainerLayout] = React.useState<LayoutRectangle>();
   const _extraData = [showMenu, containerLayout];
   useDocumentEvent('mousedown', (e) => {
     const node = ref.current;
-    if (node && !isChildNode(node as unknown as Node, e.target)) setShowMenu(false);
+    const node2 = ref2.current;
+    if (node && node2
+      && !isChildNode(node as unknown as Node, e.target)
+      && !isChildNode(node2 as unknown as Node, e.target)
+    ) setShowMenu(false);
   });
   return (
     <Overlay
@@ -66,6 +71,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       extraData={React.useMemo(() => _extraData, _extraData)}
       render={(layout) => showMenu && (
         <Row
+          ref={ref2}
           classes='position-absolute py-1 px-3 rounded-2 bg-primary-600'
           onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
           style={{

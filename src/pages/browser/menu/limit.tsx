@@ -41,14 +41,13 @@ export const LimitButton: React.FC<LimitButtonProps> = ({
   <MenuButton
     title='Limit'
     menu={(
-      <Row classes='text-white g-2'>
+      <Row classes='text-white g-2 align-items-center'>
         <Text>Limit</Text>
         <UncontrolledTextInput
-          classes='p-0 border-0 rounded-0'
+          classes='border-0 bg-primary-800'
           style={{
             outline: 'none',
             color: 'white',
-            backgroundColor: 'transparent',
           } as any}
           value={`${limit}`}
           onChangeText={(text) => {
