@@ -47,8 +47,8 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
         <Row
           classes='position-absolute'
           style={{
-            top: '100%',
-            right: 0,
+            top: layout.y + layout.height,
+            right: layout.x,
           }}
         >
 

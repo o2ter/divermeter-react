@@ -47,8 +47,8 @@ export const LimitButton: React.FC<LimitButtonProps> = ({
         <Row
           classes='position-absolute bg-secondary-400'
           style={{
-            top: '100%',
-            right: 0,
+            top: layout.y + layout.height,
+            right: layout.x,
           }}
         >
           <Text>Limit</Text>
