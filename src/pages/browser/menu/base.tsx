@@ -83,7 +83,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       )}
     >
       <Text
-        classes={['py-2 px-3', showMenu ? 'rounded-top-2 bg-primary-600' : '']}
+        classes={['py-1 px-2', showMenu ? 'rounded-top-2 bg-primary-600' : '']}
         onPress={() => setShowMenu(v => !v)}
       >{title}</Text>
     </Overlay>
