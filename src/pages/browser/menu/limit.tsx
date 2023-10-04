@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, UncontrolledTextInput } from '@o2ter/react-ui';
+import { Text, TextInput } from '@o2ter/react-ui';
 import { MenuButton } from './base';
 import { Row } from '@o2ter/wireframe';
 
@@ -37,25 +37,36 @@ type LimitButtonProps = {
 export const LimitButton: React.FC<LimitButtonProps> = ({
   limit,
   setLimit,
-}) => (
-  <MenuButton
-    title='Limit'
-    menu={(
-      <Row classes='text-white g-2 align-items-center'>
-        <Text>Limit</Text>
-        <UncontrolledTextInput
-          classes='border-0 bg-primary-800'
-          style={{
-            outline: 'none',
-            color: 'white',
-          } as any}
-          value={`${limit}`}
-          onChangeText={(text) => {
-            const number = parseFloat(text);
-            if (_.isFinite(number)) setLimit(number);
-          }}
-        />
-      </Row>
-    )}
-  />
-);
+}) => {
+
+  const [text, setText] = React.useState<string | null>(null);
+
+  function submit() {
+    const number = text ? parseFloat(text) : limit;
+    if (_.isFinite(number)) setLimit(number);
+    setText(null);
+  }
+
+  return (
+    <MenuButton
+      title='Limit'
+      menu={(
+        <Row classes='text-white g-2 align-items-center'>
+          <Text>Limit</Text>
+          <TextInput
+            classes='border-0 bg-primary-800'
+            style={{
+              outline: 'none',
+              color: 'white',
+            } as any}
+            value={text ?? `${limit ?? ''}`}
+            onFocus={() => setText(`${limit ?? ''}`)}
+            onChangeText={setText}
+            onBlur={() => submit()}
+            onSubmitEditing={() => submit()}
+          />
+        </Row>
+      )}
+    />
+  )
+};
