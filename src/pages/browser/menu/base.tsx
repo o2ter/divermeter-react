@@ -76,7 +76,8 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
           onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
           style={{
             top: layout.y + layout.height,
-            left: layout.x + layout.width - (containerLayout?.width ?? 0) + theme.borderRadius['2'],
+            left: layout.x + layout.width - (containerLayout?.width ?? 0),
+            borderTopRightRadius: 0,
             opacity: containerLayout ? 1 : 0,
           }}
         >{menu}</Row>
