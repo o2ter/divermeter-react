@@ -25,8 +25,8 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, Overlay, UncontrolledTextInput } from '@o2ter/react-ui';
-import { Row } from '@o2ter/wireframe';
+import { Text, UncontrolledTextInput } from '@o2ter/react-ui';
+import { MenuButton } from './base';
 
 type LimitButtonProps = {
   limit: number;
@@ -36,35 +36,22 @@ type LimitButtonProps = {
 export const LimitButton: React.FC<LimitButtonProps> = ({
   limit,
   setLimit,
-}) => {
-
-  const [showMenu, setShowMenu] = React.useState(false);
-
-  return (
-    <Overlay
-      extraData={showMenu}
-      render={(layout) => showMenu && (
-        <Row
-          classes='position-absolute bg-secondary-400'
-          style={{
-            top: layout.y + layout.height,
-            right: layout.x,
+}) => (
+  <MenuButton
+    title='Limit'
+    menu={(
+      <>
+        <Text>Limit</Text>
+        <UncontrolledTextInput
+          classes='ml-1 p-0 border-0 rounded-0 bg-secondary-400'
+          style={{ outline: 'none', color: 'white' } as any}
+          value={`${limit}`}
+          onChangeText={(text) => {
+            const number = parseFloat(text);
+            if (_.isFinite(number)) setLimit(number);
           }}
-        >
-          <Text>Limit</Text>
-          <UncontrolledTextInput
-            classes='ml-1 p-0 border-0 rounded-0 bg-secondary-400'
-            style={{ outline: 'none', color: 'white' } as any}
-            value={`${limit}`}
-            onChangeText={(text) => {
-              const number = parseFloat(text);
-              if (_.isFinite(number)) setLimit(number);
-            }}
-          />
-        </Row>
-      )}
-    >
-      <Text onPress={() => setShowMenu(v => !v)}>Limit</Text>
-    </Overlay>
-  );
-}
+        />
+      </>
+    )}
+  />
+);

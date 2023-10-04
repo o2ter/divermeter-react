@@ -33,8 +33,8 @@ import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf } from '../../components/datasheet/type';
-import { FilterButton } from './filter';
-import { LimitButton } from './limit';
+import { FilterButton } from './menu/filter';
+import { LimitButton } from './menu/limit';
 import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 

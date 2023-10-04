@@ -25,8 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, Overlay } from '@o2ter/react-ui';
-import { Row } from '@o2ter/wireframe';
+import { MenuButton } from './base';
 
 type FilterButtonProps = {
   filter: any[];
@@ -36,26 +35,12 @@ type FilterButtonProps = {
 export const FilterButton: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
-}) => {
-
-  const [showMenu, setShowMenu] = React.useState(false);
-
-  return (
-    <Overlay
-      extraData={showMenu}
-      render={(layout) => showMenu && (
-        <Row
-          classes='position-absolute'
-          style={{
-            top: layout.y + layout.height,
-            right: layout.x,
-          }}
-        >
-
-        </Row>
-      )}
-    >
-      <Text onPress={() => setShowMenu(v => !v)}>Filter</Text>
-    </Overlay>
-  );
-}
+}) => (
+  <MenuButton
+    title='Filter'
+    menu={(
+      <>
+      </>
+    )}
+  />
+);
