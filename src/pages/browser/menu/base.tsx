@@ -40,9 +40,10 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
 }) => {
   const [showMenu, setShowMenu] = React.useState(false);
   const [containerLayout, setContainerLayout] = React.useState<LayoutRectangle>();
+  const _extraData = [showMenu, containerLayout];
   return (
     <Overlay
-      extraData={showMenu}
+      extraData={React.useMemo(() => _extraData, _extraData)}
       render={(layout) => showMenu && (
         <Row
           classes='position-absolute'
