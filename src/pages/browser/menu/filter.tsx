@@ -40,7 +40,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   <MenuButton
     title='Filter'
     menu={(
-      <View style={{ width: 100, height: 100 }}>
+      <View classes='text-white' style={{ width: 100, height: 100 }}>
 
       </View>
     )}

@@ -27,6 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Text, UncontrolledTextInput } from '@o2ter/react-ui';
 import { MenuButton } from './base';
+import { Row } from '@o2ter/wireframe';
 
 type LimitButtonProps = {
   limit: number;
@@ -40,18 +41,22 @@ export const LimitButton: React.FC<LimitButtonProps> = ({
   <MenuButton
     title='Limit'
     menu={(
-      <>
+      <Row classes='text-white g-2'>
         <Text>Limit</Text>
         <UncontrolledTextInput
-          classes='ml-1 p-0 border-0 rounded-0 bg-secondary-400'
-          style={{ outline: 'none', color: 'white' } as any}
+          classes='p-0 border-0 rounded-0'
+          style={{
+            outline: 'none',
+            color: 'white',
+            backgroundColor: 'transparent',
+          } as any}
           value={`${limit}`}
           onChangeText={(text) => {
             const number = parseFloat(text);
             if (_.isFinite(number)) setLimit(number);
           }}
         />
-      </>
+      </Row>
     )}
   />
 );
