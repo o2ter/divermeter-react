@@ -26,6 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
+import { View } from '@o2ter/react-ui';
 
 type FilterButtonProps = {
   filter: any[];
@@ -39,8 +40,9 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   <MenuButton
     title='Filter'
     menu={(
-      <>
-      </>
+      <View style={{ width: 100, height: 100 }}>
+
+      </View>
     )}
   />
 );

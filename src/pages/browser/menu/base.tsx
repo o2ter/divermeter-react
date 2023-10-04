@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, Overlay } from '@o2ter/react-ui';
+import { Text, Overlay, useTheme, useDocumentEvent } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { LayoutRectangle } from 'react-native';
 
@@ -34,28 +34,52 @@ type MenuButtonProps = {
   menu: React.ReactNode
 };
 
+const isChildNode = (parent?: Node | null, node?: Node | EventTarget | null) => {
+  if (!parent) return false;
+  while (node !== document) {
+    if (node === parent) {
+      return true;
+    }
+    const parentNode = node && 'parentNode' in node ? node.parentNode : null;
+    if (!parentNode) return false;
+    node = parentNode;
+  }
+  return false;
+}
+
 export const MenuButton: React.FC<MenuButtonProps> = ({
   title,
   menu,
 }) => {
+  const theme = useTheme();
+  const ref = React.useRef<React.ComponentRef<typeof Overlay>>(null);
   const [showMenu, setShowMenu] = React.useState(false);
   const [containerLayout, setContainerLayout] = React.useState<LayoutRectangle>();
   const _extraData = [showMenu, containerLayout];
+  useDocumentEvent('mousedown', (e) => {
+    const node = ref.current;
+    if (node && !isChildNode(node as unknown as Node, e.target)) setShowMenu(false);
+  });
   return (
     <Overlay
+      ref={ref}
       extraData={React.useMemo(() => _extraData, _extraData)}
       render={(layout) => showMenu && (
         <Row
-          classes='position-absolute'
+          classes='position-absolute py-1 px-2 rounded-2 bg-secondary-400'
           onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
           style={{
             top: layout.y + layout.height,
-            right: layout.x,
+            left: layout.x + layout.width - (containerLayout?.width ?? 0) + theme.borderRadius['2'],
+            opacity: containerLayout ? 1 : 0,
           }}
         >{menu}</Row>
       )}
     >
-      <Text onPress={() => setShowMenu(v => !v)}>{title}</Text>
+      <Text
+        classes={['py-1 px-2', showMenu ? 'rounded-top-2 bg-secondary-400' : '']}
+        onPress={() => setShowMenu(v => !v)}
+      >{title}</Text>
     </Overlay>
   );
 }
