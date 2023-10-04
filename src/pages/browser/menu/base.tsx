@@ -27,6 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Text, Overlay } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
+import { LayoutRectangle } from 'react-native';
 
 type MenuButtonProps = {
   title: string;
@@ -38,12 +39,14 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
   menu,
 }) => {
   const [showMenu, setShowMenu] = React.useState(false);
+  const [containerLayout, setContainerLayout] = React.useState<LayoutRectangle>();
   return (
     <Overlay
       extraData={showMenu}
       render={(layout) => showMenu && (
         <Row
           classes='position-absolute'
+          onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
           style={{
             top: layout.y + layout.height,
             right: layout.x,
