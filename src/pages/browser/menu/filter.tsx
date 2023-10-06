@@ -60,7 +60,7 @@ const decodeFilter = (selectors: any[]) => {
   for (const selector of _.castArray(selectors)) {
     for (const [key, query] of _.toPairs(selector)) {
       if (_.includes(conditionalKeys, key) && _.isArray(query)) {
-
+        decoded.push({ op: key, exprs: decodeFilter(query) });
       } else if (!key.startsWith('$') && !_.isArray(query)) {
 
       }
