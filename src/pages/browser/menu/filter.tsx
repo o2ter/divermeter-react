@@ -52,21 +52,14 @@ export type FilterType = {
   value: any;
 };
 
-export const encodeFilter = (filter: FilterType): any => {
-  switch (filter.op) {
-    case '$and':
-    case '$nor':
-    case '$or':
-      return { [filter.op]: _.map(filter.exprs, v => encodeFilter(v)) };
-    case '$eq':
-    case '$gt':
-    case '$gte':
-    case '$lt':
-    case '$lte':
-    case '$ne':
-      return { [filter.field]: { [filter.op]: filter.value } };
-    default: throw Error();
+export const encodeFilter = (filter: any): any => {
+  if (_.includes(conditionalKeys, filter.op)) {
+    return { [filter.op]: _.map(filter.exprs, v => encodeFilter(v)) };
   }
+  if (_.includes(comparisonKeys, filter.op)) {
+    return { [filter.field]: { [filter.op]: filter.value } };
+  }
+  throw Error();
 }
 
 type FilterButtonProps = {
