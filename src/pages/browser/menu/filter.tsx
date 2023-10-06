@@ -28,11 +28,6 @@ import React from 'react';
 import { MenuButton } from './base';
 import { View } from '@o2ter/react-ui';
 
-type FilterButtonProps = {
-  filter: any[];
-  setFilter: React.Dispatch<React.SetStateAction<any[]>>;
-};
-
 const comparisonKeys = [
   '$eq',
   '$gt',
@@ -48,33 +43,43 @@ const conditionalKeys = [
   '$or',
 ] as const;
 
-type DecodedFilter = {
-  op: string;
-  field?: string;
-  value?: any;
-  exprs?: DecodedFilter[];
+export type FilterType = {
+  op: typeof conditionalKeys[number];
+  exprs: FilterType[];
+} | {
+  op: typeof comparisonKeys[number];
+  field: string;
+  value: any;
 };
 
-const decodeFilter = (selectors: any[]) => {
-  const decoded: DecodedFilter[] = [];
-  for (const selector of selectors) {
-    for (const [key, query] of _.toPairs(selector)) {
-      if (_.includes(conditionalKeys, key) && _.isArray(query)) {
-        decoded.push({ op: key, exprs: decodeFilter(query) });
-      } else if (!key.startsWith('$') && !_.isArray(query)) {
-
-      }
-    }
+export const encodeFilter = (filter: FilterType): any => {
+  switch (filter.op) {
+    case '$and':
+    case '$nor':
+    case '$or':
+      return { [filter.op]: _.map(filter.exprs, v => encodeFilter(v)) };
+    case '$eq':
+    case '$gt':
+    case '$gte':
+    case '$lt':
+    case '$lte':
+    case '$ne':
+      return { [filter.field]: { [filter.op]: filter.value } };
+    default: throw Error();
   }
-  return decoded;
 }
+
+type FilterButtonProps = {
+  filter: FilterType[];
+  setFilter: React.Dispatch<React.SetStateAction<FilterType[]>>;
+};
 
 export const FilterButton: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
 }) => {
 
-  const [decoded, setDecoded] = React.useState(decodeFilter(filter));
+  const [decoded, setDecoded] = React.useState(filter);
 
   return (
     <MenuButton

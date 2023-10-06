@@ -33,7 +33,7 @@ import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf } from '../../components/datasheet/type';
-import { FilterButton } from './menu/filter';
+import { FilterButton, FilterType, encodeFilter } from './menu/filter';
 import { LimitButton } from './menu/limit';
 import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
@@ -83,13 +83,13 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const { filter: initialFilter } = state ?? {};
 
-  const [filter, setFilter] = React.useState<any[]>(_.castArray(initialFilter ?? []));
+  const [filter, setFilter] = React.useState<FilterType[]>(_.castArray(initialFilter ?? []));
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
 
   const query = React.useMemo(() => {
     const query = Proto.Query(className, { master: true });
-    for (const f of filter) query.filter(f);
+    for (const f of filter) query.filter(encodeFilter(f));
     return query;
   }, [className, schema, filter]);
 
