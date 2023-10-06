@@ -72,7 +72,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   setFilter,
 }) => {
 
-  const [decoded, setDecoded] = React.useState(filter);
+  const [store, setStore] = React.useState(filter);
 
   return (
     <MenuButton
