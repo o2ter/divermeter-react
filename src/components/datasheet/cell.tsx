@@ -96,7 +96,13 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
               const className = value?.className;
               if (className) {
                 navigate(`/browser/${className}`, {
-                  state: { filter: [{ _id: { $eq: value.objectId } }] }
+                  state: {
+                    filter: [{
+                      op: '$eq',
+                      field: '_id',
+                      value: value.objectId,
+                    }]
+                  }
                 });
               }
             }}
