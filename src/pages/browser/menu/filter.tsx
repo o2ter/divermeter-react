@@ -57,7 +57,7 @@ type DecodedFilter = {
 
 const decodeFilter = (selectors: any[]) => {
   const decoded: DecodedFilter[] = [];
-  for (const selector of _.castArray(selectors)) {
+  for (const selector of selectors) {
     for (const [key, query] of _.toPairs(selector)) {
       if (_.includes(conditionalKeys, key) && _.isArray(query)) {
         decoded.push({ op: key, exprs: decodeFilter(query) });
