@@ -55,10 +55,16 @@ type DecodedFilter = {
   exprs?: DecodedFilter[];
 };
 
-const decodeFilter = (filters: any[]) => {
+const decodeFilter = (selectors: any[]) => {
   const decoded: DecodedFilter[] = [];
-  for (const filter of filters) {
+  for (const selector of _.castArray(selectors)) {
+    for (const [key, query] of _.toPairs(selector)) {
+      if (_.includes(conditionalKeys, key) && _.isArray(query)) {
 
+      } else if (!key.startsWith('$') && !_.isArray(query)) {
+
+      }
+    }
   }
   return decoded;
 }
@@ -74,7 +80,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
       title='Filter'
       menu={(
         <View classes='text-white' style={{ width: 100, height: 100 }}>
-  
+
         </View>
       )}
     />
