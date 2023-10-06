@@ -33,6 +33,36 @@ type FilterButtonProps = {
   setFilter: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
+const comparisonKeys = [
+  '$eq',
+  '$gt',
+  '$gte',
+  '$lt',
+  '$lte',
+  '$ne',
+] as const;
+
+const conditionalKeys = [
+  '$and',
+  '$nor',
+  '$or',
+] as const;
+
+type DecodedFilter = {
+  op: string;
+  field?: string;
+  value?: any;
+  exprs?: DecodedFilter[];
+};
+
+const decodeFilter = (filters: any[]) => {
+  const decoded: DecodedFilter[] = [];
+  for (const filter of filters) {
+
+  }
+  return decoded;
+}
+
 export const FilterButton: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
