@@ -36,13 +36,17 @@ type FilterButtonProps = {
 export const FilterButton: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
-}) => (
-  <MenuButton
-    title='Filter'
-    menu={(
-      <View classes='text-white' style={{ width: 100, height: 100 }}>
+}) => {
 
-      </View>
-    )}
-  />
-);
+
+  return (
+    <MenuButton
+      title='Filter'
+      menu={(
+        <View classes='text-white' style={{ width: 100, height: 100 }}>
+  
+        </View>
+      )}
+    />
+  );
+}
