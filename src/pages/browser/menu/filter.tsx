@@ -83,7 +83,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 
   if (isConditionalFilter(filter)) {
     return (
-      <View>
+      <Row>
         {_.map(filter.exprs, (f, i) => (
           <FilterSection
             key={i}
@@ -93,7 +93,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
             }
           />
         ))}
-      </View>
+      </Row>
     );
   }
 
