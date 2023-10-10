@@ -86,6 +86,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
               hide();
             }} />
             <Button title='Submit' onPress={() => {
+              setFilter(store);
               hide();
             }} />
           </Row>
