@@ -81,26 +81,20 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   setFilter,
 }) => {
 
-  if (isConditionalFilter(filter)) {
-    return (
-      <Row>
-        <Col>
-          {_.map(filter.exprs, (f, i) => (
-            <FilterSection
-              key={i}
-              filter={f}
-              setFilter={(x) => setFilter((v) =>
-                ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))
-              }
-            />
-          ))}
-        </Col>
-      </Row>
-    );
-  }
-
   return (
-    <Row></Row>
+    <Row>
+      {isConditionalFilter(filter) && <Col>
+        {_.map(filter.exprs, (f, i) => (
+          <FilterSection
+            key={i}
+            filter={f}
+            setFilter={(x) => setFilter((v) =>
+              ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))
+            }
+          />
+        ))}
+      </Col>}
+    </Row>
   );
 }
 
