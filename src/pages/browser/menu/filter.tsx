@@ -29,6 +29,19 @@ import { MenuButton } from './base';
 import { Button, View } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
+const conditionalKeys = [
+  '$and',
+  '$nor',
+  '$or',
+] as const;
+
+type ConditionalFilterType = {
+  op: typeof conditionalKeys[number];
+  exprs: FilterType[];
+};
+
+const isConditionalFilter = (x: FilterType): x is ConditionalFilterType => _.includes(conditionalKeys, x.op);
+
 const comparisonKeys = [
   '$eq',
   '$gt',
@@ -38,26 +51,21 @@ const comparisonKeys = [
   '$ne',
 ] as const;
 
-const conditionalKeys = [
-  '$and',
-  '$nor',
-  '$or',
-] as const;
-
-export type FilterType = {
-  op: typeof conditionalKeys[number];
-  exprs: FilterType[];
-} | {
+type ComparisonFilterType = {
   op: typeof comparisonKeys[number];
   field: string;
   value: any;
 };
 
-export const encodeFilter = (filter: any): any => {
-  if (_.includes(conditionalKeys, filter.op)) {
+const isComparisonFilter = (x: FilterType): x is ComparisonFilterType => _.includes(comparisonKeys, x.op);
+
+export type FilterType = ConditionalFilterType | ComparisonFilterType;
+
+export const encodeFilter = (filter: FilterType): any => {
+  if (isConditionalFilter(filter)) {
     return { [filter.op]: _.map(filter.exprs, v => encodeFilter(v)) };
   }
-  if (_.includes(comparisonKeys, filter.op)) {
+  if (isComparisonFilter(filter)) {
     return { [filter.field]: { [filter.op]: filter.value } };
   }
   throw Error();
@@ -72,6 +80,22 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   filter,
   setFilter,
 }) => {
+
+  if (isConditionalFilter(filter)) {
+    return (
+      <View>
+        {_.map(filter.exprs, (f, i) => (
+          <FilterSection
+            key={i}
+            filter={f}
+            setFilter={(x) => setFilter((v) => 
+              ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x)}))
+            }
+          />
+        ))}
+      </View>
+    );
+  }
 
   return (
     <View></View>
