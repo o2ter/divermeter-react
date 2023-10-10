@@ -149,11 +149,11 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
               setFilter={(x) => setStore(v => _.set([...v], i, _.isFunction(x) ? x(v[i]) : x))}
             />
           ))}
-          <Row>
+          <Row classes='g-1'>
             <Button title='Cancel' outline variant='danger' onPress={() => {
               hide();
             }} />
-            <Button title='Submit' onPress={() => {
+            <Button title='Submit' outline variant='light' onPress={() => {
               setFilter(store);
               hide();
             }} />
