@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Text, Overlay, useTheme, useDocumentEvent } from '@o2ter/react-ui';
+import { Text, Overlay, useDocumentEvent } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { LayoutRectangle } from 'react-native';
 
