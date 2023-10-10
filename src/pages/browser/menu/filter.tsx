@@ -28,6 +28,7 @@ import React from 'react';
 import { MenuButton } from './base';
 import { Button, Picker } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
+import { TDataType } from '../../../proto';
 
 const conditionalKeys = {
   '$and': 'and',
@@ -72,11 +73,13 @@ export const encodeFilter = (filter: FilterType): any => {
 }
 
 type FilterSectionProps = {
+  fields: Record<string, TDataType>;
   filter: FilterType;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
 };
 
 const FilterSection: React.FC<FilterSectionProps> = ({
+  fields,
   filter,
   setFilter,
 }) => (
@@ -99,20 +102,30 @@ const FilterSection: React.FC<FilterSectionProps> = ({
       {_.map(filter.exprs, (f, i) => (
         <FilterSection
           key={i}
+          fields={fields}
           filter={f}
           setFilter={(x) => setFilter((v) => ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))}
         />
       ))}
     </Col>}
+    {isComparisonFilter(filter) && <>
+      <Picker
+        value={filter.field}
+        items={_.map(_.keys(fields), (f) => ({ label: f, value: f }))}
+        onValueChange={(f) => setFilter((v) => ({ ...v, field: f }))}
+      />
+    </>}
   </Row>
 );
 
 type FilterButtonProps = {
+  fields: Record<string, TDataType>;
   filter: FilterType[];
   setFilter: React.Dispatch<React.SetStateAction<FilterType[]>>;
 };
 
 export const FilterButton: React.FC<FilterButtonProps> = ({
+  fields,
   filter,
   setFilter,
 }) => {
@@ -127,6 +140,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
           {_.map(store, (filter, i) => (
             <FilterSection
               key={i}
+              fields={fields}
               filter={filter}
               setFilter={(x) => setStore(v => _.set([...v], i, _.isFunction(x) ? x(v[i]) : x))}
             />

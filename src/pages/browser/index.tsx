@@ -203,7 +203,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         </View>
         <View classes='justify-content-end'>
           <Row classes='text-white'>
-            <FilterButton filter={filter} setFilter={setFilter} />
+            <FilterButton fields={_fields} filter={filter} setFilter={setFilter} />
             <View classes='bg-secondary-200 h-100 mx-2' style={{ width: 1 }} />
             <LimitButton limit={limit} setLimit={setLimit} />
           </Row>
