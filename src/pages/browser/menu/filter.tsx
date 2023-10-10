@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
-import { Button, View } from '@o2ter/react-ui';
+import { Button } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
 
 const conditionalKeys = [
@@ -100,7 +100,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   }
 
   return (
-    <View></View>
+    <Row></Row>
   );
 }
 
@@ -120,7 +120,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
     <MenuButton
       title='Filter'
       menu={({ hide }) => (
-        <View classes='text-white'>
+        <Col classes='text-white'>
           {_.map(store, (filter, i) => (
             <FilterSection
               key={i}
@@ -137,7 +137,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
               hide();
             }} />
           </Row>
-        </View>
+        </Col>
       )}
     />
   );
