@@ -110,8 +110,11 @@ const FilterSection: React.FC<FilterSectionProps> = ({
     </Col>}
     {isComparisonFilter(filter) && <>
       <Picker
-        value={filter.field}
-        items={_.map(_.keys(fields), (f) => ({ label: f, value: f }))}
+        value={filter.field ?? ''}
+        items={[
+          { label: '', value: '' },
+          ..._.map(_.keys(fields), (f) => ({ label: f, value: f }))
+        ]}
         onValueChange={(f) => setFilter((v) => ({ ...v, field: f }))}
       />
     </>}
