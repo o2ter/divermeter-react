@@ -26,7 +26,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
-import { Button } from '@o2ter/react-ui';
+import { Button, Picker } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
 
 const conditionalKeys = {
@@ -83,6 +83,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 
   return (
     <Row>
+      <Picker value={filter.op} items={[
+        ..._.map(_.toPairs(conditionalKeys), ([k, v]) => ({ label: v, value: k })),
+        ..._.map(_.toPairs(comparisonKeys), ([k, v]) => ({ label: v, value: k })),
+      ]} />
       {isConditionalFilter(filter) && <Col>
         {_.map(filter.exprs, (f, i) => (
           <FilterSection
