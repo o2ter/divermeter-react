@@ -27,7 +27,7 @@ import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
 import { Button, View } from '@o2ter/react-ui';
-import { Row } from '@o2ter/wireframe';
+import { Col, Row } from '@o2ter/wireframe';
 
 const conditionalKeys = [
   '$and',
@@ -84,15 +84,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   if (isConditionalFilter(filter)) {
     return (
       <Row>
-        {_.map(filter.exprs, (f, i) => (
-          <FilterSection
-            key={i}
-            filter={f}
-            setFilter={(x) => setFilter((v) => 
-              ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x)}))
-            }
-          />
-        ))}
+        <Col>
+          {_.map(filter.exprs, (f, i) => (
+            <FilterSection
+              key={i}
+              filter={f}
+              setFilter={(x) => setFilter((v) =>
+                ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))
+              }
+            />
+          ))}
+        </Col>
       </Row>
     );
   }
