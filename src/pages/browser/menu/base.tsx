@@ -51,7 +51,6 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
   title,
   menu,
 }) => {
-  const theme = useTheme();
   const ref = React.useRef<React.ComponentRef<typeof Overlay>>(null);
   const ref2 = React.useRef<React.ComponentRef<typeof Row>>(null);
   const [showMenu, setShowMenu] = React.useState(false);
