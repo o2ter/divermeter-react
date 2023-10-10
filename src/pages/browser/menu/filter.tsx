@@ -26,7 +26,8 @@
 import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
-import { View } from '@o2ter/react-ui';
+import { Button, View } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 
 const comparisonKeys = [
   '$eq',
@@ -77,9 +78,17 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   return (
     <MenuButton
       title='Filter'
-      menu={(
-        <View classes='text-white' style={{ width: 100, height: 100 }}>
+      menu={({ hide }) => (
+        <View classes='text-white'>
 
+          <Row>
+            <Button title='Cancel' outline variant='danger' onPress={() => {
+              hide();
+            }} />
+            <Button title='Submit' onPress={() => {
+              hide();
+            }} />
+          </Row>
         </View>
       )}
     />

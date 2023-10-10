@@ -31,7 +31,7 @@ import { LayoutRectangle } from 'react-native';
 
 type MenuButtonProps = {
   title: string;
-  menu: React.ReactNode
+  menu: React.ReactNode | ((x: { hide: () => void }) => React.ReactNode)
 };
 
 const isChildNode = (parent?: Node | null, node?: Node | EventTarget | null) => {
@@ -55,7 +55,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
   const ref2 = React.useRef<React.ComponentRef<typeof Row>>(null);
   const [showMenu, setShowMenu] = React.useState(false);
   const [containerLayout, setContainerLayout] = React.useState<LayoutRectangle>();
-  const _extraData = [showMenu, containerLayout, menu];
+  const _extraData = [showMenu, containerLayout];
   useDocumentEvent('mousedown', (e) => {
     const node = ref.current;
     const node2 = ref2.current;
@@ -79,7 +79,9 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
             borderTopRightRadius: 0,
             opacity: containerLayout ? 1 : 0,
           }}
-        >{menu}</Row>
+        >{_.isFunction(menu) ? menu({
+          hide: () => setShowMenu(false),
+        }) : menu}</Row>
       )}
     >
       <Text
