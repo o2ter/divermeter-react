@@ -29,35 +29,35 @@ import { MenuButton } from './base';
 import { Button } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
 
-const conditionalKeys = [
-  '$and',
-  '$nor',
-  '$or',
-] as const;
+const conditionalKeys = {
+  '$and': 'and',
+  '$nor': 'nor',
+  '$or': 'or',
+};
 
 type ConditionalFilterType = {
-  op: typeof conditionalKeys[number];
+  op: keyof typeof conditionalKeys;
   exprs: FilterType[];
 };
 
-const isConditionalFilter = (x: FilterType): x is ConditionalFilterType => _.includes(conditionalKeys, x.op);
+const isConditionalFilter = (x: FilterType): x is ConditionalFilterType => _.includes(_.keys(conditionalKeys), x.op);
 
-const comparisonKeys = [
-  '$eq',
-  '$gt',
-  '$gte',
-  '$lt',
-  '$lte',
-  '$ne',
-] as const;
+const comparisonKeys = {
+  '$eq': 'equal',
+  '$gt': 'greater',
+  '$gte': 'greater or equal',
+  '$lt': 'less',
+  '$lte': 'less or equal',
+  '$ne': 'not equal',
+};
 
 type ComparisonFilterType = {
-  op: typeof comparisonKeys[number];
+  op: keyof typeof comparisonKeys;
   field: string;
   value: any;
 };
 
-const isComparisonFilter = (x: FilterType): x is ComparisonFilterType => _.includes(comparisonKeys, x.op);
+const isComparisonFilter = (x: FilterType): x is ComparisonFilterType => _.includes(_.keys(comparisonKeys), x.op);
 
 export type FilterType = ConditionalFilterType | ComparisonFilterType;
 
