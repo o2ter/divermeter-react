@@ -79,36 +79,33 @@ type FilterSectionProps = {
 const FilterSection: React.FC<FilterSectionProps> = ({
   filter,
   setFilter,
-}) => {
-
-  return (
-    <Row>
-      <Picker
-        value={filter.op}
-        items={[
-          ..._.map(_.toPairs(conditionalKeys), ([op, v]) => ({ label: v, value: op })),
-          ..._.map(_.toPairs(comparisonKeys), ([op, v]) => ({ label: v, value: op })),
-        ]}
-        onValueChange={(op) => {
-          if (_.includes(conditionalKeys, op)) {
-            setFilter((v) => ({ ..._.pick(v, 'exprs'), op }) as any)
-          } else if (_.includes(conditionalKeys, op)) {
-            setFilter((v) => ({ ..._.pick(v, 'field', 'value'), op }) as any)
-          }
-        }}
-      />
-      {isConditionalFilter(filter) && <Col>
-        {_.map(filter.exprs, (f, i) => (
-          <FilterSection
-            key={i}
-            filter={f}
-            setFilter={(x) => setFilter((v) => ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))}
-          />
-        ))}
-      </Col>}
-    </Row>
-  );
-}
+}) => (
+  <Row>
+    <Picker
+      value={filter.op}
+      items={[
+        ..._.map(_.toPairs(conditionalKeys), ([op, v]) => ({ label: v, value: op })),
+        ..._.map(_.toPairs(comparisonKeys), ([op, v]) => ({ label: v, value: op })),
+      ]}
+      onValueChange={(op) => {
+        if (_.includes(conditionalKeys, op)) {
+          setFilter((v) => ({ ..._.pick(v, 'exprs'), op }) as any)
+        } else if (_.includes(conditionalKeys, op)) {
+          setFilter((v) => ({ ..._.pick(v, 'field', 'value'), op }) as any)
+        }
+      }}
+    />
+    {isConditionalFilter(filter) && <Col>
+      {_.map(filter.exprs, (f, i) => (
+        <FilterSection
+          key={i}
+          filter={f}
+          setFilter={(x) => setFilter((v) => ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))}
+        />
+      ))}
+    </Col>}
+  </Row>
+);
 
 type FilterButtonProps = {
   filter: FilterType[];
