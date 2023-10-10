@@ -63,6 +63,21 @@ export const encodeFilter = (filter: any): any => {
   throw Error();
 }
 
+type FilterSectionProps = {
+  filter: FilterType;
+  setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
+};
+
+const FilterSection: React.FC<FilterSectionProps> = ({
+  filter,
+  setFilter,
+}) => {
+
+  return (
+    <View></View>
+  );
+}
+
 type FilterButtonProps = {
   filter: FilterType[];
   setFilter: React.Dispatch<React.SetStateAction<FilterType[]>>;
@@ -80,7 +95,13 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
       title='Filter'
       menu={({ hide }) => (
         <View classes='text-white'>
-
+          {_.map(store, (filter, i) => (
+            <FilterSection
+              key={i}
+              filter={filter}
+              setFilter={(x) => setStore(v => _.set([...v], i, _.isFunction(x) ? x(v[i]) : x))}
+            />
+          ))}
           <Row>
             <Button title='Cancel' outline variant='danger' onPress={() => {
               hide();
