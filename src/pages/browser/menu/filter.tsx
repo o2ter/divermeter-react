@@ -85,8 +85,9 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 }) => (
   <Row>
     <Picker
-      value={filter.op}
+      value={filter.op ?? ''}
       items={[
+        { label: '', value: '' },
         ..._.map(_.toPairs(conditionalKeys), ([op, v]) => ({ label: v, value: op })),
         ..._.map(_.toPairs(comparisonKeys), ([op, v]) => ({ label: v, value: op })),
       ]}
