@@ -51,7 +51,7 @@ export const LimitButton: React.FC<LimitButtonProps> = ({
     <MenuButton
       title='Limit'
       menu={(
-        <Row classes='text-white g-2 align-items-center'>
+        <Row classes='text-white  gap-2 align-items-center'>
           <Text>Limit</Text>
           <TextInput
             classes='border-0 bg-primary-800'

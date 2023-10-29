@@ -33,7 +33,7 @@ import { SideMenu } from '../../components/sidemenu';
 import { Browser } from '../browser';
 import { Config } from '../config';
 import NotFound from '../NotFound';
-import { Row } from '@o2ter/wireframe';
+import { Row, Col } from '@o2ter/wireframe';
 
 export const Dashboard = () => {
   const proto = useProto();
@@ -48,16 +48,16 @@ export const Dashboard = () => {
   });
   return (
     <Row classes='flex-fill'>
-      <View classes='bg-primary-900'>
+      <Col classes='col-auto bg-primary-900'>
         <SideMenu schema={schema} />
-      </View>
-      <View classes='flex-fill' style={{ height: 0, minHeight: '100%' }}>
+      </Col>
+      <Col style={{ height: 0, minHeight: '100%' }}>
         <Navigator>
           <Route path='/browser/:class' component={Browser} schema={schema} />
           <Route path='/config' component={Config} />
           <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
         </Navigator>
-      </View>
+      </Col>
     </Row>
   );
 };

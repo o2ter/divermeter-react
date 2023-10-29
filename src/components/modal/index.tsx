@@ -51,7 +51,7 @@ export const Modal: React.FC<ModalProps> = ({
       <Text classes='h2'>{title}</Text>
     </View>
     {children}
-    <Row classes='bg-body g-2 p-3 border-top justify-content-end'>
+    <Row classes='bg-body  gap-2 p-3 border-top justify-content-end'>
       <Button
         outline={variant !== 'danger'}
         title='Cancel'
