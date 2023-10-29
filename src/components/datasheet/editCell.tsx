@@ -154,7 +154,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
     case 'file':
       return (
         <View
-          classes='g-1 bg-white'
+          classes='gap-1 bg-white'
           style={{
             ...paddingStyle,
             ...borderStyle,
