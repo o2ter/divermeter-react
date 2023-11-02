@@ -1348,13 +1348,13 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.251":
-  version "0.0.251"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.251.tgz#8b2373e666cae598ade988349b9c5659286a8c03"
-  integrity sha512-1zTPMpc/P0K4Oz0adWY6k0FrfIYnAXeZxSZcYHKEPJx7Yg7Q/HAKCoTia0j4FYMGBk7latPV0R5k/c7L7YrLKQ==
+"@o2ter/react-ui@^0.0.263":
+  version "0.0.263"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.263.tgz#27cee785afee50d2e8159bca8b235196c0197a39"
+  integrity sha512-S6/VSf3hEfHx+EXSIT8vIywOPk9kSb1OLtLqJDj30jV4cYA+kW6Li0r9JCVzhrg9uod0d/8jJ0VCM3U+66ua1A==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
-    "@react-native/normalize-color" "^2.1.0"
+    "@react-native/normalize-colors" "^0.74.1"
     codemirror "^6.0.1"
     d3-dsv "^3.0.1"
     jsbarcode ">=3.11.5"
@@ -1379,10 +1379,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.43":
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.43.tgz#8b79352b0d80cea1f1bed42f62234d00da77a34d"
-  integrity sha512-gjJcoD5m5N/Mz7eccpuGbM/7cBsuXm6e5HW8fwwsBogEvhHVA2crbYML8g3ItcIGDyqTVnEIsSOXQ2f88ovcdw==
+"@o2ter/wireframe@^0.0.45":
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.45.tgz#e7df79c5abb714a04bae30d3aa9f2cd853bf710b"
+  integrity sha512-Sp2NVagwdBrP3AS/+FWxyGBXqO4xkv0+Suyxtdoh+bZeXfftcKKmW3yl1V3RHy8pRyldWuce4Sl4eLBbO5wAcQ==
   dependencies:
     lodash ">=4.17.21"
 
@@ -1395,6 +1395,11 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-2.1.0.tgz#939b87a9849e81687d3640c5efa2a486ac266f91"
   integrity sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==
+
+"@react-native/normalize-colors@^0.74.1":
+  version "0.74.1"
+  resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.74.1.tgz#6e8ccf99954728dcd3cfe0d56e758ee5050a7bea"
+  integrity sha512-r+bTRs6pImqE3fx4h7bPzH2sOWSrnSHF/RJ7d00pNUj2P6ws3DdhS7WV+/7YosZkloYQfkiIkK3pIHvcYn665w==
 
 "@react-native/virtualized-lists@^0.72.4":
   version "0.72.8"
