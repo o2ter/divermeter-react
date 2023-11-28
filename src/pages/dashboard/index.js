@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useToast } from '@o2ter/react-ui';
+import { Navigator, Route, View, useAlert } from '@o2ter/react-ui';
 
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';
@@ -37,7 +37,7 @@ import { Row, Col } from '@o2ter/wireframe';
 
 export const Dashboard = () => {
   const proto = useProto();
-  const { showError } = useToast();
+  const { showError } = useAlert();
   const { resource: schema } = useAsyncResource(async () => {
     try {
       return await proto.schema({ master: true });

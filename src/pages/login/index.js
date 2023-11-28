@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Form, Text, useActivity, useToast } from '@o2ter/react-ui';
+import { View, Form, Text, useActivity, useAlert } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
 import Localization from '../../i18n/login';
@@ -36,7 +36,7 @@ import { useAuth } from '../../config';
 export const Login = () => {
   const [, setAuth] = useAuth();
   const startActivity = useActivity();
-  const { showError } = useToast();
+  const { showError } = useAlert();
   const localization = Localization.useLocalize();
   return (
     <View classes='flex-fill bg-primary-900 align-items-center justify-content-center'>

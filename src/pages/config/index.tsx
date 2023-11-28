@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, Button, useModal, useActivity, useToast } from '@o2ter/react-ui';
+import { View, Text, Button, useModal, useActivity, useAlert } from '@o2ter/react-ui';
 import { useProto } from '../../proto';
 import { useAsyncResource } from 'sugax';
 import { Decimal, serialize } from 'proto.io/dist/client';
@@ -60,7 +60,7 @@ export const Config: React.FC<{}> = () => {
   const setModal = useModal();
   const startActivity = useActivity();
 
-  const { showError } = useToast();
+  const { showError } = useAlert();
 
   return (
     <>

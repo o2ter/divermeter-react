@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useToast, useActivity, useLocation, useModal } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -74,7 +74,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const setModal = useModal();
 
   const startActivity = useActivity();
-  const { showError } = useToast();
+  const { showError } = useAlert();
 
   const readonlyKeys = [
     ...defaultObjectReadonlyKeys,

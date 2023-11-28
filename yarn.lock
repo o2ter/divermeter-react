@@ -1311,10 +1311,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.42":
-  version "0.0.42"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.42.tgz#c9971f9446c843eb515dbdf8c3585e05a4ab6062"
-  integrity sha512-vlcnuEFQXE1lIaYHWCWWhqY9DV31YChMiZ4JnMJrYWmtFQsuqDK4Z3usKTZRmXwBTB0n1VQLPY4vcDhhhsXrtw==
+"@o2ter/react-booster@^0.0.43":
+  version "0.0.43"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.43.tgz#28b2a440e5a59ae3b12290488d190fd78ebd0f1c"
+  integrity sha512-NRd9FKX674BGitDDKahZBgQMORN9BZccLfalEF+fRUKt0qMll9o17CJhzkZVdShB4XOV/7na9WvzH0IHN0psMA==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -1348,10 +1348,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.263":
-  version "0.0.263"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.263.tgz#27cee785afee50d2e8159bca8b235196c0197a39"
-  integrity sha512-S6/VSf3hEfHx+EXSIT8vIywOPk9kSb1OLtLqJDj30jV4cYA+kW6Li0r9JCVzhrg9uod0d/8jJ0VCM3U+66ua1A==
+"@o2ter/react-ui@^0.0.268":
+  version "0.0.268"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.268.tgz#99c0e694fc7a91556d9c947f0dd9d59a631de98f"
+  integrity sha512-1Efd2RhjSKq4UIAU/7mF+0mOcHapstIdNX/K335H3AqtmsBkmsGt2otFRs+hezARtAYYsH8Gl3Gx8bVnagRuNg==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
@@ -1379,10 +1379,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.45":
-  version "0.0.45"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.45.tgz#e7df79c5abb714a04bae30d3aa9f2cd853bf710b"
-  integrity sha512-Sp2NVagwdBrP3AS/+FWxyGBXqO4xkv0+Suyxtdoh+bZeXfftcKKmW3yl1V3RHy8pRyldWuce4Sl4eLBbO5wAcQ==
+"@o2ter/wireframe@^0.0.46":
+  version "0.0.46"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.46.tgz#8dc8eeba98fec93137bfad20c4edfe340c79feda"
+  integrity sha512-iO4hZCjeCiCY39hgOQolo9CK0FqK4hviTCk5NR0U+kNU7MKXygkOVfhc3LC58e7WN2eAIB+T3eaOeKk9bN7H6w==
   dependencies:
     lodash ">=4.17.21"
 
@@ -5197,12 +5197,10 @@ styleq@^0.1.3:
   resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.1.3.tgz#8efb2892debd51ce7b31dc09c227ad920decab71"
   integrity sha512-3ZUifmCDCQanjeej1f6kyl/BeP/Vae5EYkQ9iJfUm/QwZvlgnZzyflqAsAWYURdtea8Vkvswu2GrC57h3qffcA==
 
-sugax@^1.0.89:
-  version "1.0.89"
-  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.89.tgz#4fa0d8a2c0faf2f7b8724e1b9c22f801d96b6a4e"
-  integrity sha512-d7OcIS9hATMXuDDqaWeUmLqag6+a+SgcjNASe8duEJxONsyHPKfoj0WN3SFN1WDRS98BCBvnoBmwNJFOnenWSQ==
-  dependencies:
-    lodash ">=4.17.21"
+sugax@^1.0.90:
+  version "1.0.90"
+  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.90.tgz#77e16d84c4e1cd57ba7858c43255c152edde072d"
+  integrity sha512-ru+7mmWcl7dhIVwMSwOwUly33fM+jcld4hxRNlC/piwwkbytnfbN693mtBuA89MwI73HgbTPqlEpbI9aph7tmg==
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
