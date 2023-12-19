@@ -30,7 +30,7 @@ import { Row } from '@o2ter/wireframe';
 
 type ModalProps = React.PropsWithChildren<{
   title: string;
-  variant?: string;
+  color?: string;
   confirmed?: boolean;
   onCancel: () => void;
   onSubmit?: () => void;
@@ -39,7 +39,7 @@ type ModalProps = React.PropsWithChildren<{
 
 export const Modal: React.FC<ModalProps> = ({
   title,
-  variant = 'primary',
+  color = 'primary',
   confirmed = true,
   onCancel,
   onSubmit,
@@ -47,27 +47,27 @@ export const Modal: React.FC<ModalProps> = ({
   children,
 }) => (
   <View classes='rounded-2 overflow-hidden w-50'>
-    <View classes={`bg-${variant}-600 p-3 text-white`}>
+    <View classes={`bg-${color}-600 p-3 text-white`}>
       <Text classes='h2'>{title}</Text>
     </View>
     {children}
     <Row classes='bg-body  gap-2 p-3 border-top justify-content-end'>
       <Button
-        outline={variant !== 'danger'}
+        outline={color !== 'danger'}
         title='Cancel'
-        variant={variant}
+        color={color}
         onPress={onCancel}
       />
       {onSubmit && <Button
         title='Submit'
-        variant={variant}
+        color={color}
         onPress={onSubmit}
       />}
       {onConfirm && <Button
         title='Confirm'
-        outline={variant === 'danger'}
+        outline={color === 'danger'}
         disabled={!confirmed}
-        variant={variant}
+        color={color}
         onPress={onConfirm}
       />}
     </Row>
@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
 
 type ConfirmModalProps = {
   title: string;
-  variant?: string;
+  color?: string;
   comfirmMessage: string;
   comfirmAnswer: string;
   onCancel: () => void;
@@ -84,7 +84,7 @@ type ConfirmModalProps = {
 };
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({
-  variant = 'danger',
+  color = 'danger',
   comfirmMessage,
   comfirmAnswer,
   ...props
@@ -92,7 +92,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   const [value, setValue] = React.useState('');
   return (
     <Modal
-      variant={variant}
+      color={color}
       confirmed={value === comfirmAnswer}
       {...props}
     >

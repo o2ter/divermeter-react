@@ -150,10 +150,10 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
             />
           ))}
           <Row classes='gap-1'>
-            <Button title='Cancel' outline variant='danger' onPress={() => {
+            <Button title='Cancel' outline color='danger' onPress={() => {
               hide();
             }} />
-            <Button title='Submit' outline variant='light' onPress={() => {
+            <Button title='Submit' outline color='light' onPress={() => {
               setFilter(store);
               hide();
             }} />

@@ -74,7 +74,7 @@ export const Login = () => {
             <Form.TextField secureTextEntry name='pass' />
           </View>
           <View classes='py-1'>
-            <Form.Button title={localization.string('login')} variant='primary' action='submit' />
+            <Form.Button title={localization.string('login')} color='primary' action='submit' />
           </View>
         </Form>
       </View>
