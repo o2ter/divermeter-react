@@ -51,7 +51,7 @@ export const Dashboard = () => {
       <Col classes='col-auto bg-primary-900'>
         <SideMenu schema={schema} />
       </Col>
-      <Col style={{ height: 0, minHeight: '100%' }}>
+      <Col style={{ minHeight: '100%' }}>
         <Navigator>
           <Route path='/browser/:class' component={Browser} schema={schema} />
           <Route path='/config' component={Config} />
