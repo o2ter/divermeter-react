@@ -53,7 +53,7 @@ export const Modal: React.FC<ModalProps> = ({
     {children}
     <Row classes='bg-body  gap-2 p-3 border-top justify-content-end'>
       <Button
-        outline={color !== 'danger'}
+        variant={color === 'danger' ? 'solid' : 'outline'}
         title='Cancel'
         color={color}
         onPress={onCancel}
@@ -65,7 +65,7 @@ export const Modal: React.FC<ModalProps> = ({
       />}
       {onConfirm && <Button
         title='Confirm'
-        outline={color === 'danger'}
+        variant={color !== 'danger' ? 'solid' : 'outline'}
         disabled={!confirmed}
         color={color}
         onPress={onConfirm}

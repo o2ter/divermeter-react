@@ -72,7 +72,7 @@ export const Config: React.FC<{}> = () => {
         <View classes='justify-content-end'>
           <Row classes='text-white'>
             <Button
-              outline
+              variant='outline'
               color='light'
               title='Create a parameter'
               onPress={() => setModal(
