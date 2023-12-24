@@ -75,7 +75,7 @@ const Section = ({ header, link, children }) => {
 
 export const SideMenu = ({ schema }) => {
   const [, setAuth] = useAuth();
-  const localization = Localization.useLocalize();
+  const { string: t } = Localization.useLocalize();
   const sections = [
     {
       header: 'Browser',
@@ -101,7 +101,7 @@ export const SideMenu = ({ schema }) => {
           icon='MaterialIcons'
           iconName='logout'
           onPress={() => { setAuth(); }}
-          label={localization.string('logout')}
+          label={t('logout')}
         />
       </View>
     </View>

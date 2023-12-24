@@ -12,12 +12,12 @@ import Localization from '../../i18n/NotFound';
 
 export default function NotFound() {
 
-  const localization = Localization.useLocalize();
+  const { string: t } = Localization.useLocalize();
 
   return (
     <View classes='align-items-center justify-content-center' style={{ flex: 1 }}>
       <Text classes='display-1 fw-bold'>404</Text>
-      <Text classes='fs-3 fw-bold'>{localization.string('NotFoundMessage')}</Text>
+      <Text classes='fs-3 fw-bold'>{t('NotFoundMessage')}</Text>
     </View>
   );
 }

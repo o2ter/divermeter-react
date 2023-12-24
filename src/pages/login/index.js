@@ -37,7 +37,7 @@ export const Login = () => {
   const [, setAuth] = useAuth();
   const startActivity = useActivity();
   const { showError } = useAlert();
-  const localization = Localization.useLocalize();
+  const { string: t } = Localization.useLocalize();
   return (
     <View
       classes='bg-primary-900 align-items-center justify-content-center'
@@ -46,8 +46,8 @@ export const Login = () => {
       <View classes='bg-white px-3 py-2 rounded-1'>
         <Form
           schema={{
-            user: string().required().label(localization.string('username')),
-            pass: string().required().label(localization.string('password')),
+            user: string().required().label(t('username')),
+            pass: string().required().label(t('password')),
           }}
           onSubmit={async (values) => {
             try {
@@ -58,26 +58,26 @@ export const Login = () => {
                 window.location.reload();
               });
             } catch {
-              showError(localization.string('invalid_user'));
+              showError(t('invalid_user'));
             }
           }}
         >
           <View classes='py-1'>
             <Row classes='justify-content-between'>
-              <Text>{localization.string('username')}</Text>
+              <Text>{t('username')}</Text>
               <Form.ErrorMessage name='user' />
             </Row>
             <Form.TextField name='user' />
           </View>
           <View classes='py-1'>
             <Row classes='justify-content-between'>
-              <Text>{localization.string('password')}</Text>
+              <Text>{t('password')}</Text>
               <Form.ErrorMessage name='pass' />
             </Row>
             <Form.TextField secureTextEntry name='pass' />
           </View>
           <View classes='py-1'>
-            <Form.Button title={localization.string('login')} color='primary' action='submit' />
+            <Form.Button title={t('login')} color='primary' action='submit' />
           </View>
         </Form>
       </View>
