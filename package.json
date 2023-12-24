@@ -27,7 +27,7 @@
     "@o2ter/wireframe": ">=0.0.49",
     "express": ">=4.18.2",
     "lodash": ">=4.17.21",
-    "proto.io": ">=0.0.57",
+    "proto.io": ">=0.0.61",
     "react": ">=18.2.0",
     "react-native-web": ">=0.18.9",
     "sugax": ">=1.0.90"
@@ -54,7 +54,7 @@
     "@types/react": "^18.2.21",
     "@types/react-native": "^0.72.2",
     "lodash": "^4.17.21",
-    "proto.io": "^0.0.60",
+    "proto.io": "^0.0.61",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native-reanimated": "^3.4.2",
