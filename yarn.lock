@@ -4474,10 +4474,10 @@ prop-types@^15.5.7, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.61:
-  version "0.0.61"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.61.tgz#5cbeb91b818df2e8fccaccee2e8483c7ea44302c"
-  integrity sha512-KRVvM7Mu3wHl58kQXjNOMHeQWFATgDSfkcai86r4r2ZGqqThRWVHYot7DXWvysVgUSa52v7GKIm11hOtMKlukQ==
+proto.io@^0.0.62:
+  version "0.0.62"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.62.tgz#8bd9927cae23b9033aec3b6debce4ac2e6fd33f4"
+  integrity sha512-sVimpirgZVqa6rtRFFIAyMQlSMyAT41HnVLsxatZ9gQwpaZUCS+zlRxdXCU216znG8rOxLaRSniHXYWCL2sYbA==
   dependencies:
     "@o2ter/crypto-js" "^0.0.5"
     axios "^1.6.0"
