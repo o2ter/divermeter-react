@@ -1379,10 +1379,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.48":
-  version "0.0.48"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.48.tgz#cd93f0a68a17a308636bd2a79e4073416f285ecd"
-  integrity sha512-b5boa+uHZBdRoH/uq+VdcMWggDNts+QVVGQjfl/I++L3hOrq/gmlLqIQRQ01LrGirq2qV9Sx+LpEH2d+GcNWSA==
+"@o2ter/wireframe@^0.0.49":
+  version "0.0.49"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.49.tgz#1a052aef55ff91024659cd62444cc71c3fd30a28"
+  integrity sha512-xZ0zxPm8w0SlJb7G2c557bkDxNdjfXHVbxmqauUUM7mOBNShMeWLQ4RYqw5sPhE4lt/RJw4zjr8AyD14y/smrw==
   dependencies:
     lodash ">=4.17.21"
 

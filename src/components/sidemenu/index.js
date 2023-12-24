@@ -87,12 +87,8 @@ export const SideMenu = ({ schema }) => {
     },
   ];
 
-  const height = typeof CSS !== 'undefined' &&
-    'supports' in CSS &&
-    CSS.supports('height', '100dvh') ? '100dvh' : '100vh';
-
   return (
-    <View classes='flex-fill' style={{ height }}>
+    <View classes='flex-fill dvh-100'>
       <View classes='flex-fill bg-primary-700 py-3 pl-4 pr-5 overflow-auto'>
         {_.map(sections, (section, i) => (
           <View key={section.header} classes={i === 0 ? '' : 'mt-2'}>
