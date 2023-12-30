@@ -1316,10 +1316,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.295":
-  version "0.0.295"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.295.tgz#f4013f720ae6c938cbf0f6bc8015e6199fa6bc1f"
-  integrity sha512-O24gy5K3xzp6e3kwqdmIaOCFbofB9BUn4FOOAD22oW7mcz80YQj/xINT1q/gp9+76gGDhHbydJqgaVvjDc2HPw==
+"@o2ter/react-ui@^0.0.296":
+  version "0.0.296"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.296.tgz#a2f5501ae867b13de3d5cfb3ae5ea7f42337f8e5"
+  integrity sha512-thrF7rP3MydM8S9FzP/ze/fr6S0Q0WgxMDpzhATIx7aE9BwHhAN7/QZc1MMUcw9gEU7OhwePEV/BQ9NJdMQ8xw==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
@@ -1346,10 +1346,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.51":
-  version "0.0.51"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.51.tgz#6e64a33f7d0182ae99c20296824d153e59546094"
-  integrity sha512-JnTMItblySOLcmCgV0Goh0jLImfayNT8IWU+QXy+fj8+uljrYUgHfPk0Ae3XlpS2eIpo5hgI3Fx41OqdiP4X/g==
+"@o2ter/wireframe@^0.0.52":
+  version "0.0.52"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.52.tgz#a52c1ea09179cad14419728ae3adcf1f8da7bc3c"
+  integrity sha512-Z1knN/dz95bQJOgjGodKpKiljtZN9IST1WNIALt8VSrzFz3NVtK6tnzysVZKouBcbNBPWIxwEiFfjqwERm98/Q==
   dependencies:
     lodash ">=4.17.21"
 
