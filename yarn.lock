@@ -1316,10 +1316,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.306":
-  version "0.0.306"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.306.tgz#beedeb79b4007ac32d8635f6d4c29c7601de3831"
-  integrity sha512-wrL8K9hz4h8j9PFzsF16EG08tZNX3Yw0X2z80QCTIyuG9ERwycdtlZ0xrZBCTMkB+B3iP5jOXQ5uLC++NAMj1A==
+"@o2ter/react-ui@^0.0.307":
+  version "0.0.307"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.307.tgz#7426e9b1f4a4953e5e1c6dfb93989b05eab26fe9"
+  integrity sha512-byqe7Xm9dxmH/wBUPdaijiin7zRC4NPqIE+gXxFz7psqt3xXgoau5XZck/5NGg66wdEPh0ecfeScpvhFf0geqg==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
@@ -5058,10 +5058,10 @@ styleq@^0.1.3:
   resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.1.3.tgz#8efb2892debd51ce7b31dc09c227ad920decab71"
   integrity sha512-3ZUifmCDCQanjeej1f6kyl/BeP/Vae5EYkQ9iJfUm/QwZvlgnZzyflqAsAWYURdtea8Vkvswu2GrC57h3qffcA==
 
-sugax@^1.0.90:
-  version "1.0.90"
-  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.90.tgz#77e16d84c4e1cd57ba7858c43255c152edde072d"
-  integrity sha512-ru+7mmWcl7dhIVwMSwOwUly33fM+jcld4hxRNlC/piwwkbytnfbN693mtBuA89MwI73HgbTPqlEpbI9aph7tmg==
+sugax@^1.0.92:
+  version "1.0.92"
+  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.92.tgz#710a466b739ff2788e10ac2824a71cc09276682e"
+  integrity sha512-ayJxMnA9mS33C1FV1OZnwoySXaDxCEjtmYKxunf7qHioEobG+Ye43a4jp/TmYHLV+SKfPOTz3bmK3IURzPOHnA==
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
