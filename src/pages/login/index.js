@@ -39,10 +39,7 @@ export const Login = () => {
   const { showError } = useAlert();
   const { string: t } = Localization.useLocalize();
   return (
-    <View
-      classes='bg-primary-900 align-items-center justify-content-center'
-      style={{ height: '100dvh' }}
-    >
+    <View classes='flex-fill bg-primary-900 align-items-center justify-content-center'>
       <View classes='bg-white px-3 py-2 rounded-1'>
         <Form
           schema={{
