@@ -9,7 +9,7 @@
     "maxNodeModuleJsDepth": 1,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "declaration": true,
     "declarationDir": "types",
     "outDir": "dist",
