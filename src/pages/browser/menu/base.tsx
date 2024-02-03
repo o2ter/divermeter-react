@@ -68,20 +68,24 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
     <Overlay
       ref={ref}
       extraData={React.useMemo(() => _extraData, _extraData)}
-      render={(layout) => showMenu && (
-        <Row
-          ref={ref2}
-          classes='position-absolute py-2 px-3 rounded-2 bg-primary-600'
-          onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
-          style={{
-            top: layout.y + layout.height,
-            left: layout.x + layout.width - (containerLayout?.width ?? 0),
-            borderTopRightRadius: 0,
-            opacity: containerLayout ? 1 : 0,
-          }}
-        >{_.isFunction(menu) ? menu({
-          hide: () => setShowMenu(false),
-        }) : menu}</Row>
+      render={(layout) => (
+        <>
+          {showMenu && (
+            <Row
+              ref={ref2}
+              classes='position-absolute py-2 px-3 rounded-2 bg-primary-600'
+              onLayout={(e) => setContainerLayout(e.nativeEvent.layout)}
+              style={{
+                top: layout.y + layout.height,
+                left: layout.x + layout.width - (containerLayout?.width ?? 0),
+                borderTopRightRadius: 0,
+                opacity: containerLayout ? 1 : 0,
+              }}
+            >{_.isFunction(menu) ? menu({
+              hide: () => setShowMenu(false),
+            }) : menu}</Row>
+          )}
+        </>
       )}
     >
       <Text
