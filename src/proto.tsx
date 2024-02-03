@@ -26,27 +26,29 @@
 import _ from 'lodash';
 import React from 'react';
 import ProtoClient from 'proto.io/dist/client';
-import { env } from '@o2ter/react-booster/src/route/client';
 
 export const createProto = (
+  endpoint: string,
   auth?: { user: string; pass: string; },
-) => new ProtoClient({ endpoint: env.PROTO_SERVER_URL, masterUser: auth });
+) => new ProtoClient({ endpoint, masterUser: auth });
 
-const ProtoContext = React.createContext(createProto());
+const ProtoContext = React.createContext<ReturnType<typeof createProto> | undefined>(undefined);
 
 export const ProtoProvider: React.FC<React.PropsWithChildren<{
+  endpoint: string;
   auth?: { user: string; pass: string; };
 }>> = ({
+  endpoint,
   auth,
   children,
 }) => {
-  const proto = React.useMemo(() => createProto(auth), [auth?.user, auth?.pass]);
+  const proto = React.useMemo(() => createProto(endpoint, auth), [auth?.user, auth?.pass]);
   return (
     <ProtoContext.Provider value={proto}>{children}</ProtoContext.Provider>
   );
 };
 
-export const useProto = () => React.useContext(ProtoContext);
+export const useProto = () => React.useContext(ProtoContext)!;
 
 export type TProto = ReturnType<typeof useProto>;
 export type TSchema = Awaited<ReturnType<TProto['schema']>>;

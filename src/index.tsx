@@ -30,10 +30,10 @@ import { useAuth } from './config';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 
-export const Browser: React.FC<{}> = () => {
+export const Browser: React.FC<{ endpoint: string }> = ({ endpoint }) => {
   const [auth] = useAuth();
   return typeof window === 'undefined' ? <></> : (
-    <ProtoProvider auth={auth}>
+    <ProtoProvider endpoint={endpoint} auth={auth}>
       {auth ? <Dashboard /> : <Login />}
     </ProtoProvider>
   );
