@@ -42,8 +42,8 @@ export const LimitButton: React.FC<LimitButtonProps> = ({
   const [text, setText] = React.useState<string | null>(null);
 
   function submit() {
-    const number = text ? parseFloat(text) : limit;
-    if (_.isFinite(number)) setLimit(number);
+    const number = text ? parseInt(text, 10) : limit;
+    if (_.isSafeInteger(number)) setLimit(number);
     setText(null);
   }
 
