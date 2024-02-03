@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import Browser from '../../src';
-import './css/main.scss';
 import { env } from '@o2ter/react-booster/src/route/client';
+import './css/main.scss';
 
 export default () => <Browser endpoint={env.PROTO_SERVER_URL} />;
