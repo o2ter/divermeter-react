@@ -46,7 +46,7 @@ export const Login = () => {
             user: string().required().label(t('username')),
             pass: string().required().label(t('password')),
           }}
-          onSubmit={async (values) => {
+          onSubmit={async (values: any) => {
             try {
               await startActivity(async () => {
                 const proto = createProto(values);

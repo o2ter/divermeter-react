@@ -1317,10 +1317,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.326":
-  version "0.0.326"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.326.tgz#4363ca266afde703c2e71a74095d714c06d00454"
-  integrity sha512-fzXaeY+8Sp6zIn4NxV/z7Q9w/6BaB8Jzo4KWGPAPwsi3UIWISbEaqgfK9BqiAy/OjB8n6nPtAXiT2OA/zIcADw==
+"@o2ter/react-ui@^0.0.328":
+  version "0.0.328"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.328.tgz#8fee21af5df63f70ee59713eafe1d7af453d53b7"
+  integrity sha512-H2FI/84ELltbj248HNaiLnrWhXpI/dpKWHA24/VEPj5NCIkyip6hNdUy4bG1Eo3DIWMDfP1PTvAJ5inVq9n6XQ==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"

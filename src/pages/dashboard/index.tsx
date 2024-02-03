@@ -43,7 +43,7 @@ export const Dashboard = () => {
       return await proto.schema({ master: true });
     } catch (e) {
       console.error(e);
-      showError(e);
+      showError(e as any);
     }
   });
   return (
@@ -53,7 +53,7 @@ export const Dashboard = () => {
       </Col>
       <Col style={{ minHeight: '100%' }}>
         <Navigator>
-          <Route path='/browser/:class' component={Browser} schema={schema} />
+          <Route path='/browser/:class' component={Browser} props={{ schema }} />
           <Route path='/config' component={Config} />
           <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
         </Navigator>
