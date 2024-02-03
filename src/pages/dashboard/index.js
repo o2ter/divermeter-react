@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, View, useAlert } from '@o2ter/react-ui';
+import { Navigator, Route, useAlert } from '@o2ter/react-ui';
 
 import { useAsyncResource } from 'sugax';
 import { useProto } from '../../proto';

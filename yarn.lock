@@ -1279,10 +1279,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.59":
-  version "0.0.59"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.59.tgz#0f148981d51a0787d8f69d6aeb990e132764f56a"
-  integrity sha512-4x3g3b4Xszey+nqEk5qkUviGxOrJUA8YGbq512hFDg8qPspEyx/3eWlBzKOUpH4bw2tTk3m46fLlWlEh7LCWww==
+"@o2ter/react-booster@^0.0.60":
+  version "0.0.60"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.60.tgz#b97162ac45202fbe8a386f86b9e3d4568a94fa71"
+  integrity sha512-jl+aILHz0FnyzDwwCpculM3VymWwd0Ri8Tu56ZARzKTIQ8LrG8l316o0I5sx/mi4o70g/hifg3wXI3wh4LgvjA==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -1317,10 +1317,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.325":
-  version "0.0.325"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.325.tgz#58beb8dc6a94ac603ea95695577addc56ce06f6e"
-  integrity sha512-vILDknB2AHJLBEr2G+Rm2g57XuC+L2YCfTZQ2dAUf4i920/wv/9F2PIQZGZQFxAVLVzq8MGUL2ZbVDsaAntYfw==
+"@o2ter/react-ui@^0.0.326":
+  version "0.0.326"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.326.tgz#4363ca266afde703c2e71a74095d714c06d00454"
+  integrity sha512-fzXaeY+8Sp6zIn4NxV/z7Q9w/6BaB8Jzo4KWGPAPwsi3UIWISbEaqgfK9BqiAy/OjB8n6nPtAXiT2OA/zIcADw==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
