@@ -133,7 +133,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
           />
         </Resizable>
       );
-    case 'date': return;
+    case 'date': return <></>;
     case 'object':
     case 'array':
       return (
@@ -186,13 +186,13 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
           style={{ outline: 'none' } as any}
           value={_value?.objectId ?? ''}
           onChangeText={(text) => {
-            if (_.isString(type) || type?.type !== 'pointer') return;
+            if (_.isString(type) || type?.type !== 'pointer') return <></>;
             setValue(_.isEmpty(text) ? null : Proto.Object(type.target, text));
           }}
           autoFocus
         />
       );
-    case 'relation': return;
-    default: return;
+    case 'relation': return <></>;
+    default: return <></>;
   }
 });

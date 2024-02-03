@@ -113,7 +113,7 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
       return (
         <Text classes='font-monospace text-right' style={{ color: 'gray' }} numberOfLines={1}>{_.castArray(value).length} objects</Text>
       );
-    default: return;
+    default: return <></>;
   }
 };
 
