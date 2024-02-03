@@ -25,10 +25,10 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { DataSheet as _DataSheet, Icon, Text } from '@o2ter/react-ui';
+import { DataSheet as _DataSheet, Icon, Text, Pressable } from '@o2ter/react-ui';
 import { TObject, TSchema } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
-import { GestureResponderEvent, Pressable } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 import { typeOf } from './type';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
