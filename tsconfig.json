@@ -10,16 +10,13 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "declaration": true,
-    "declarationDir": "types",
+    "declaration": false,
     "outDir": "dist",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true,
     "downlevelIteration": true,
-    "moduleSuffixes": [".web", ""]
   },
-  "exclude":[
+  "exclude": [
     "**/dist/*",
     "**/node_modules/*"
   ]

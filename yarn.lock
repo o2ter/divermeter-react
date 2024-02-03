@@ -1279,10 +1279,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.60":
-  version "0.0.60"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.60.tgz#b97162ac45202fbe8a386f86b9e3d4568a94fa71"
-  integrity sha512-jl+aILHz0FnyzDwwCpculM3VymWwd0Ri8Tu56ZARzKTIQ8LrG8l316o0I5sx/mi4o70g/hifg3wXI3wh4LgvjA==
+"@o2ter/react-booster@^0.0.61":
+  version "0.0.61"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.61.tgz#dfd7f8cc5aebde0d736d036ce8acd8e7b83a1653"
+  integrity sha512-X3Z75ilHaqa/r+arzgVubQA6ETmOpoT/vhJlLxZbn3VdjF2iDaSj1YF26IUMV4gWaM1bOnFLJSZk9SvvTtZPVw==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
