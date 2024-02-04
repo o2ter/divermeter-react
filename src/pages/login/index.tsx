@@ -33,7 +33,7 @@ import { string } from '@o2ter/valid.js';
 import { createProto } from '../../proto';
 import { useAuth } from '../../config';
 
-export const Login = () => {
+export const Login: React.FC<{ endpoint: string }> = ({ endpoint }) => {
   const [, setAuth] = useAuth();
   const startActivity = useActivity();
   const { showError } = useAlert();
@@ -49,7 +49,7 @@ export const Login = () => {
           onSubmit={async (values: any) => {
             try {
               await startActivity(async () => {
-                const proto = createProto(values);
+                const proto = createProto(endpoint, values);
                 await proto.schema({ master: true });
                 setAuth(values);
                 window.location.reload();

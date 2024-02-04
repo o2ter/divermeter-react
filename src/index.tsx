@@ -34,7 +34,7 @@ export const Browser: React.FC<{ endpoint: string }> = ({ endpoint }) => {
   const [auth] = useAuth();
   return typeof window === 'undefined' ? <></> : (
     <ProtoProvider endpoint={endpoint} auth={auth}>
-      {auth ? <Dashboard /> : <Login />}
+      {auth ? <Dashboard /> : <Login endpoint={endpoint} />}
     </ProtoProvider>
   );
 };
