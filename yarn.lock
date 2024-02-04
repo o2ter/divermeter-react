@@ -1517,10 +1517,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.63":
-  version "0.0.63"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.63.tgz#103e27d9683e3765058a93ffe85d626594359859"
-  integrity sha512-MSbRjs+MofRB4VLSSJ+6YMgL9oW4SWEq4CiuQ8skZB3cOCiMVMEEBGs9lh1nnMgbbSC3xCvhgESLgOBLbD48Ug==
+"@o2ter/react-booster@^0.0.64":
+  version "0.0.64"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.64.tgz#999c9889e6dbef313ad92ddcdeea7dff32d65805"
+  integrity sha512-uw4MPefH0oc0iehfVpTUP2X8hMuba57r97A0jlmUML2C7eQ+sZeIVWbnqSkU05p6orTQ7ZZtvy+CFpn+z7qeEg==
   dependencies:
     "@babel/core" "^7.22.10"
     "@babel/plugin-proposal-class-properties" "^7.18.6"
@@ -4692,10 +4692,10 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.83:
-  version "0.0.83"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.83.tgz#d55c8b8f4472c05a24e824520e53d2b7f95b0b70"
-  integrity sha512-s2jdQn0R1k21yPwNLumoOTO7ZRAwGQmclixIJfzwHoKePV1jS96x40BPdnLFtRHaeLF8LigXNaatNn1okzgb8Q==
+proto.io@^0.0.84:
+  version "0.0.84"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.84.tgz#2889a8e20849d28e758530c29730f81d66cf5fe0"
+  integrity sha512-Kknn64uiH9wq/tLU1p2LDiG9Oq5SvgZXYbRPkrffCSGiCG4izvohdCMXEcigLctFPTU1cfqGp3Z/lZKWulzNyw==
   dependencies:
     "@o2ter/crypto-js" "^0.0.5"
     axios "^1.6.0"
