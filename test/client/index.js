@@ -28,4 +28,4 @@ import Browser from '../../src';
 import { env } from '@o2ter/react-booster/src/route/client';
 import './css/main.scss';
 
-export default () => <Browser endpoint={env.PROTO_SERVER_URL} />;
+export default () => <Browser endpoint={env.PROTO_ENDPOINT} />;

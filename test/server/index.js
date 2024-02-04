@@ -80,7 +80,7 @@ const Proto = new ProtoService({
 
 export default async (app, env) => {
 
-  env.PROTO_SERVER_URL = 'http://localhost:8080/proto';
+  env.PROTO_ENDPOINT = 'http://localhost:8080/proto';
 
   app.use('/proto', await ProtoRoute({
     proto: Proto,
