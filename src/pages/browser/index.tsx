@@ -88,12 +88,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const [limit, setLimit] = React.useState(100);
 
   const query = React.useMemo(() => {
-    const query = Proto.Query(className, { master: true });
+    const query = Proto.Query(className);
     for (const f of filter) query.filter(encodeFilter(f));
     return query;
   }, [className, schema, filter]);
 
-  const { resource: count } = useAsyncResource(() => query.count(), undefined, [className, query]);
+  const { resource: count } = useAsyncResource(() => query.count({ master: true }), undefined, [className, query]);
   const { resource: objects } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
@@ -104,7 +104,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         ..._.map(_.keys(relation), key => `${key}._id`),
         ..._.map(_.keys(files), key => `${key}.filename`),
       );
-      return await _query.sort(sort).limit(limit).find();
+      return await _query.sort(sort).limit(limit).find({ master: true });
     } catch (e: any) {
       console.error(e);
       showError(e);
@@ -329,7 +329,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
               const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
               const deleteAction = () => startActivity(async () => {
                 try {
-                  await Proto.Query(className, { master: true }).containsIn('_id', ids).deleteMany();
+                  await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
                   setDeletedObjs(_objs => [..._objs, ...ids]);
                   setUpdatedObjs(objs => _.omit(objs, ...ids));
                   ref.current?.clearSelection();
