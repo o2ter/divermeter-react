@@ -41,7 +41,7 @@
     "@o2ter/react-booster": "^0.0.65",
     "@o2ter/react-ui": "^0.0.329",
     "@o2ter/valid.js": "^1.0.3",
-    "@o2ter/wireframe": "^0.0.54",
+    "@o2ter/wireframe": "^0.0.55",
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-json": "^6.0.0",

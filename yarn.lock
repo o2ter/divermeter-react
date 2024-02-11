@@ -1585,10 +1585,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.54":
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.54.tgz#a9d2b1b3cdc3aa2eaa6e17c500e50715153af0a2"
-  integrity sha512-CVKeNCv58GxfUBXv04mDSQu93piTCvRZlHnjmyGfeOc4N4XEAOf57WyrFUCF72pxg2j9L+967e6fy6lcwfPs3g==
+"@o2ter/wireframe@^0.0.55":
+  version "0.0.55"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.55.tgz#5f8337323ec0afe77757ee57dcbb6bf7ebe99128"
+  integrity sha512-FSJ3hYa8y5GpXlZFll6pGRbLI0Rbx8eKeIfDn/g7vx1D/0bzUDDpiVEKT53HZ4He1TMhP6Gyw1d+GD/NGfJ3Eg==
   dependencies:
     lodash ">=4.17.21"
 
