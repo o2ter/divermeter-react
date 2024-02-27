@@ -1555,10 +1555,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.338":
-  version "0.0.338"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.338.tgz#b8c8a5b3ec7b9209bbcd88018f34b3402fafa7c2"
-  integrity sha512-6zx3Or0/FRrpF8f1f/jxIH6E2cXiiOLAkBZoGl4kDpbJScuf8LJkoFRlriyUxXbaktiykC+FJiSPNLoCd7Lb8Q==
+"@o2ter/react-ui@^0.0.339":
+  version "0.0.339"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.339.tgz#9620053a4e562336fe25b4978bfbce4aaea55ace"
+  integrity sha512-walChGCZPmFhVC2EsgdbOHK+tzGKB2w9aisNmQuR/inpwpEjjeFsTnkp4qu1jt6Arwi1eL3bzAnDoSZPycQWDg==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
@@ -4771,10 +4771,10 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.94:
-  version "0.0.94"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.94.tgz#73026531aa29340ae07883a6688cf480b02b07e8"
-  integrity sha512-pLSR54WOxgPo/TPFtvR4RcZzhmphQTRGtvh9Np0gEoE+k+JZg0Fzj/455QeWsEtn5ySN/9xHfCaNPIqAAQ65gA==
+proto.io@^0.0.95:
+  version "0.0.95"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.95.tgz#5c4d0a923329a6a684825adfdd2fe9e8bae623f9"
+  integrity sha512-Aw00QOlPJfuJaVRop/KX1GYLfcGRH4A3fgx/2z5VcHP5mq6ybkSOn8dE5Ux/naFt/m/Z0OEhIK0bQTZwEBJy/w==
   dependencies:
     "@o2ter/crypto-js" "^0.0.5"
     axios "^1.6.0"
