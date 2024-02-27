@@ -1555,10 +1555,10 @@
     webpack-cli "^5.1.4"
     whatwg-url "^13.0.0"
 
-"@o2ter/react-ui@^0.0.339":
-  version "0.0.339"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.339.tgz#9620053a4e562336fe25b4978bfbce4aaea55ace"
-  integrity sha512-walChGCZPmFhVC2EsgdbOHK+tzGKB2w9aisNmQuR/inpwpEjjeFsTnkp4qu1jt6Arwi1eL3bzAnDoSZPycQWDg==
+"@o2ter/react-ui@^0.0.340":
+  version "0.0.340"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-ui/-/react-ui-0.0.340.tgz#482f555a6a0947c0fdd7bbac0233d33f0f78925c"
+  integrity sha512-bS9vsGhcI2N7tY2xRUWN9eMtyGAzVfX0jOdu+bfrf+WcgX3I/kD2QEan6441eSZvOyMhg85BeDYvLBO2i95L9g==
   dependencies:
     "@react-native-picker/picker" ">=2.4.8"
     "@react-native/normalize-colors" "^0.74.1"
@@ -1588,10 +1588,10 @@
   dependencies:
     lodash ">=4.17.21"
 
-"@o2ter/wireframe@^0.0.57":
-  version "0.0.57"
-  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.57.tgz#2dd8e8b7623699c161d9dd2effd1b025efbd4b5a"
-  integrity sha512-L3Ce1PaRorzSzHOpQ4h+qNsbqgbExuM4pdIzBOfVSMDAMxqOSvQLc1Igip19GXjjXXLLRFZtUSkwRiNTqkolnw==
+"@o2ter/wireframe@^0.0.58":
+  version "0.0.58"
+  resolved "https://registry.yarnpkg.com/@o2ter/wireframe/-/wireframe-0.0.58.tgz#d2a03577b4daf811ba2c7f7e0e8f4f12b010a3de"
+  integrity sha512-7KzbUpSkxjOhmyl7U4wfi3vqjI5GkGqw6BKNDe7qIypOfYJumXNu73LHUyG5xNrFPneXGaNxOy71PYRP2GngAw==
   dependencies:
     lodash ">=4.17.21"
 
@@ -4771,10 +4771,10 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.95:
-  version "0.0.95"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.95.tgz#5c4d0a923329a6a684825adfdd2fe9e8bae623f9"
-  integrity sha512-Aw00QOlPJfuJaVRop/KX1GYLfcGRH4A3fgx/2z5VcHP5mq6ybkSOn8dE5Ux/naFt/m/Z0OEhIK0bQTZwEBJy/w==
+proto.io@^0.0.96:
+  version "0.0.96"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.96.tgz#99f99463c755e5213b8a78f18909561c57db1833"
+  integrity sha512-t4pp+wCus7kUpPO3z4ETTVzWU8l2yrXYA4jxeIR21B6KzkLS8rciErj4hg92qhiMgK9NvXGleY4ERQugoaekow==
   dependencies:
     "@o2ter/crypto-js" "^0.0.5"
     axios "^1.6.0"
@@ -5543,10 +5543,10 @@ styleq@^0.1.3:
   resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.1.3.tgz#8efb2892debd51ce7b31dc09c227ad920decab71"
   integrity sha512-3ZUifmCDCQanjeej1f6kyl/BeP/Vae5EYkQ9iJfUm/QwZvlgnZzyflqAsAWYURdtea8Vkvswu2GrC57h3qffcA==
 
-sugax@^1.0.94:
-  version "1.0.94"
-  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.94.tgz#d73d64fbf7c9c618485c30d47f6dfb32c333dfd7"
-  integrity sha512-xnV/SpZQvMVBFWvcAVI/D4jOlfObOObwGd3yXjzxIW2iQIfuWd43YgDYlJvj4/+zEhQw2UhX08bOhIxF5StCzA==
+sugax@^1.0.95:
+  version "1.0.95"
+  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.95.tgz#551635e0309bdc8313b5ac9e61ce1cce37acb54d"
+  integrity sha512-95fJ5xfWcD6zLzrkFbIArE2HUmcQHh8SpE6l9huv1wR0LGPQB5XNDE7axrWvUTZdByqXEZTPtFpDhbmYIuMjWw==
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
