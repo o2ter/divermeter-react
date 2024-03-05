@@ -1622,6 +1622,13 @@
     react-native-vector-icons ">=9.2.0"
     react-router-dom ">=6.6.2"
 
+"@o2ter/utils-js@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.1.tgz#f208778d49b1dcb27eb75cbd32a6ce444df64e0c"
+  integrity sha512-IOZbRAdkLaDMoh4Ff1rIx3zIURTWNwCdEZMinjS5xipBTy0MwMtT/0kJrC+rdgoWUPEIZXlcdZcj09RQ4U+RIw==
+  dependencies:
+    lodash ">=4.17.21"
+
 "@o2ter/valid.js@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@o2ter/valid.js/-/valid.js-1.0.3.tgz#15bb9257eaba01050a5ad1de7411f29c4997813e"
@@ -5836,10 +5843,12 @@ styleq@^0.1.3:
   resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.1.3.tgz#8efb2892debd51ce7b31dc09c227ad920decab71"
   integrity sha512-3ZUifmCDCQanjeej1f6kyl/BeP/Vae5EYkQ9iJfUm/QwZvlgnZzyflqAsAWYURdtea8Vkvswu2GrC57h3qffcA==
 
-sugax@^1.0.95:
-  version "1.0.95"
-  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.95.tgz#551635e0309bdc8313b5ac9e61ce1cce37acb54d"
-  integrity sha512-95fJ5xfWcD6zLzrkFbIArE2HUmcQHh8SpE6l9huv1wR0LGPQB5XNDE7axrWvUTZdByqXEZTPtFpDhbmYIuMjWw==
+sugax@^1.0.96:
+  version "1.0.96"
+  resolved "https://registry.yarnpkg.com/sugax/-/sugax-1.0.96.tgz#bcdc3fd2a81c40b52038f015ccf1e448d7365e8c"
+  integrity sha512-me27iKlZSTB2RJiKU984C5r2qtQSRtO/bt15f8rN2XZBfjP45wlD74MXVPNwN//cSjrA2tgM4z7Wb7Oi7LuCMA==
+  dependencies:
+    "@o2ter/utils-js" "^0.0.1"
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
