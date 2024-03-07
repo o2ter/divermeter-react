@@ -1543,11 +1543,12 @@
   dependencies:
     make-dir "^3.0.2"
 
-"@o2ter/crypto-js@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@o2ter/crypto-js/-/crypto-js-0.0.5.tgz#7bd4e87830958358779f07f80fbfffa1124c5fd7"
-  integrity sha512-fXR0/tWr7U7COPA9zQ+LuAdsqdjeGR7xeBGw/MprZOlcqhCX9nCa9KyH/LTBAoFU/zW4scBfsUnw7IOCd9RLKw==
+"@o2ter/crypto-js@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@o2ter/crypto-js/-/crypto-js-0.0.7.tgz#65da958c73dd471d2e1cf54e1e38b09ff87df500"
+  integrity sha512-DsCGhtaRFjEmnFNMO9uhhvVkfVKpgg+y5XaYQtiLm1yPPz4v1cKsgc0prUpVJmNDHlwTKz57LndIb0RGcuiFAA==
   dependencies:
+    "@o2ter/utils-js" "^0.0.1"
     lodash ">=4.17.21"
 
 "@o2ter/i18n@^0.0.10":
@@ -1626,6 +1627,13 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.1.tgz#f208778d49b1dcb27eb75cbd32a6ce444df64e0c"
   integrity sha512-IOZbRAdkLaDMoh4Ff1rIx3zIURTWNwCdEZMinjS5xipBTy0MwMtT/0kJrC+rdgoWUPEIZXlcdZcj09RQ4U+RIw==
+  dependencies:
+    lodash ">=4.17.21"
+
+"@o2ter/utils-js@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.5.tgz#ac514a4b73d5c34c6462522f33038bdf10d5d411"
+  integrity sha512-/zZ913Mc3GwfHLaKjzGxRQM10bKecBlC+U4azt8d9z9Tv8tuhAwHt5qTEKPCaWF6ulQBr/irgFCsUKsNh7hVgQ==
   dependencies:
     lodash ">=4.17.21"
 
@@ -5034,13 +5042,14 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.101:
-  version "0.0.101"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.101.tgz#9c2441f1ff4ef785abeac7cd9493f0643ec737dc"
-  integrity sha512-d54ieR8KDKra8eWqekniR1/Vi1czcqcM7KJVKhbrQNxmdKW38kgePhoI31Y6zJ4ToJRb+Wxsvtz/cgV8JnahLA==
+proto.io@^0.0.102:
+  version "0.0.102"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.102.tgz#8fd23c0777ad9e05d3ef554fb25aab381c0c481a"
+  integrity sha512-6/AVnwxutm5cLJGi+tygjeyMbYl3lKDmdCTXF6pgmlnOfbYQ0r1CaqAFhf1EPV3fxRNa8i35CfCqyeOXo5HJCg==
   dependencies:
     "@google-cloud/storage" "^7.7.0"
-    "@o2ter/crypto-js" "^0.0.5"
+    "@o2ter/crypto-js" "^0.0.7"
+    "@o2ter/utils-js" "^0.0.5"
     axios "^1.6.0"
     busboy "^1.6.0"
     cookie-parser "^1.4.6"
