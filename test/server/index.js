@@ -78,7 +78,13 @@ const Proto = new ProtoService({
   },
 });
 
-export default async (app, env) => {
+/* eslint-disable no-param-reassign */
+/**
+ * @param {import('http').Server}[server]
+ * @param {import('express').Express}[app]
+ * @param {Record<string, any>}[env]
+ */
+export default async (server, app, env) => {
 
   env.PROTO_ENDPOINT = 'http://localhost:8080/proto';
 
