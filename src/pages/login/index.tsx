@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Form, Text, useActivity, useAlert } from '@o2ter/react-ui';
+import { View, Form, Text, useAlert } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 
 import Localization from '../../i18n/login';
@@ -35,25 +35,23 @@ import { useAuth } from '../../config';
 
 export const Login: React.FC<{ endpoint: string }> = ({ endpoint }) => {
   const [, setAuth] = useAuth();
-  const startActivity = useActivity();
   const { showError } = useAlert();
   const { string: t } = Localization.useLocalize();
   return (
     <View classes='flex-fill bg-primary-900 align-items-center justify-content-center'>
       <View classes='bg-white px-3 py-2 rounded-1'>
         <Form
+          activity
           schema={{
             user: string().required().label(t('username')),
             pass: string().required().label(t('password')),
           }}
           onSubmit={async (values: any) => {
             try {
-              await startActivity(async () => {
-                const proto = createProto(endpoint, values);
-                await proto.schema({ master: true });
-                setAuth(values);
-                window.location.reload();
-              });
+              const proto = createProto(endpoint, values);
+              await proto.schema({ master: true });
+              setAuth(values);
+              window.location.reload();
             } catch {
               showError(t('invalid_user'));
             }
