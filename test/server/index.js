@@ -80,15 +80,14 @@ const Proto = new ProtoService({
 
 /* eslint-disable no-param-reassign */
 /**
- * @param {import('http').Server}[server]
- * @param {import('express').Express}[app]
+ * @param {import('@o2ter/server-js').Server}[app]
  * @param {Record<string, any>}[env]
  */
-export default async (server, app, env) => {
+export default async (app, env) => {
 
   env.PROTO_ENDPOINT = 'http://localhost:8080/proto';
 
-  app.use('/proto', await ProtoRoute({
+  app.express().use('/proto', await ProtoRoute({
     proto: Proto,
   }));
 
