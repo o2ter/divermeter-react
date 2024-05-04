@@ -2379,6 +2379,13 @@
   dependencies:
     lodash ">=4.17.21"
 
+"@o2ter/utils-js@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.8.tgz#a997f85ad647f8fd66a35da2439f6a58e7354af5"
+  integrity sha512-qEJ9A8U+4x0b8zlINq+GLgr/8rE79fmhI4jtoU/uMkd/mpGbNCYdJZVaY2wgvLjG1yfBS/kM0tqrThqYcLv/kg==
+  dependencies:
+    lodash ">=4.17.21"
+
 "@o2ter/valid.js@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@o2ter/valid.js/-/valid.js-1.0.6.tgz#b2a02feb950abaaec52ad9ad7539c81cd294e134"
@@ -5920,14 +5927,14 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.113:
-  version "0.0.113"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.113.tgz#54760503dfaa3f4bda368f540e8537ec148d018f"
-  integrity sha512-3vBVoUZ7hkRtyPJ3T/u3da7INGZhlRSMGZuhSCAgEL6VazToDh0TtODZjOVIJfTjvedGElagMkua0VfEEZ0lcw==
+proto.io@^0.0.114:
+  version "0.0.114"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.114.tgz#7f25caeda91530f42dc5908855d4dd2a2649ca27"
+  integrity sha512-0rgS5NTughXphvtVhDC9oMq45Rvs4zlaDl76u9DEJCKwage9UQekO22RyKUyBYn8KY28m9VCaq0eLZ7+SxBBXg==
   dependencies:
     "@google-cloud/storage" "^7.7.0"
     "@o2ter/crypto-js" "^0.0.7"
-    "@o2ter/utils-js" "^0.0.7"
+    "@o2ter/utils-js" "^0.0.8"
     axios "^1.6.0"
     busboy "^1.6.0"
     cookie-parser "^1.4.6"
