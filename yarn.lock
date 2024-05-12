@@ -2291,10 +2291,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.81":
-  version "0.0.81"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.81.tgz#1ade19d98c72a25092af16917b41ccdf3ebc688c"
-  integrity sha512-sLjE+VWDv3qtyXgPLApN2ONXEz73TRM/lwgq4Uch0XKqeWNWVkZU0gdAhyDf+zNDwXOhTKkQIAVfSxzzWZkSyw==
+"@o2ter/react-booster@^0.0.82":
+  version "0.0.82"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.82.tgz#88ca724e98bd08b41bc30ea79871edb90782e914"
+  integrity sha512-YbmwB6JFgUkjfma+06TPpNTu72NrUZ1DhTs+fELiG8MWyetuZj7Om+O/rW/+NJzsIPKUzMuZk1CqD8wXj/rx0g==
   dependencies:
     "@babel/core" "^7.24.4"
     "@babel/preset-env" "^7.24.4"
@@ -2303,7 +2303,7 @@
     "@loadable/babel-plugin" "^5.16.1"
     "@loadable/component" "^5.16.4"
     "@loadable/webpack-plugin" "^5.15.2"
-    "@o2ter/utils-js" "^0.0.7"
+    "@o2ter/utils-js" "^0.0.8"
     autoprefixer "^10.4.19"
     babel-loader "^9.1.3"
     core-js "^3.37.0"
@@ -2324,7 +2324,6 @@
     tslib "^2.6.2"
     webpack "^5.91.0"
     webpack-cli "^5.1.4"
-    whatwg-url "^14.0.0"
 
 "@o2ter/react-ui@^0.0.364":
   version "0.0.364"
@@ -2369,13 +2368,6 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.1.tgz#f208778d49b1dcb27eb75cbd32a6ce444df64e0c"
   integrity sha512-IOZbRAdkLaDMoh4Ff1rIx3zIURTWNwCdEZMinjS5xipBTy0MwMtT/0kJrC+rdgoWUPEIZXlcdZcj09RQ4U+RIw==
-  dependencies:
-    lodash ">=4.17.21"
-
-"@o2ter/utils-js@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.7.tgz#89f64f387cc82b9d956ae28d95e60579388a75f0"
-  integrity sha512-lQNCkFK+pdYYXdFBo3gdfBEjzAms6DsQftl52RPXOoUHH7hWATNc2nCIKjNRNiJXGdJ9lgK9a/+gvfKBiZceZQ==
   dependencies:
     lodash ">=4.17.21"
 
@@ -5982,11 +5974,6 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-punycode@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
-  integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
-
 qrcode@>=1.5.1:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.3.tgz#03afa80912c0dccf12bc93f615a535aad1066170"
@@ -6862,13 +6849,6 @@ touch@^3.1.0:
   dependencies:
     nopt "~1.0.10"
 
-tr46@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/tr46/-/tr46-5.0.0.tgz#3b46d583613ec7283020d79019f1335723801cec"
-  integrity sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==
-  dependencies:
-    punycode "^2.3.1"
-
 tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
@@ -7070,11 +7050,6 @@ webidl-conversions@^3.0.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
   integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
 
-webidl-conversions@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
-  integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
-
 webpack-cli@^5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-5.1.4.tgz#c8e046ba7eaae4911d7e71e2b25b776fcc35759b"
@@ -7137,14 +7112,6 @@ webpack@^5.91.0:
     terser-webpack-plugin "^5.3.10"
     watchpack "^2.4.1"
     webpack-sources "^3.2.3"
-
-whatwg-url@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-14.0.0.tgz#00baaa7fd198744910c4b1ef68378f2200e4ceb6"
-  integrity sha512-1lfMEm2IEr7RIV+f4lUNPOqfFL+pO+Xw3fJSqmjX9AbXcXcYOkCe1P6+9VBZB6n94af16NfZf+sSk0JCBZC9aw==
-  dependencies:
-    tr46 "^5.0.0"
-    webidl-conversions "^7.0.0"
 
 whatwg-url@^5.0.0:
   version "5.0.0"
