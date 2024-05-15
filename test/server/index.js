@@ -24,7 +24,7 @@
 //
 
 import _ from 'lodash';
-import ProtoRoute, { Decimal, ProtoService } from 'proto.io';
+import ProtoRoute, { Decimal, ProtoService, schema } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
 
@@ -73,6 +73,29 @@ const Proto = new ProtoService({
         relation: { type: 'relation', target: 'Test' },
         relation2: { type: 'relation', target: 'Test', foreignField: 'pointer' },
         relation3: { type: 'relation', target: 'Test', foreignField: 'relation' },
+        shape: schema.shape({
+          boolean: 'boolean',
+          number: 'number',
+          decimal: 'decimal',
+          string: 'string',
+          date: 'date',
+          object: 'object',
+          array: 'array',
+          file: { type: 'pointer', target: 'File' },
+          pointer: { type: 'pointer', target: 'Test' },
+          relation: { type: 'relation', target: 'Test' },
+          relation2: { type: 'relation', target: 'Test', foreignField: 'pointer' },
+          relation3: { type: 'relation', target: 'Test', foreignField: 'relation' },
+          shape: schema.shape({
+            boolean: 'boolean',
+            number: 'number',
+            decimal: 'decimal',
+            string: 'string',
+            date: 'date',
+            object: 'object',
+            array: 'array',
+          }),
+        }),
       },
     }
   },
