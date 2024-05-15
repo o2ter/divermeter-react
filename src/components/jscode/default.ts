@@ -1,5 +1,5 @@
 //
-//  index.tsx
+//  default.ts
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2024 O2ter Limited. All rights reserved.
@@ -23,14 +23,6 @@
 //  THE SOFTWARE.
 //
 
-import _ from 'lodash';
-import React from 'react';
-import { CodeMirror } from '@o2ter/react-ui';
-import { defaultExtensions } from './default';
+import { javascript } from '@codemirror/lang-javascript';
 
-export const JSCode: React.FC<React.ComponentPropsWithoutRef<typeof CodeMirror>> = ({
-  extensions = [],
-  ...props
-}) => (
-  <CodeMirror extensions={[...defaultExtensions, ...extensions]} codeFolding lineNumbers {...props} />
-);
+export const defaultExtensions = [javascript()];
