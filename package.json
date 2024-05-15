@@ -23,7 +23,7 @@
   },
   "peerDependencies": {
     "@o2ter/i18n": ">=0.0.10",
-    "@o2ter/react-ui": ">=0.0.364",
+    "@o2ter/react-ui": ">=0.0.365",
     "@o2ter/valid.js": ">=1.0.6",
     "@o2ter/wireframe": ">=0.0.59",
     "express": ">=4.19.2",
@@ -40,7 +40,7 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@o2ter/i18n": "^0.0.10",
     "@o2ter/react-booster": "^0.0.82",
-    "@o2ter/react-ui": "^0.0.364",
+    "@o2ter/react-ui": "^0.0.365",
     "@o2ter/valid.js": "^1.0.6",
     "@o2ter/wireframe": "^0.0.59",
     "@rollup/plugin-babel": "^6.0.0",
