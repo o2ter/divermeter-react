@@ -26,11 +26,10 @@
 import _ from 'lodash';
 import React from 'react';
 import { Modal } from '../../components/modal';
-import { Text, TextInput, View, useAlert } from '@o2ter/react-ui';
+import { JSCode, Text, TextInput, View, useAlert } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { encodeObject } from '../../components/datasheet/encode';
 import { Decimal } from 'proto.io/dist/client';
-import { JSCode } from '../../components/jscode';
 
 type ParameterModalProps = {
   title: string;

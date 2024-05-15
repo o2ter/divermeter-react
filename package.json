@@ -17,12 +17,9 @@
     "watch:test": "until [ -f ./test/dist/server.js ]; do sleep 1; done && nodemon --watch ./test/dist ./test/dist/server.js",
     "test": "rm -rf ./test/dist/* && npm-run-all --parallel watch:*"
   },
-  "dependencies": {
-    "@codemirror/lang-javascript": "^6.2.2"
-  },
   "peerDependencies": {
     "@o2ter/i18n": ">=0.0.10",
-    "@o2ter/react-ui": ">=0.0.365",
+    "@o2ter/react-ui": ">=0.0.366",
     "@o2ter/valid.js": ">=1.0.6",
     "@o2ter/wireframe": ">=0.0.59",
     "express": ">=4.19.2",
@@ -39,7 +36,7 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@o2ter/i18n": "^0.0.10",
     "@o2ter/react-booster": "^0.0.82",
-    "@o2ter/react-ui": "^0.0.365",
+    "@o2ter/react-ui": "^0.0.366",
     "@o2ter/server-js": "^0.0.10",
     "@o2ter/valid.js": "^1.0.6",
     "@o2ter/wireframe": "^0.0.59",

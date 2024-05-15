@@ -25,11 +25,10 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { TextInput, Switch, View, Text, UploadInput } from '@o2ter/react-ui';
+import { TextInput, Switch, View, Text, UploadInput, JSCode } from '@o2ter/react-ui';
 import { Decimal } from 'proto.io/dist/client';
 import { TDataType, useProto } from '../../proto';
 import { typeOf } from './type';
-import { JSCode } from '../jscode';
 import { encodeObject } from './encode';
 
 export type DataSheetEditCellProps = {
