@@ -2352,17 +2352,30 @@
     react-native-vector-icons ">=9.2.0"
     react-router-dom ">=6.6.2"
 
-"@o2ter/server-js@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.2.tgz#4780132dba342cf41562238a038a7ac6b72da348"
-  integrity sha512-z43r7PPQf2k+6An46WDuK2YVq9sZerTlIJqt/mB3/299BEH9LhjpuHfS8/w5q2KDj7TXhTst8Sexu51ko0QSNQ==
+"@o2ter/server-js@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.10.tgz#b7bf2f846a7035727ac68020f79de68044cbe763"
+  integrity sha512-/EaCz+QcbGxglrvEPxo6YXpobMbai9Ui5duQXgWwC4rMe6pN82uSwoxB7+TXqnbNt4m4mozZeg5eYWBXcMQOgg==
   dependencies:
+    "@o2ter/styler.js" "^0.0.1"
+    "@types/compression" "^1.7.5"
+    "@types/cookie-parser" "^1.4.7"
+    "@types/express" "^4.17.21"
+    bufferutil "^4.0.8"
     compression "^1.7.4"
     cookie-parser "^1.4.6"
     express "^4.19.2"
     lodash "^4.17.21"
     morgan "^1.10.0"
     socket.io "^4.7.5"
+    utf-8-validate "^6.0.3"
+
+"@o2ter/styler.js@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@o2ter/styler.js/-/styler.js-0.0.1.tgz#bed4ac01bc605cfc8f7092fcc6a7b0c02b9872b7"
+  integrity sha512-EiwmCiR4n3tcTVQbd7sGh5+O4u48xgAn50rE/f39jPYFiBh5L0ic2JvCdHXcKLWfvMPJxKfoAQFMCLiBu+NYJA==
+  dependencies:
+    lodash "^4.17.21"
 
 "@o2ter/utils-js@^0.0.1":
   version "0.0.1"
@@ -2509,12 +2522,26 @@
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.5.tgz#db9468cb1b1b5a925b8f34822f1669df0c5472f5"
   integrity sha512-hWtVTC2q7hc7xZ/RLbxapMvDMgUnDvKvMOpKal4DrMyfGBUfB1oKaZlIRr6mJL+If3bAP6sV/QneGzF6tJjZDg==
 
+"@types/compression@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@types/compression/-/compression-1.7.5.tgz#0f80efef6eb031be57b12221c4ba6bc3577808f7"
+  integrity sha512-AAQvK5pxMpaT+nDvhHrsBhLSYG5yQdtkaJE1WYieSNY2mVFKAgmU4ks65rkZD5oqnGCFLyQpUr1CqI4DmUMyDg==
+  dependencies:
+    "@types/express" "*"
+
 "@types/connect@*":
   version "3.4.38"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.38.tgz#5ba7f3bc4fbbdeaff8dded952e5ff2cc53f8d858"
   integrity sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==
   dependencies:
     "@types/node" "*"
+
+"@types/cookie-parser@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@types/cookie-parser/-/cookie-parser-1.4.7.tgz#c874471f888c72423d78d2b3c32d1e8579cf3c8f"
+  integrity sha512-Fvuyi354Z+uayxzIGCwYTayFKocfV7TuDYZClCdIP9ckhvAu/ixDtCB6qx2TT0FKjPLf1f3P/J1rgf6lPs64mw==
+  dependencies:
+    "@types/express" "*"
 
 "@types/cookie@^0.4.1":
   version "0.4.1"
@@ -2574,7 +2601,7 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@^4.17.17":
+"@types/express@*", "@types/express@^4.17.17", "@types/express@^4.17.21":
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.21.tgz#c26d4a151e60efe0084b23dc3369ebc631ed192d"
   integrity sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==
@@ -3319,6 +3346,13 @@ buffer-xor@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha512-571s0T7nZWK6vB67HI5dyUF7wXiNcfaPPPTl6zYCNApANjIvYJTg7hlud/+cJpdAhS7dVzqMLmfhfHR3rAcOjQ==
+
+bufferutil@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-4.0.8.tgz#1de6a71092d65d7766c4d8a522b261a6e787e8ea"
+  integrity sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==
+  dependencies:
+    node-gyp-build "^4.3.0"
 
 builtin-modules@^3.3.0:
   version "3.3.0"
@@ -5428,6 +5462,11 @@ node-fetch@^2.6.12, node-fetch@^2.6.9:
   dependencies:
     whatwg-url "^5.0.0"
 
+node-gyp-build@^4.3.0:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.1.tgz#976d3ad905e71b76086f4f0b0d3637fe79b6cda5"
+  integrity sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==
+
 node-releases@^2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.13.tgz#d5ed1627c23e3461e819b02e57b75e4899b1c81d"
@@ -6998,6 +7037,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+utf-8-validate@^6.0.3:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-6.0.4.tgz#1305a1bfd94cecb5a866e6fc74fd07f3ed7292e5"
+  integrity sha512-xu9GQDeFp+eZ6LnCywXN/zBancWvOpUMzgjLPSjy4BRHSmTelvn2E0DG0o1sTiw5hkCKBHo8rwSKncfRfv2EEQ==
+  dependencies:
+    node-gyp-build "^4.3.0"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2:
   version "1.0.2"
