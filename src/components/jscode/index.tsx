@@ -26,11 +26,13 @@
 import _ from 'lodash';
 import React from 'react';
 import { CodeMirror } from '@o2ter/react-ui';
-import { defaultExtensions } from './default';
+import { javascript } from '@codemirror/lang-javascript';
+
+const _extensions = [javascript()];
 
 export const JSCode: React.FC<React.ComponentPropsWithoutRef<typeof CodeMirror>> = ({
   extensions = [],
   ...props
 }) => (
-  <CodeMirror extensions={[...defaultExtensions, ...extensions]} codeFolding lineNumbers {...props} />
+  <CodeMirror extensions={[..._extensions, ...extensions]} codeFolding lineNumbers {...props} />
 );
