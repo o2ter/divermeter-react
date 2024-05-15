@@ -61,10 +61,32 @@ const decodeClipboardData = async (
   }
 }
 
+const flatternShape = (fields: TSchema[string]['fields']) => {
+  const result: TSchema[string]['fields'] = {};
+  for (const [key, field] of _.entries(fields)) {
+    if (_.isString(field) || field.type !== 'shape') {
+      result[key] = field;
+    } else {
+      for (const [x, type] of _.entries(flatternShape(field.shape))) {
+        result[`${key}.${x}`] = type;
+      }
+    }
+  }
+  return result;
+}
+
 const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }> = ({ schema, className, state }) => {
 
   const Proto = useProto();
-  const _schema = schema?.[className];
+
+  const _schema = React.useMemo(() => {
+    const _schema = schema?.[className];
+    return _schema ? {
+      ..._schema,
+      fields: flatternShape(_schema.fields)
+    } : undefined;
+  }, [schema, className]);
+
   const _fields = _schema?.fields ?? {};
   const _columns = _.keys(_fields);
 
