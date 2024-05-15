@@ -48,10 +48,10 @@ export const Dashboard = () => {
   });
   return (
     <Row classes='flex-fill'>
-      <Col classes='col-auto bg-primary-900'>
+      <Col classes='col-auto bg-primary-900 sticky-top dvh-100'>
         <SideMenu schema={schema} />
       </Col>
-      <Col style={{ minHeight: '100%' }}>
+      <Col classes='min-h-100'>
         <Navigator>
           <Route path='/browser/:class' component={Browser} props={{ schema }} />
           <Route path='/config' component={Config} />
