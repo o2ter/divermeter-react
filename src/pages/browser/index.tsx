@@ -115,7 +115,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
     return query;
   }, [className, schema, filter]);
 
-  const { resource: count } = useAsyncResource(() => query.count({ master: true }), undefined, [className, query]);
+  const { resource: count } = useAsyncResource(() => query.count({ master: true }), [className, query]);
   const { resource: objects } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
@@ -131,7 +131,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
       console.error(e);
       showError(e);
     }
-  }), undefined, [query, sort, limit]);
+  }), [query, sort, limit]);
 
   const [insertedObjs, setInsertedObjs] = React.useState<TObject[]>([]);
   const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
