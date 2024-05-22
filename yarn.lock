@@ -1502,10 +1502,10 @@
     events ">=3.3.0"
     lodash ">=4.17.21"
 
-"@o2ter/react-booster@^0.0.82":
-  version "0.0.82"
-  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.82.tgz#88ca724e98bd08b41bc30ea79871edb90782e914"
-  integrity sha512-YbmwB6JFgUkjfma+06TPpNTu72NrUZ1DhTs+fELiG8MWyetuZj7Om+O/rW/+NJzsIPKUzMuZk1CqD8wXj/rx0g==
+"@o2ter/react-booster@^0.0.83":
+  version "0.0.83"
+  resolved "https://registry.yarnpkg.com/@o2ter/react-booster/-/react-booster-0.0.83.tgz#c58b5f0f4594927adba432982fa8697f4eb9a708"
+  integrity sha512-UDbhSctquuv2/y5m1AUCPuJshGG7fO6hUgYx1Fjl7czZk0pmSljLTiBWgofWIlNTv5pAuelN5Jhms5Nlyc26NQ==
   dependencies:
     "@babel/core" "^7.24.4"
     "@babel/preset-env" "^7.24.4"
@@ -1564,10 +1564,10 @@
     react-native-vector-icons ">=9.2.0"
     react-router-dom ">=6.6.2"
 
-"@o2ter/server-js@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.10.tgz#b7bf2f846a7035727ac68020f79de68044cbe763"
-  integrity sha512-/EaCz+QcbGxglrvEPxo6YXpobMbai9Ui5duQXgWwC4rMe6pN82uSwoxB7+TXqnbNt4m4mozZeg5eYWBXcMQOgg==
+"@o2ter/server-js@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.12.tgz#7fb4613f0eb8a0251a4089bb07f2c9cfb87d3d11"
+  integrity sha512-GuVe5aUeP53b2ACM+SqiTlA0ey8yhiz154yFLxKMmGSFEm4kXKnMo+8zX+TjYt30XDM9Eltx0vCGLTiD7b+5uw==
   dependencies:
     "@o2ter/styler.js" "^0.0.1"
     "@types/compression" "^1.7.5"
@@ -1576,11 +1576,14 @@
     bufferutil "^4.0.8"
     compression "^1.7.4"
     cookie-parser "^1.4.6"
+    cors "^2.8.5"
+    csrf "^3.1.0"
     express "^4.19.2"
     lodash "^4.17.21"
     morgan "^1.10.0"
+    path-to-regexp "^6.2.2"
     socket.io "^4.7.5"
-    utf-8-validate "^6.0.3"
+    utf-8-validate "^6.0.4"
 
 "@o2ter/styler.js@^0.0.1":
   version "0.0.1"
@@ -6315,6 +6318,11 @@ path-to-regexp@0.1.7:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==
 
+path-to-regexp@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.2.tgz#324377a83e5049cbecadc5554d6a63a9a4866b36"
+  integrity sha512-GQX3SSMokngb36+whdpRXE+3f9V8UzyAorlYvOGx87ufGHehNTn5lCxrKtLyZ4Yl/wEKnNnr98ZzOwwDZV5ogw==
+
 path-type@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-3.0.0.tgz#cef31dc8e0a1a3bb0d105c0cd97cf3bf47f4e36f"
@@ -6605,10 +6613,10 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.116:
-  version "0.0.116"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.116.tgz#88b5165c2ef430298891c87eaf1965e9f187bbae"
-  integrity sha512-y6CJmljbs56b12K7UiNDn4TJw+AE5j6TtXcKUmDbKC82IiIrIgU9i5FL/BlpMi2rB9mtDs5bZtJ2b26WnP40Ww==
+proto.io@^0.0.117:
+  version "0.0.117"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.117.tgz#576c228800c48f6769637f33234b3cb7cbd17ea1"
+  integrity sha512-9nLEmdxHVDTJuhuQhfbTFhANKzZ87c98pxemUClo8itMYBeOrbz+ngh0CAJTMrglAhhmyGJzK2/6RwL3cnLaag==
   dependencies:
     "@google-cloud/storage" "^7.11.0"
     "@o2ter/crypto-js" "^0.0.7"
@@ -8010,7 +8018,7 @@ uri-js@^4.2.2, uri-js@^4.4.1:
   dependencies:
     punycode "^2.1.0"
 
-utf-8-validate@^6.0.3:
+utf-8-validate@^6.0.4:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-6.0.4.tgz#1305a1bfd94cecb5a866e6fc74fd07f3ed7292e5"
   integrity sha512-xu9GQDeFp+eZ6LnCywXN/zBancWvOpUMzgjLPSjy4BRHSmTelvn2E0DG0o1sTiw5hkCKBHo8rwSKncfRfv2EEQ==
