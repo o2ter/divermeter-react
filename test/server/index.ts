@@ -1,5 +1,5 @@
 //
-//  index.js
+//  index.ts
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2024 O2ter Limited. All rights reserved.
@@ -24,6 +24,7 @@
 //
 
 import _ from 'lodash';
+import { Server } from '@o2ter/server-js';
 import ProtoRoute, { Decimal, ProtoService, schema } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/dist/adapters/file/database';
 import { PostgresStorage } from 'proto.io/dist/adapters/storage/progres';
@@ -102,11 +103,7 @@ const Proto = new ProtoService({
 });
 
 /* eslint-disable no-param-reassign */
-/**
- * @param {import('@o2ter/server-js').Server}[app]
- * @param {Record<string, any>}[env]
- */
-export default async (app, env) => {
+export default async (app: Server, env: Record<string, any>) => {
 
   env.PROTO_ENDPOINT = 'http://localhost:8080/proto';
 
