@@ -41,9 +41,9 @@ export const Dashboard = () => {
   const { resource: schema } = useAsyncResource(async () => {
     try {
       return await proto.schema({ master: true });
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      showError(e as any);
+      showError(e);
     }
   });
   return (
