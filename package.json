@@ -19,7 +19,7 @@
   },
   "peerDependencies": {
     "@o2ter/i18n": ">=0.0.10",
-    "@o2ter/react-ui": ">=0.0.366",
+    "@o2ter/react-ui": ">=0.0.367",
     "@o2ter/valid.js": ">=1.0.6",
     "@o2ter/wireframe": ">=0.0.60",
     "express": ">=4.19.2",
@@ -36,7 +36,7 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@o2ter/i18n": "^0.0.10",
     "@o2ter/react-booster": "^0.0.83",
-    "@o2ter/react-ui": "^0.0.366",
+    "@o2ter/react-ui": "^0.0.367",
     "@o2ter/server-js": "^0.0.14",
     "@o2ter/valid.js": "^1.0.6",
     "@o2ter/wireframe": "^0.0.60",
@@ -61,7 +61,7 @@
     "rollup": "^4.17.2",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-sass": "^1.12.22",
-    "sugax": "^1.0.98",
+    "sugax": "^1.0.100",
     "tslib": "^2.4.0",
     "typescript": "^5.4.5"
   }
