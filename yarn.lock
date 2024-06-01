@@ -6593,19 +6593,16 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proto.io@^0.0.117:
-  version "0.0.117"
-  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.117.tgz#576c228800c48f6769637f33234b3cb7cbd17ea1"
-  integrity sha512-9nLEmdxHVDTJuhuQhfbTFhANKzZ87c98pxemUClo8itMYBeOrbz+ngh0CAJTMrglAhhmyGJzK2/6RwL3cnLaag==
+proto.io@^0.0.118:
+  version "0.0.118"
+  resolved "https://registry.yarnpkg.com/proto.io/-/proto.io-0.0.118.tgz#258729a2e7a3a619111b9c97f0f4310bf9a1be06"
+  integrity sha512-TZJsX8y2CryKLiSOIOLzqQqtNZG0OHvOCv8A0x6fiR/TcHj26ihlkfvb6zdI7gaEzAkfmvVcqCy8DFpvqh6Lqw==
   dependencies:
     "@google-cloud/storage" "^7.11.0"
     "@o2ter/crypto-js" "^0.0.7"
-    "@o2ter/utils-js" "^0.0.8"
+    "@o2ter/utils-js" "^0.0.9"
     axios "^1.6.8"
     busboy "^1.6.0"
-    cookie-parser "^1.4.6"
-    cors "^2.8.5"
-    csrf "^3.1.0"
     decimal.js "^10.4.3"
     jsonwebtoken "^9.0.2"
     lodash ">=4.17.21"
