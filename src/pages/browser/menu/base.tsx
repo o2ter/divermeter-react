@@ -31,7 +31,7 @@ import { LayoutRectangle } from 'react-native';
 
 type MenuButtonProps = {
   title: string;
-  menu: React.ReactNode | ((x: { hide: () => void }) => React.ReactNode)
+  menu: React.ReactNode | ((x: { hide: VoidFunction }) => React.ReactNode)
 };
 
 const isChildNode = (parent?: Node | null, node?: Node | EventTarget | null) => {

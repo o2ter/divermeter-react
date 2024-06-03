@@ -32,9 +32,9 @@ type ModalProps = React.PropsWithChildren<{
   title: string;
   color?: string;
   confirmed?: boolean;
-  onCancel: () => void;
-  onSubmit?: () => void;
-  onConfirm?: () => void;
+  onCancel: VoidFunction;
+  onSubmit?: VoidFunction;
+  onConfirm?: VoidFunction;
 }>;
 
 export const Modal: React.FC<ModalProps> = ({
@@ -79,8 +79,8 @@ type ConfirmModalProps = {
   color?: string;
   comfirmMessage: string;
   comfirmAnswer: string;
-  onCancel: () => void;
-  onConfirm: () => void;
+  onCancel: VoidFunction;
+  onConfirm: VoidFunction;
 };
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({

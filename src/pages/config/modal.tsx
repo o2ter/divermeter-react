@@ -35,7 +35,7 @@ type ParameterModalProps = {
   title: string;
   name?: string;
   initialValue?: any;
-  onCancel: () => void;
+  onCancel: VoidFunction;
   onSubmit?: (name: string, value: any) => void;
 };
 
