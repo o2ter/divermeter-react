@@ -102,6 +102,20 @@ const Proto = new ProtoService({
   },
 });
 
+export const serverOptions: Server.Options = {
+  http: 'v1',
+  express: {
+    cors: {
+      credentials: true,
+      origin: true,
+    },
+    rateLimit: {
+      windowMs: 1000,
+      limit: 1000,
+    },
+  },
+};
+
 /* eslint-disable no-param-reassign */
 export default async (app: Server, env: Record<string, any>) => {
 
