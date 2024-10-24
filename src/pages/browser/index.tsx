@@ -37,6 +37,7 @@ import { FilterButton, FilterType, encodeFilter } from './menu/filter';
 import { LimitButton } from './menu/limit';
 import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
+import { StyleSheet } from 'react-native';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -231,189 +232,193 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           </Row>
         </View>
       </Row>
-      <View classes='flex-fill p-1 bg-secondary-100'>
-        {_schema && <div className='flex-fill overflow-auto'>
-          <DataSheet
-            ref={ref}
-            data={_objs}
-            schema={_schema}
-            columns={_columns}
-            columnWidth={_columns.map(c => _columnWidths[c] ?? 160)}
-            sort={sort}
-            allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
-            onColumnPressed={(e: any, column) => {
-              setSort(sort => ({
-                ...e.shiftKey ? _.omit(sort, column) : {},
-                [column]: sort[column] === 1 ? -1 : 1,
-              }));
-            }}
-            onColumnWidthChange={(col, width) => setConfig((c: any) => ({
-              ...c,
-              'column-widths': {
-                ...c['column-widths'],
-                [className]: {
-                  ...c['column-widths']?.[className] ?? {},
-                  [_columns[col]]: width,
-                }
-              }
-            }))}
-            onValueChanged={(value, row, column) => startActivity(async () => {
-              try {
-                let obj = _objs[row]?.clone() ?? Proto.Object(className);
-                await setValue(obj, column, value);
-                await saveUpdates([obj]);
-                ref.current?.endEditing();
-              } catch (e: any) {
-                console.error(e);
-                showError(e);
-              }
-            })}
-            onPasteRows={(rows, clipboard) => startActivity(async () => {
-              try {
-                const { type, data } = decodeClipboardJsonData(clipboard) ?? await decodeClipboardData(clipboard) ?? {};
-                const objects = _.compact(_.map(rows, row => _objs[row]));
-                const updates: TObject[] = [];
-                if (type === 'json') {
-                  for (const [obj, values] of _.zip(objects, data ?? [])) {
-                    const _obj = obj?.clone() ?? Proto.Object(className);
-                    for (const [column, value] of _.toPairs(values)) {
-                      if (!_.includes(readonlyKeys, column)) {
-                        await setValue(_obj, column, value);
-                      }
-                    }
-                    updates.push(_obj);
-                  }
-                } else if (type === 'raw') {
-                  for (const [obj, values] of _.zip(objects, data ?? [])) {
-                    const _obj = obj?.clone() ?? Proto.Object(className);
-                    for (const [column = '', value] of _.zip(_columns, values)) {
-                      if (!_.includes(readonlyKeys, column)) {
-                        if (_.isNil(value)) {
-                          if (_obj.objectId) _obj.set(column, null);
-                        } else {
-                          const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
-                          if (!_.isNil(_value)) _obj.set(column, _value as any);
-                        }
-                      }
-                    }
-                    updates.push(_obj);
-                  }
-                }
-                await saveUpdates(updates);
-              } catch (e: any) {
-                console.error(e);
-                showError(e);
-              }
-            })}
-            onPasteCells={(cells, clipboard) => startActivity(async () => {
-              const _rows = _.range(cells.start.row, cells.end.row + 1);
-              const _cols = _.range(cells.start.col, cells.end.col + 1).map(c => _columns[c]);
-              const { data } = await decodeClipboardData(clipboard) ?? {};
-              const replaceAction = () => startActivity(async () => {
-                try {
-                  const objects = _.compact(_.map(_rows, row => _objs[row]));
-                  const updates: TObject[] = [];
-                  for (const [obj, values] of _.zip(objects, data ?? [])) {
-                    const _obj = obj?.clone() ?? Proto.Object(className);
-                    for (const [column = '', value] of _.zip(_cols, values)) {
-                      if (!_.includes(readonlyKeys, column)) {
-                        if (_.isNil(value)) {
-                          if (_obj.objectId) _obj.set(column, null);
-                        } else {
-                          const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
-                          if (!_.isNil(_value)) _obj.set(column, _value as any);
-                        }
-                      }
-                    }
-                    updates.push(_obj);
-                  }
-                  await saveUpdates(updates);
-                } catch (e: any) {
-                  console.error(e);
-                  showError(e);
-                }
-              });
-              if (_rows.length * _cols.length <= 3) return replaceAction();
-              setModal(
-                <ConfirmModal
-                  title='Replace selected data'
-                  comfirmMessage='To comfirm, type the class name in the box bellow'
-                  comfirmAnswer={className}
-                  onCancel={() => setModal()}
-                  onConfirm={() => {
-                    setModal();
-                    replaceAction();
-                  }}
-                />
-              );
-            })}
-            onDeleteRows={(rows) => {
-              const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
-              const deleteAction = () => startActivity(async () => {
-                try {
-                  await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
-                  setDeletedObjs(_objs => [..._objs, ...ids]);
-                  setUpdatedObjs(objs => _.omit(objs, ...ids));
-                  ref.current?.clearSelection();
-                } catch (e: any) {
-                  console.error(e);
-                  showError(e);
-                }
-              });
-              if (ids.length <= 3) return deleteAction();
-              setModal(
-                <ConfirmModal
-                  title='Delete selected rows'
-                  comfirmMessage='To comfirm, type the class name in the box bellow'
-                  comfirmAnswer={className}
-                  onCancel={() => setModal()}
-                  onConfirm={() => {
-                    setModal();
-                    deleteAction();
-                  }}
-                />
-              );
-            }}
-            onDeleteCells={(cells) => {
-              const _rows = _.range(cells.start.row, cells.end.row + 1);
-              const _cols = _.range(cells.start.col, cells.end.col + 1)
-                .map(c => _columns[c])
-                .filter(c => !_.includes(readonlyKeys, c));
-              const deleteAction = () => startActivity(async () => {
-                try {
-                  const updated = await Promise.all(_.map(_rows, row => {
-                    let obj = _objs[row]?.clone();
-                    if (!obj?.objectId) return;
-                    obj = updatedObjs[obj.objectId]?.clone() ?? obj;
-                    for (const _col of _cols) obj.set(_col, null);
-                    return obj.save({ master: true });
+      <View classes='flex-fill bg-secondary-100'>
+        {_schema && (
+          <View style={StyleSheet.absoluteFill}>
+            <div className='flex-fill overflow-auto'>
+              <DataSheet
+                ref={ref}
+                data={_objs}
+                schema={_schema}
+                columns={_columns}
+                columnWidth={_columns.map(c => _columnWidths[c] ?? 160)}
+                sort={sort}
+                allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
+                onColumnPressed={(e: any, column) => {
+                  setSort(sort => ({
+                    ...e.shiftKey ? _.omit(sort, column) : {},
+                    [column]: sort[column] === 1 ? -1 : 1,
                   }));
-                  setUpdatedObjs(objs => ({
-                    ...objs,
-                    ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
-                  }));
-                  ref.current?.clearSelection();
-                } catch (e: any) {
-                  console.error(e);
-                  showError(e);
-                }
-              });
-              if (_rows.length * _cols.length <= 3) return deleteAction();
-              setModal(
-                <ConfirmModal
-                  title='Delete selected data'
-                  comfirmMessage='To comfirm, type the class name in the box bellow'
-                  comfirmAnswer={className}
-                  onCancel={() => setModal()}
-                  onConfirm={() => {
-                    setModal();
-                    deleteAction();
-                  }}
-                />
-              );
-            }}
-          />
-        </div>}
+                }}
+                onColumnWidthChange={(col, width) => setConfig((c: any) => ({
+                  ...c,
+                  'column-widths': {
+                    ...c['column-widths'],
+                    [className]: {
+                      ...c['column-widths']?.[className] ?? {},
+                      [_columns[col]]: width,
+                    }
+                  }
+                }))}
+                onValueChanged={(value, row, column) => startActivity(async () => {
+                  try {
+                    let obj = _objs[row]?.clone() ?? Proto.Object(className);
+                    await setValue(obj, column, value);
+                    await saveUpdates([obj]);
+                    ref.current?.endEditing();
+                  } catch (e: any) {
+                    console.error(e);
+                    showError(e);
+                  }
+                })}
+                onPasteRows={(rows, clipboard) => startActivity(async () => {
+                  try {
+                    const { type, data } = decodeClipboardJsonData(clipboard) ?? await decodeClipboardData(clipboard) ?? {};
+                    const objects = _.compact(_.map(rows, row => _objs[row]));
+                    const updates: TObject[] = [];
+                    if (type === 'json') {
+                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                        const _obj = obj?.clone() ?? Proto.Object(className);
+                        for (const [column, value] of _.toPairs(values)) {
+                          if (!_.includes(readonlyKeys, column)) {
+                            await setValue(_obj, column, value);
+                          }
+                        }
+                        updates.push(_obj);
+                      }
+                    } else if (type === 'raw') {
+                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                        const _obj = obj?.clone() ?? Proto.Object(className);
+                        for (const [column = '', value] of _.zip(_columns, values)) {
+                          if (!_.includes(readonlyKeys, column)) {
+                            if (_.isNil(value)) {
+                              if (_obj.objectId) _obj.set(column, null);
+                            } else {
+                              const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
+                              if (!_.isNil(_value)) _obj.set(column, _value as any);
+                            }
+                          }
+                        }
+                        updates.push(_obj);
+                      }
+                    }
+                    await saveUpdates(updates);
+                  } catch (e: any) {
+                    console.error(e);
+                    showError(e);
+                  }
+                })}
+                onPasteCells={(cells, clipboard) => startActivity(async () => {
+                  const _rows = _.range(cells.start.row, cells.end.row + 1);
+                  const _cols = _.range(cells.start.col, cells.end.col + 1).map(c => _columns[c]);
+                  const { data } = await decodeClipboardData(clipboard) ?? {};
+                  const replaceAction = () => startActivity(async () => {
+                    try {
+                      const objects = _.compact(_.map(_rows, row => _objs[row]));
+                      const updates: TObject[] = [];
+                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                        const _obj = obj?.clone() ?? Proto.Object(className);
+                        for (const [column = '', value] of _.zip(_cols, values)) {
+                          if (!_.includes(readonlyKeys, column)) {
+                            if (_.isNil(value)) {
+                              if (_obj.objectId) _obj.set(column, null);
+                            } else {
+                              const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
+                              if (!_.isNil(_value)) _obj.set(column, _value as any);
+                            }
+                          }
+                        }
+                        updates.push(_obj);
+                      }
+                      await saveUpdates(updates);
+                    } catch (e: any) {
+                      console.error(e);
+                      showError(e);
+                    }
+                  });
+                  if (_rows.length * _cols.length <= 3) return replaceAction();
+                  setModal(
+                    <ConfirmModal
+                      title='Replace selected data'
+                      comfirmMessage='To comfirm, type the class name in the box bellow'
+                      comfirmAnswer={className}
+                      onCancel={() => setModal()}
+                      onConfirm={() => {
+                        setModal();
+                        replaceAction();
+                      }}
+                    />
+                  );
+                })}
+                onDeleteRows={(rows) => {
+                  const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
+                  const deleteAction = () => startActivity(async () => {
+                    try {
+                      await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
+                      setDeletedObjs(_objs => [..._objs, ...ids]);
+                      setUpdatedObjs(objs => _.omit(objs, ...ids));
+                      ref.current?.clearSelection();
+                    } catch (e: any) {
+                      console.error(e);
+                      showError(e);
+                    }
+                  });
+                  if (ids.length <= 3) return deleteAction();
+                  setModal(
+                    <ConfirmModal
+                      title='Delete selected rows'
+                      comfirmMessage='To comfirm, type the class name in the box bellow'
+                      comfirmAnswer={className}
+                      onCancel={() => setModal()}
+                      onConfirm={() => {
+                        setModal();
+                        deleteAction();
+                      }}
+                    />
+                  );
+                }}
+                onDeleteCells={(cells) => {
+                  const _rows = _.range(cells.start.row, cells.end.row + 1);
+                  const _cols = _.range(cells.start.col, cells.end.col + 1)
+                    .map(c => _columns[c])
+                    .filter(c => !_.includes(readonlyKeys, c));
+                  const deleteAction = () => startActivity(async () => {
+                    try {
+                      const updated = await Promise.all(_.map(_rows, row => {
+                        let obj = _objs[row]?.clone();
+                        if (!obj?.objectId) return;
+                        obj = updatedObjs[obj.objectId]?.clone() ?? obj;
+                        for (const _col of _cols) obj.set(_col, null);
+                        return obj.save({ master: true });
+                      }));
+                      setUpdatedObjs(objs => ({
+                        ...objs,
+                        ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
+                      }));
+                      ref.current?.clearSelection();
+                    } catch (e: any) {
+                      console.error(e);
+                      showError(e);
+                    }
+                  });
+                  if (_rows.length * _cols.length <= 3) return deleteAction();
+                  setModal(
+                    <ConfirmModal
+                      title='Delete selected data'
+                      comfirmMessage='To comfirm, type the class name in the box bellow'
+                      comfirmAnswer={className}
+                      onCancel={() => setModal()}
+                      onConfirm={() => {
+                        setModal();
+                        deleteAction();
+                      }}
+                    />
+                  );
+                }}
+              />
+            </div>
+          </View>
+        )}
       </View>
     </>
   );
