@@ -33,11 +33,18 @@ import { typeOf } from './type';
 export type DataSheetCellProps = {
   value?: any;
   type?: TDataType;
+  hidden?: boolean;
 };
 
-const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type }) => {
+const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type, hidden }) => {
 
   const navigate = useNavigate();
+
+  if (hidden) {
+    return (
+      <Text classes='font-monospace text-right' style={{ color: 'lightgray' }} numberOfLines={1}>(hidden)</Text>
+    );
+  }
 
   if (_.isNil(value)) {
     return (

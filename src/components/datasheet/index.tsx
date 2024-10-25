@@ -112,7 +112,7 @@ export const DataSheet = React.forwardRef(({
             value={item?.value}
             type={schema.fields[columns[columnIdx]]}
           />
-        ) : <DataSheetCell {...item} />
+        ) : <DataSheetCell hidden={_.includes(schema.secureFields, item?.column)} {...item} />
       )}
       {...props}
     />
