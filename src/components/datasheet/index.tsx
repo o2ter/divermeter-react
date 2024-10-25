@@ -85,7 +85,8 @@ export const DataSheet = React.forwardRef(({
       data={_data}
       encoders={encoders}
       columns={_.map(columns, c => ({
-        key: c, label: (
+        key: c,
+        label: (
           <Pressable
             onPress={(e) => onColumnPressed(e, c)}
             style={{ flexDirection: 'row', alignItems: 'center', cursor: 'default' } as any}
