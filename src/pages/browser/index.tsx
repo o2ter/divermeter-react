@@ -39,6 +39,8 @@ import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
 
+import Localization from '../../i18n/browser';
+
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
 const decodeClipboardJsonData = (
@@ -78,6 +80,8 @@ const flatternShape = (fields: TSchema[string]['fields']) => {
 
 const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }> = ({ schema, className, state }) => {
 
+  const { string: t } = Localization.useLocalize();
+
   const Proto = useProto();
 
   const _schema = React.useMemo(() => {
@@ -100,7 +104,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const setModal = useModal();
 
   const startActivity = useActivity();
-  const { showError } = useAlert();
+  const { showError, showSuccess } = useAlert();
 
   const readonlyKeys = [
     ...defaultObjectReadonlyKeys,
@@ -273,6 +277,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                       await saveUpdates([obj]);
                     }
                     ref.current?.endEditing();
+                    showSuccess(t('saved'));
                   } catch (e: any) {
                     console.error(e);
                     showError(e);
@@ -310,6 +315,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                       }
                     }
                     await saveUpdates(updates);
+                    showSuccess(t('saved'));
                   } catch (e: any) {
                     console.error(e);
                     showError(e);
@@ -338,6 +344,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         updates.push(_obj);
                       }
                       await saveUpdates(updates);
+                      showSuccess(t('saved'));
                     } catch (e: any) {
                       console.error(e);
                       showError(e);
@@ -365,6 +372,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                       setDeletedObjs(_objs => [..._objs, ...ids]);
                       setUpdatedObjs(objs => _.omit(objs, ...ids));
                       ref.current?.clearSelection();
+                      showSuccess(t('deleted'));
                     } catch (e: any) {
                       console.error(e);
                       showError(e);
@@ -403,6 +411,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
                       }));
                       ref.current?.clearSelection();
+                      showSuccess(t('deleted'));
                     } catch (e: any) {
                       console.error(e);
                       showError(e);
