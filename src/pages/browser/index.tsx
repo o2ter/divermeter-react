@@ -84,7 +84,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
     const _schema = schema?.[className];
     return _schema ? {
       ..._schema,
-      fields: flatternShape(_schema.fields)
+      fields: {
+        ...flatternShape(_schema.fields),
+        ...className === 'User' ? { password: 'string' } : {},
+      } as ReturnType<typeof flatternShape>,
     } : undefined;
   }, [schema, className]);
 
@@ -262,9 +265,13 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 }))}
                 onValueChanged={(value, row, column) => startActivity(async () => {
                   try {
-                    let obj = _objs[row]?.clone() ?? Proto.Object(className);
-                    await setValue(obj, column, value);
-                    await saveUpdates([obj]);
+                    if (_objs[row] && className === 'User' && column === 'password') {
+                      await Proto.setPassword(_objs[row], value, { master: true });
+                    } else {
+                      let obj = _objs[row]?.clone() ?? Proto.Object(className);
+                      await setValue(obj, column, value);
+                      await saveUpdates([obj]);
+                    }
                     ref.current?.endEditing();
                   } catch (e: any) {
                     console.error(e);
