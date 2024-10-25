@@ -93,7 +93,9 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
             <Text>Value</Text>
           </View>
           <View classes='flex-fill'>
-            <Resizable>
+            <Resizable style={{
+              minHeight: 200,
+            }}>
               <JSCode
                 classes='w-100 h-100'
                 style={{ outline: 'none' } as any}
