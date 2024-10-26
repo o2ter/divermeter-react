@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -115,6 +115,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const [filter, setFilter] = React.useState<FilterType[]>(_.castArray(initialFilter ?? []));
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
+  const [page, setPage] = React.useState(1);
 
   const query = React.useMemo(() => {
     const query = Proto.Query(className);
@@ -433,7 +434,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           </View>
         )}
       </View>
-      <View classes='py-1 px-4 flex-row bg-secondary-600 text-secondary-200'>
+      <Row classes='py-1 px-4 justify-content-between bg-secondary-600 text-secondary-200'>
         <Row classes='gap-2 align-items-center'>
           <Text>Limit</Text>
           <UncontrolledTextInput
@@ -444,7 +445,28 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
             }}
           />
         </Row>
-      </View>
+        <Row classes='gap-2 align-items-center'>
+          {page > 1 && (
+            <Button variant='unstyled' onPress={() => setPage(v => v - 1)}>
+              <Text classes='text-secondary-200'>
+                <Icon icon='MaterialIcons' name='navigate-before' />
+              </Text>
+            </Button>
+          )}
+          <TextInput
+            value={`${page ?? ''}`}
+            onBlur={(e) => {
+              const number = e.nativeEvent.text ? parseInt(e.nativeEvent.text, 10) : limit;
+              if (_.isSafeInteger(number)) setPage(Math.max(1, number));
+            }}
+          />
+          <Button variant='unstyled' onPress={() => setPage(v => v + 1)}>
+            <Text classes='text-secondary-200'>
+              <Icon icon='MaterialIcons' name='navigate-next' />
+            </Text>
+          </Button>
+        </Row>
+      </Row>
     </>
   );
 };
