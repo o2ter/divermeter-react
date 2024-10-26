@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput, useNavigate } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -82,6 +82,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const { string: t } = Localization.useLocalize();
 
   const Proto = useProto();
+
+  const navigate = useNavigate();
 
   const relatedBy = React.useMemo(() => {
     const { relatedBy } = state ?? {};
@@ -234,14 +236,35 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   return (
     <>
       <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
-        <View>
-          <Text style={{ fontSize: 10 }}>CLASS</Text>
-          <Text>
-            <Text classes='h1 text-white'>{className}</Text>
-            {!_.isNil(count) && <Text
-              classes='fs-small ml-3'
-            >{count} objects</Text>}
-          </Text>
+        <View classes='flex-row align-items-center gap-3'>
+          {relatedBy && (
+            <Button
+              variant='unstyled'
+              color='white'
+              onPress={() => navigate(-1)}
+            >
+              <Icon icon='SimpleLineIcons' name='arrow-left-circle' style={{ fontSize: 24 }} />
+            </Button>
+          )}
+          <View>
+            {!relatedBy && (
+              <Text style={{ fontSize: 10 }}>CLASS</Text>
+            )}
+            {relatedBy && (
+              <Text style={{ fontSize: 10 }}>RELATION {relatedBy.className}</Text>
+            )}
+            <Text>
+              {!relatedBy && (
+                <Text classes='h5 text-white'>{className}</Text>
+              )}
+              {relatedBy && (
+                <Text classes='h5 text-white'>'{relatedBy.key}' on {relatedBy.objectId}</Text>
+              )}
+              {!_.isNil(count) && <Text
+                classes='fs-small ml-3'
+              >{count} objects</Text>}
+            </Text>
+          </View>
         </View>
         <View classes='justify-content-end'>
           <Row classes='text-white'>
@@ -467,11 +490,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         <Row classes='gap-2 align-items-center'>
           <Button
             variant='unstyled'
+            color='secondary-200'
             onPress={() => setPage(v => Math.max(1, v - 1))}
           >
-            <Text classes='text-secondary-200'>
-              <Icon icon='MaterialIcons' name='navigate-before' />
-            </Text>
+            <Icon icon='MaterialIcons' name='navigate-before' />
           </Button>
           <TextInput
             value={`${page ?? ''}`}
@@ -487,11 +509,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           />
           <Button
             variant='unstyled'
+            color='secondary-200'
             onPress={() => setPage(v => v + 1)}
           >
-            <Text classes='text-secondary-200'>
-              <Icon icon='MaterialIcons' name='navigate-next' />
-            </Text>
+            <Icon icon='MaterialIcons' name='navigate-next' />
           </Button>
         </Row>
       </Row>
