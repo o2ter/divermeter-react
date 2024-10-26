@@ -448,9 +448,17 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
                   const deleteAction = () => startActivity(async () => {
                     try {
-                      await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
-                      setDeletedObjs(_objs => [..._objs, ...ids]);
-                      setUpdatedObjs(objs => _.omit(objs, ...ids));
+                      if (relatedBy?.editable) {
+                        const obj = Proto.Object(relatedBy.className, relatedBy.objectId);
+                        obj.removeAll(relatedBy.key, _.map(ids, x => Proto.Object(className, x)));
+                        await obj.save({ master: true });
+                        refreshCount();
+                        refresh();
+                      } else {
+                        await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
+                        setDeletedObjs(_objs => [..._objs, ...ids]);
+                        setUpdatedObjs(objs => _.omit(objs, ...ids));
+                      }
                       ref.current?.clearSelection();
                       showSuccess(t('deleted'));
                     } catch (e: any) {
