@@ -31,6 +31,7 @@ export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type === 'pointe
 
 export const typeStr = (x?: TDataType) => {
   if (_.isString(x)) return x;
+  if (x?.type === 'pointer' && x.target === 'File') return 'file';
   if (x?.type === 'pointer') return `Pointer<${x.target}>`;
   if (x?.type === 'relation') return `Relation<${x.target}>`;
   return x?.type;
