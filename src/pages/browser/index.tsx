@@ -451,13 +451,14 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           />
         </Row>
         <Row classes='gap-2 align-items-center'>
-          {page > 1 && (
-            <Button variant='unstyled' onPress={() => setPage(v => v - 1)}>
-              <Text classes='text-secondary-200'>
-                <Icon icon='MaterialIcons' name='navigate-before' />
-              </Text>
-            </Button>
-          )}
+          <Button
+            variant='unstyled'
+            onPress={() => setPage(v => Math.max(1, v - 1))}
+          >
+            <Text classes='text-secondary-200'>
+              <Icon icon='MaterialIcons' name='navigate-before' />
+            </Text>
+          </Button>
           <TextInput
             value={`${page ?? ''}`}
             classes='border-0'
@@ -470,7 +471,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
               if (_.isSafeInteger(number)) setPage(Math.max(1, number));
             }}
           />
-          <Button variant='unstyled' onPress={() => setPage(v => v + 1)}>
+          <Button
+            variant='unstyled'
+            onPress={() => setPage(v => v + 1)}
+          >
             <Text classes='text-secondary-200'>
               <Icon icon='MaterialIcons' name='navigate-next' />
             </Text>
