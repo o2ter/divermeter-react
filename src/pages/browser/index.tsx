@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput, useNavigate } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput, useNavigate, Pressable } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -34,7 +34,7 @@ import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf, typeOf } from '../../components/datasheet/type';
 import { FilterButton, FilterType, encodeFilter } from './menu/filter';
-import { ConfirmModal } from '../../components/modal';
+import { ConfirmModal, Modal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
 
@@ -75,6 +75,25 @@ const flatternShape = (fields: TSchema[string]['fields']) => {
     }
   }
   return result;
+}
+
+const AddRelationModal = ({ onSubmit }: { onSubmit: (ids: string[]) => void }) => {
+  const setModal = useModal();
+  const [value, setValue] = React.useState('');
+  return (
+    <Modal
+      title='Add Object'
+      onCancel={() => setModal()}
+      onSubmit={() => {
+        onSubmit(_.compact(_.map(value.split(','), x => x.trim())));
+      }}
+    >
+      <View classes='bg-body p-3'>
+        <Text>objectIds</Text>
+        <TextInput value={value} onChangeText={setValue} />
+      </View>
+    </Modal>
+  );
 }
 
 const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }> = ({ schema, className, state }) => {
@@ -137,8 +156,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
     return query;
   }, [className, schema, filter, relatedBy]);
 
-  const { resource: count } = useAsyncResource(() => query.count({ master: true }), [className, query]);
-  const { resource: objects } = useAsyncResource(() => startActivity(async () => {
+  const { resource: count, refresh: refreshCount } = useAsyncResource(() => query.count({ master: true }), [className, query]);
+  const { resource: objects, refresh } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
       const files = _.pickBy(_fields, type => !_.isString(type) && type.type === 'pointer' && type.target === 'File');
@@ -269,6 +288,31 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         <View classes='justify-content-end'>
           <Row classes='text-white'>
             <FilterButton fields={_fields} filter={filter} setFilter={setFilter} />
+            {relatedBy?.editable && (
+              <>
+                <View classes='bg-secondary-200 h-100 mx-2' style={{ width: 1 }} />
+                <Text
+                  classes='py-1 px-2'
+                  onPress={() => setModal(
+                    <AddRelationModal onSubmit={(ids) => startActivity(async () => {
+                      if (_.isEmpty(ids)) return setModal();
+                      try {
+                        const obj = Proto.Object(relatedBy.className, relatedBy.objectId);
+                        obj.addToSet(relatedBy.key, _.map(ids, x => Proto.Object(className, x)));
+                        await obj.save({ master: true });
+                        showSuccess(t('saved'));
+                        setModal();
+                        refreshCount();
+                        refresh();
+                      } catch (e: any) {
+                        console.error(e);
+                        showError(e);
+                      }
+                    })} />
+                  )}
+                >Add Object</Text>
+              </>
+            )}
           </Row>
         </View>
       </Row>

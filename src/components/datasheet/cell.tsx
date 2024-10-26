@@ -134,6 +134,7 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value,
                       className,
                       objectId,
                       key: column,
+                      editable: !(type as any).foreignField,
                     },
                   }
                 });
