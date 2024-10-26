@@ -134,12 +134,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         ..._.map(_.keys(relation), key => `${key}._id`),
         ..._.map(_.keys(files), key => `${key}.filename`),
       );
-      return await _query.sort(sort).limit(limit).find({ master: true });
+      return await _query.sort(sort).limit(limit).skip((page - 1) * limit).find({ master: true });
     } catch (e: any) {
       console.error(e);
       showError(e);
     }
-  }), [query, sort, limit]);
+  }), [query, sort, limit, page]);
 
   const [insertedObjs, setInsertedObjs] = React.useState<TObject[]>([]);
   const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
@@ -439,6 +439,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           <Text>Limit</Text>
           <UncontrolledTextInput
             value={`${limit ?? ''}`}
+            classes='border-0'
+            style={{
+              textAlign: 'center',
+              width: 64,
+            }}
             onBlur={(e) => {
               const number = e.nativeEvent.text ? parseInt(e.nativeEvent.text, 10) : limit;
               if (_.isSafeInteger(number)) setLimit(number);
@@ -455,6 +460,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           )}
           <TextInput
             value={`${page ?? ''}`}
+            classes='border-0'
+            style={{
+              textAlign: 'center',
+              width: 64,
+            }}
             onBlur={(e) => {
               const number = e.nativeEvent.text ? parseInt(e.nativeEvent.text, 10) : limit;
               if (_.isSafeInteger(number)) setPage(Math.max(1, number));
