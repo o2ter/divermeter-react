@@ -448,7 +448,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
                   const deleteAction = () => startActivity(async () => {
                     try {
-                      if (relatedBy?.editable) {
+                      if (relatedBy) {
+                        if (!relatedBy.editable) return;
                         const obj = Proto.Object(relatedBy.className, relatedBy.objectId);
                         obj.removeAll(relatedBy.key, _.map(ids, x => Proto.Object(className, x)));
                         await obj.save({ master: true });
