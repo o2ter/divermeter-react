@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useAlert, useActivity, useLocation, useModal } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
@@ -34,7 +34,6 @@ import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf } from '../../components/datasheet/type';
 import { FilterButton, FilterType, encodeFilter } from './menu/filter';
-import { LimitButton } from './menu/limit';
 import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
@@ -234,8 +233,6 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         <View classes='justify-content-end'>
           <Row classes='text-white'>
             <FilterButton fields={_fields} filter={filter} setFilter={setFilter} />
-            <View classes='bg-secondary-200 h-100 mx-2' style={{ width: 1 }} />
-            <LimitButton limit={limit} setLimit={setLimit} />
           </Row>
         </View>
       </Row>
@@ -435,6 +432,18 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
             </div>
           </View>
         )}
+      </View>
+      <View classes='py-1 px-4 flex-row bg-secondary-600 text-secondary-200'>
+        <Row classes='gap-2 align-items-center'>
+          <Text>Limit</Text>
+          <UncontrolledTextInput
+            value={`${limit ?? ''}`}
+            onBlur={(e) => {
+              const number = e.nativeEvent.text ? parseInt(e.nativeEvent.text, 10) : limit;
+              if (_.isSafeInteger(number)) setLimit(number);
+            }}
+          />
+        </Row>
       </View>
     </>
   );
