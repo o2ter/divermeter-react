@@ -29,7 +29,7 @@ import { DataSheet as _DataSheet, Icon, Text, Pressable } from '@o2ter/react-ui'
 import { TObject, TSchema } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent } from 'react-native';
-import { typeOf } from './type';
+import { typeOf, typeStr } from './type';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
 import { Decimal, isObject, serialize } from 'proto.io/dist/client';
@@ -97,7 +97,7 @@ export const DataSheet = React.forwardRef(({
             >{c}<Text
               classes='font-monospace fs-small ml-1'
               style={{ color: 'gray' }}
-            >({typeOf(schema.fields[c])})</Text>
+            >({typeStr(schema.fields[c])})</Text>
             </Text>
             {sort[c] === -1 && <Icon classes='mx-1' icon='Octicons' name='triangle-down' />}
             {sort[c] === 1 && <Icon classes='mx-1' icon='Octicons' name='triangle-up' />}

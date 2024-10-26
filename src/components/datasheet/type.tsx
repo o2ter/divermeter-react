@@ -28,3 +28,10 @@ import { TDataType } from '../../proto';
 
 export const _typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
 export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type === 'pointer' && x.target === 'File' ? 'file' : x?.type;
+
+export const typeStr = (x?: TDataType) => {
+  if (_.isString(x)) return x;
+  if (x?.type === 'pointer') return `Pointer<${x.target}>`;
+  if (x?.type === 'relation') return `Relation<${x.target}>`;
+  return x?.type;
+};
