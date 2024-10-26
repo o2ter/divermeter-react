@@ -127,7 +127,7 @@ export default async (app: Server, env: Record<string, any>) => {
 
   const date = new Date();
 
-  await Proto.Query('Test').insert({
+  const inserted = await Proto.Query('Test').insert({
     boolean: true,
     number: 42,
     decimal: new Decimal('0.001'),
@@ -142,5 +142,10 @@ export default async (app: Server, env: Record<string, any>) => {
       array: [1, 2, 3, date, new Decimal('0.001')],
     },
     array: [1, 2, 3, date, new Decimal('0.001')],
+  });
+
+  await Proto.Query('Test').insert({
+    pointer: inserted,
+    relation: [inserted],
   });
 }

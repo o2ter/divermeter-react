@@ -25,20 +25,23 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Icon, Text, useNavigate } from '@o2ter/react-ui';
+import { Icon, Text, useNavigate, useParams } from '@o2ter/react-ui';
 import { Decimal, isFile, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../../proto';
 import { typeOf } from './type';
 
 export type DataSheetCellProps = {
+  objectId?: string;
+  column?: string;
   value?: any;
   type?: TDataType;
   hidden?: boolean;
 };
 
-const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type, hidden }) => {
+const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value, type, hidden }) => {
 
   const navigate = useNavigate();
+  const { class: className } = useParams();
 
   if (hidden) {
     return (
@@ -100,9 +103,8 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type, hidden }) =
             icon='Ionicons'
             name='arrow-redo-circle'
             onPress={() => {
-              const className = value?.className;
-              if (className) {
-                navigate(`/browser/${className}`, {
+              if (value?.className) {
+                navigate(`/browser/${value.className}`, {
                   state: {
                     filter: [{
                       op: '$eq',
@@ -118,7 +120,27 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ value, type, hidden }) =
       );
     case 'relation':
       return (
-        <Text classes='font-monospace text-right' style={{ color: 'gray' }} numberOfLines={1}>{_.castArray(value).length} objects</Text>
+        <Text classes='font-monospace text-right' style={{ color: 'gray' }} numberOfLines={1}>
+          {_.castArray(value).length} objects
+          <Icon
+            classes='ml-1'
+            icon='Ionicons'
+            name='arrow-redo-circle'
+            onPress={() => {
+              if (objectId && column && className) {
+                navigate(`/browser/${(type as any).target}`, {
+                  state: {
+                    relatedBy: {
+                      className,
+                      objectId,
+                      key: column,
+                    },
+                  }
+                });
+              }
+            }}
+          />
+        </Text>
       );
     default: return <></>;
   }

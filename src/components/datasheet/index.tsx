@@ -56,6 +56,7 @@ export const DataSheet = React.forwardRef(({
 }: DataSheetProps, forwardRef: React.ForwardedRef<React.ComponentRef<typeof _DataSheet>>) => {
 
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
+    objectId: x.objectId,
     column: c,
     value: x.get(c),
     type: schema.fields[c],
@@ -106,14 +107,14 @@ export const DataSheet = React.forwardRef(({
       }))}
       showEmptyLastRow={showEmptyLastRow}
       onEndEditing={(row, column) => onValueChanged(editCell.current.value, row, columns[column])}
-      renderItem={({ item, columnIdx, isEditing }) => (
+      renderItem={({ item = {}, columnIdx, isEditing }) => (
         isEditing ? (
           <DataSheetEditCell
             ref={editCell}
-            value={item?.value}
+            value={item.value}
             type={schema.fields[columns[columnIdx]]}
           />
-        ) : <DataSheetCell hidden={_.includes(schema.secureFields, item?.column)} {...item} />
+        ) : <DataSheetCell hidden={_.includes(schema.secureFields, item.column)} {...item} />
       )}
       {...props}
     />

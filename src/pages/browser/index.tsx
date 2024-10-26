@@ -32,7 +32,7 @@ import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
-import { _typeOf } from '../../components/datasheet/type';
+import { _typeOf, typeOf } from '../../components/datasheet/type';
 import { FilterButton, FilterType, encodeFilter } from './menu/filter';
 import { ConfirmModal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
@@ -83,6 +83,14 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const Proto = useProto();
 
+  const relatedBy = React.useMemo(() => {
+    const { relatedBy } = state ?? {};
+    if (!_.isString(relatedBy?.className) || _.isEmpty(relatedBy?.className)) return;
+    if (!_.isString(relatedBy?.objectId) || _.isEmpty(relatedBy?.objectId)) return;
+    if (!_.isString(relatedBy?.key) || _.isEmpty(relatedBy?.key)) return;
+    return relatedBy;
+  }, [state]);
+
   const _schema = React.useMemo(() => {
     const _schema = schema?.[className];
     return _schema ? {
@@ -118,10 +126,14 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const [page, setPage] = React.useState(1);
 
   const query = React.useMemo(() => {
-    const query = Proto.Query(className);
+    const query = relatedBy ? Proto.Relation(
+      className,
+      Proto.Object(relatedBy.className, relatedBy.objectId),
+      relatedBy.key,
+    ) : Proto.Query(className);
     for (const f of filter) query.filter(encodeFilter(f));
     return query;
-  }, [className, schema, filter]);
+  }, [className, schema, filter, relatedBy]);
 
   const { resource: count } = useAsyncResource(() => query.count({ master: true }), [className, query]);
   const { resource: objects } = useAsyncResource(() => startActivity(async () => {
@@ -248,7 +260,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 columns={_columns}
                 columnWidth={_columns.map(c => _columnWidths[c] ?? 160)}
                 sort={sort}
-                allowEditForCell={(row, col) => !_.includes(defaultObjectReadonlyKeys, _columns[col])}
+                allowEditForCell={(row, col) => {
+                  return typeOf(_schema.fields[_columns[col]]) !== 'relation' && !_.includes(defaultObjectReadonlyKeys, _columns[col]);
+                }}
                 onColumnPressed={(e: any, column) => {
                   setSort(sort => ({
                     ...e.shiftKey ? _.omit(sort, column) : {},
