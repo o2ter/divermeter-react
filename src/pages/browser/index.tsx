@@ -270,7 +270,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
               <Text style={{ fontSize: 10 }}>CLASS</Text>
             )}
             {relatedBy && (
-              <Text style={{ fontSize: 10 }}>RELATION {relatedBy.className}</Text>
+              <Text style={{ fontSize: 10 }}>RELATION {`<${relatedBy.className}>`}</Text>
             )}
             <Text>
               {!relatedBy && (
