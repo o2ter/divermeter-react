@@ -326,6 +326,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 schema={_schema}
                 columns={_columns}
                 showEmptyLastRow={!relatedBy}
+                startRowNumber={(page - 1) * limit + 1}
                 columnWidth={_columns.map(c => _columnWidths[c] ?? 160)}
                 sort={sort}
                 allowEditForCell={(row, col) => {
