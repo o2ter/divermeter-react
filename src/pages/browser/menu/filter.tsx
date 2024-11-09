@@ -29,7 +29,7 @@ import { MenuButton } from './base';
 import { Button, JSCode } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
 import { TDataType } from '../../../proto';
-import { encodeObject } from '../../../components/datasheet/encode';
+import { encodeObject, verifyObject } from '../../../components/datasheet/encode';
 import { Decimal } from 'proto.io/dist/client';
 
 const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
@@ -56,11 +56,14 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   setFilter,
 }) => {
 
-  const store = React.useRef(filter);
+  const [store, setStore] = React.useState(filter);
+
+  console.log(store)
 
   return (
     <MenuButton
       title='Filter'
+      extraData={store}
       menu={({ hide }) => (
         <Col classes='gap-2'>
           <Resizable
@@ -72,11 +75,13 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
             <JSCode
               classes='w-100 h-100'
               style={{ outline: 'none' } as any}
-              initialValue={_.isNil(store.current) ? '' : encodeObject(store.current)}
+              initialValue={_.isNil(store) ? '' : encodeObject(store)}
               onChangeValue={(code) => {
                 try {
                   const func = new Function('Decimal', `return (${code})`);
-                  store.current = func(Decimal);
+                  const value = func(Decimal);
+                  verifyObject(value);
+                  setStore(value);
                 } catch { };
               }}
             />
@@ -86,7 +91,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
               hide();
             }} />
             <Button title='Submit' variant='outline' color='light' onPress={() => {
-              setFilter(store.current);
+              setFilter(store);
               hide();
             }} />
           </Row>

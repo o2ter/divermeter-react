@@ -44,3 +44,21 @@ const _encodeObject = (value: any, space: number, padding: number): string => {
 };
 
 export const encodeObject = (value: any, space = 4) => _encodeObject(value, space, space);
+
+export const verifyObject = (value: any) => {
+  if (_.isNil(value) || _.isBoolean(value) || _.isNumber(value) || _.isString(value) || _.isDate(value)) return;
+  if (value instanceof Decimal) return;
+  if (_.isArray(value)) {
+    for (const item of value) {
+      verifyObject(item);
+    }
+    return;
+  }
+  if (_.isPlainObject(value)) {
+    for (const v of _.values(value)) {
+      verifyObject(v);
+    }
+    return;
+  }
+  throw Error('Invalid Object');
+};

@@ -29,7 +29,7 @@ import { TextInput, Switch, View, Text, UploadInput, JSCode } from '@o2ter/react
 import { Decimal } from 'proto.io/dist/client';
 import { TDataType, useProto } from '../../proto';
 import { typeOf } from './type';
-import { encodeObject } from './encode';
+import { encodeObject, verifyObject } from './encode';
 
 export type DataSheetEditCellProps = {
   value?: any;
@@ -144,7 +144,9 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEdit
             onChangeValue={(code) => {
               try {
                 const func = new Function('Decimal', `return (${code})`);
-                setValue(func(Decimal));
+                const value = func(Decimal);
+                verifyObject(value);
+                setValue(value);
               } catch { };
             }}
           />

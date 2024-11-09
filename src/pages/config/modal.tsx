@@ -28,7 +28,7 @@ import React from 'react';
 import { Modal } from '../../components/modal';
 import { JSCode, Text, TextInput, View, useAlert } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
-import { encodeObject } from '../../components/datasheet/encode';
+import { encodeObject, verifyObject } from '../../components/datasheet/encode';
 import { Decimal } from 'proto.io/dist/client';
 
 type ParameterModalProps = {
@@ -103,7 +103,9 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
                 onChangeValue={(code) => {
                   try {
                     const func = new Function('Decimal', `return (${code})`);
-                    setValue(func(Decimal));
+                    const value = func(Decimal);
+                    verifyObject(value);
+                    setValue(value);
                     setError(null);
                   } catch (e: any) {
                     setError(e);
