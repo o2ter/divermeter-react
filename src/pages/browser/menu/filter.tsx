@@ -56,7 +56,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   setFilter,
 }) => {
 
-  const [store, setStore] = React.useState(filter);
+  const store = React.useRef(filter);
 
   return (
     <MenuButton
@@ -72,11 +72,11 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
             <JSCode
               classes='w-100 h-100'
               style={{ outline: 'none' } as any}
-              initialValue={_.isNil(store) ? '' : encodeObject(store)}
+              initialValue={_.isNil(store.current) ? '' : encodeObject(store.current)}
               onChangeValue={(code) => {
                 try {
                   const func = new Function('Decimal', `return (${code})`);
-                  setStore(func(Decimal));
+                  store.current = func(Decimal);
                 } catch { };
               }}
             />
@@ -86,7 +86,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
               hide();
             }} />
             <Button title='Submit' variant='outline' color='light' onPress={() => {
-              setFilter(store);
+              setFilter(store.current);
               hide();
             }} />
           </Row>
