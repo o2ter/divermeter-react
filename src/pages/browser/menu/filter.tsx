@@ -26,106 +26,28 @@
 import _ from 'lodash';
 import React from 'react';
 import { MenuButton } from './base';
-import { Button, Picker } from '@o2ter/react-ui';
+import { Button, JSCode } from '@o2ter/react-ui';
 import { Col, Row } from '@o2ter/wireframe';
 import { TDataType } from '../../../proto';
+import { encodeObject } from '../../../components/datasheet/encode';
+import { Decimal } from 'proto.io/dist/client';
 
-const conditionalKeys = {
-  '$and': 'and',
-  '$nor': 'nor',
-  '$or': 'or',
-};
-
-type ConditionalFilterType = {
-  op: keyof typeof conditionalKeys;
-  exprs: FilterType[];
-};
-
-const isConditionalFilter = (x: FilterType): x is ConditionalFilterType => _.includes(_.keys(conditionalKeys), x.op);
-
-const comparisonKeys = {
-  '$eq': 'equal',
-  '$gt': 'greater',
-  '$gte': 'greater or equal',
-  '$lt': 'less',
-  '$lte': 'less or equal',
-  '$ne': 'not equal',
-};
-
-type ComparisonFilterType = {
-  op: keyof typeof comparisonKeys;
-  field: string;
-  value: any;
-};
-
-const isComparisonFilter = (x: FilterType): x is ComparisonFilterType => _.includes(_.keys(comparisonKeys), x.op);
-
-export type FilterType = ConditionalFilterType | ComparisonFilterType;
-
-export const encodeFilter = (filter: FilterType): any => {
-  if (isConditionalFilter(filter)) {
-    return { [filter.op]: _.map(filter.exprs, v => encodeFilter(v)) };
-  }
-  if (isComparisonFilter(filter)) {
-    return { [filter.field]: { [filter.op]: filter.value } };
-  }
-  throw Error();
-}
-
-type FilterSectionProps = {
-  fields: Record<string, TDataType>;
-  filter: FilterType;
-  setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
-};
-
-const FilterSection: React.FC<FilterSectionProps> = ({
-  fields,
-  filter,
-  setFilter,
+const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
+  style,
+  children,
 }) => (
-  <Row>
-    <Picker
-      value={filter.op ?? ''}
-      items={[
-        { label: '', value: '' },
-        ..._.map(_.toPairs(conditionalKeys), ([op, v]) => ({ label: v, value: op })),
-        ..._.map(_.toPairs(comparisonKeys), ([op, v]) => ({ label: v, value: op })),
-      ]}
-      onValueChange={(op) => {
-        if (_.includes(conditionalKeys, op)) {
-          setFilter((v) => ({ ..._.pick(v, 'exprs'), op }) as any)
-        } else if (_.includes(conditionalKeys, op)) {
-          setFilter((v) => ({ ..._.pick(v, 'field', 'value'), op }) as any)
-        }
-      }}
-    />
-    {isConditionalFilter(filter) && <Col>
-      {_.map(filter.exprs, (f, i) => (
-        <FilterSection
-          key={i}
-          fields={fields}
-          filter={f}
-          setFilter={(x) => setFilter((v) => ({ ...v, exprs: _.set([...filter.exprs], i, _.isFunction(x) ? x(filter.exprs[i]) : x) }))}
-        />
-      ))}
-    </Col>}
-    {isComparisonFilter(filter) && <>
-      <Picker
-        value={filter.field ?? ''}
-        items={[
-          { label: '', value: '' },
-          ..._.map(_.keys(fields), (f) => ({ label: f, value: f }))
-        ]}
-        onValueChange={(f) => setFilter((v) => ({ ...v, field: f }))}
-      />
-    </>}
-  </Row>
+  <div style={{
+    resize: 'both',
+    overflow: 'auto',
+    backgroundColor: 'white',
+    ...style,
+  }}>{children}</div>
 );
 
 type FilterButtonProps = {
   fields: Record<string, TDataType>;
-  filter: FilterType[];
-  setFilter: React.Dispatch<React.SetStateAction<FilterType[]>>;
+  filter: any[];
+  setFilter: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 export const FilterButton: React.FC<FilterButtonProps> = ({
@@ -140,15 +62,25 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
     <MenuButton
       title='Filter'
       menu={({ hide }) => (
-        <Col classes='text-white'>
-          {_.map(store, (filter, i) => (
-            <FilterSection
-              key={i}
-              fields={fields}
-              filter={filter}
-              setFilter={(x) => setStore(v => _.set([...v], i, _.isFunction(x) ? x(v[i]) : x))}
+        <Col classes='gap-2'>
+          <Resizable
+            style={{
+              paddingRight: 12,
+              minWidth: 300,
+              minHeight: 200,
+            }}>
+            <JSCode
+              classes='w-100 h-100'
+              style={{ outline: 'none' } as any}
+              initialValue={_.isNil(store) ? '' : encodeObject(store)}
+              onChangeValue={(code) => {
+                try {
+                  const func = new Function('Decimal', `return (${code})`);
+                  setStore(func(Decimal));
+                } catch { };
+              }}
             />
-          ))}
+          </Resizable>
           <Row classes='gap-1'>
             <Button title='Cancel' variant='outline' color='danger' onPress={() => {
               hide();

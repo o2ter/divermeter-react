@@ -33,7 +33,7 @@ import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf, typeOf } from '../../components/datasheet/type';
-import { FilterButton, FilterType, encodeFilter } from './menu/filter';
+import { FilterButton } from './menu/filter';
 import { ConfirmModal, Modal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
@@ -141,7 +141,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const { filter: initialFilter } = state ?? {};
 
-  const [filter, setFilter] = React.useState<FilterType[]>(_.castArray(initialFilter ?? []));
+  const [filter, setFilter] = React.useState<any[]>(_.castArray(initialFilter ?? []));
   const [sort, setSort] = React.useState<Record<string, 1 | -1>>({ _id: 1 });
   const [limit, setLimit] = React.useState(100);
   const [page, setPage] = React.useState(1);
@@ -152,7 +152,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
       Proto.Object(relatedBy.className, relatedBy.objectId),
       relatedBy.key,
     ) : Proto.Query(className);
-    for (const f of filter) query.filter(encodeFilter(f));
+    for (const f of filter) query.filter(f);
     return query;
   }, [className, schema, filter, relatedBy]);
 
