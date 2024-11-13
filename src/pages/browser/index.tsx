@@ -148,7 +148,6 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const query = React.useMemo(() => {
     const query = relatedBy ? Proto.Relation(
-      className,
       Proto.Object(relatedBy.className, relatedBy.objectId),
       relatedBy.key,
     ) : Proto.Query(className);
