@@ -58,8 +58,6 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
 
   const [store, setStore] = React.useState(filter);
 
-  console.log(store)
-
   return (
     <MenuButton
       title='Filter'
