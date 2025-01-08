@@ -29,6 +29,7 @@ import { View, Text } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { TSchema } from '../../proto';
 import { LayoutRectangle, StyleSheet } from 'react-native';
+import { typeStr } from '../../components/datasheet/type';
 
 export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [layout, setLayout] = React.useState<LayoutRectangle>();
@@ -42,13 +43,39 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     const nodes = _.map(schema, ({ fields }, name) => ({
       name,
-      fields,
+      fields: _.map(fields, (type, key) => ({
+        key,
+        type: typeStr(type) ?? '',
+      })),
+    })).map(x => ({
+      ...x,
+      maxLength: Math.max(
+        x.name.length,
+        ..._.map(x.fields, ({ key, type }) => key.length + type.length + 4)
+      )
     }));
 
     for (const node of nodes) {
+      const posX = 100;
+      const posY = 100;
+      const maxWidth = node.maxLength * 8 + 16;
+      const maxHeight = node.fields.length * 18 + 40;
       ctx.beginPath();
-      ctx.roundRect(10, 20, 150, 100, [8]);
+      ctx.roundRect(posX, posY, maxWidth, maxHeight, [8]);
       ctx.stroke();
+      ctx.font = '24px font-monospace';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'black';
+      ctx.fillText(node.name, posX + maxWidth * 0.5, posY + 32);
+      ctx.font = '18px font-monospace';
+      for (const [i, field] of node.fields.entries()) {
+        ctx.textAlign = 'start';
+        ctx.fillStyle = 'black';
+        ctx.fillText(field.key, posX + 8, posY + 50 + i * 18);
+        ctx.textAlign = 'end';
+        ctx.fillStyle = 'gray';
+        ctx.fillText(field.type, posX + maxWidth - 8, posY + 50 + i * 18);
+      }
     }
 
   }, [schema, layout]);
