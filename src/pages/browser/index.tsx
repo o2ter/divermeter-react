@@ -224,8 +224,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           if (_.isFinite(date.valueOf())) return date;
           break;
         }
-      case 'object': return deserialize(value);
-      case 'array': return deserialize(value);
+      case 'object':
+      case 'array':
+      case 'string[]':
+        return deserialize(value);
       case 'pointer':
         if (!_.isEmpty(value)) return Proto.Object(className, value).fetch({ master: true });
         break;

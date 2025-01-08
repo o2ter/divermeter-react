@@ -141,6 +141,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean
     case 'date': return <></>;
     case 'object':
     case 'array':
+    case 'string[]':
       return (
         <Resizable style={{ paddingRight: 12, width: 300, height: 200 }}>
           <JSCode

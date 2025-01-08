@@ -83,6 +83,7 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value,
   switch (typeOf(type)) {
     case 'object':
     case 'array':
+    case 'string[]':
       return (
         <Text classes='font-monospace text-right' numberOfLines={1}>{serialize(value)}</Text>
       );
