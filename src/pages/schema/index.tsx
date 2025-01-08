@@ -1,5 +1,5 @@
 //
-//  index.js
+//  index.tsx
 //
 //  The MIT License
 //  Copyright (c) 2021 - 2025 O2ter Limited. All rights reserved.
@@ -25,43 +25,20 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Navigator, Route, useAlert } from '@o2ter/react-ui';
+import { View, Text } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 
-import { useAsyncResource } from 'sugax';
-import { useProto } from '../../proto';
-import { SideMenu } from '../../components/sidemenu';
-import { Browser } from '../browser';
-import { Config } from '../config';
-import NotFound from '../NotFound';
-import { Row, Col } from '@o2ter/wireframe';
-import { Schema } from '../schema';
-
-export const Dashboard = () => {
-  const proto = useProto();
-  const { showError } = useAlert();
-  const { resource: schema } = useAsyncResource(async () => {
-    try {
-      return await proto.schema({ master: true });
-    } catch (e: any) {
-      console.error(e);
-      showError(e);
-    }
-  });
+export const Schema: React.FC<{}> = () => {
   return (
-    <Row classes='flex-fill'>
-      <Col classes='col-auto bg-primary-900 sticky-top dvh-100'>
-        <SideMenu schema={schema} />
-      </Col>
-      <Col classes='min-h-100'>
-        <Navigator>
-          <Route path='/browser/:class' component={Browser} props={{ schema }} />
-          <Route path='/config' component={Config} />
-          <Route path='/schema' component={Schema} />
-          <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
-        </Navigator>
-      </Col>
-    </Row>
+    <>
+      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+        <View>
+          <Text style={{ fontSize: 10 }}>SYSTEM</Text>
+          <Text classes='h5 text-white'>Schema</Text>
+        </View>
+      </Row>
+      <View classes='flex-fill bg-secondary-100'>
+      </View>
+    </>
   );
-};
-
-export default Dashboard;
+}

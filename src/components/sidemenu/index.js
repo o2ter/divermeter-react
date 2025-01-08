@@ -85,6 +85,10 @@ export const SideMenu = ({ schema }) => {
       header: 'Config',
       link: '/config',
     },
+    {
+      header: 'Schema',
+      link: '/schema',
+    },
   ];
 
   return (
