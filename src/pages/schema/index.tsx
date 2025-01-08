@@ -41,6 +41,10 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const s1 = 24;
+    const s2 = 18;
+    const p = 8;
+
     const nodes = _.map(schema, ({ fields }, name) => ({
       name,
       fields: _.map({
@@ -60,8 +64,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ...x,
       posX: 0,
       posY: 0,
-      width: x.maxLength * 8 + 16,
-      height: x.fields.length * 18 + 40,
+      width: x.maxLength * p + p * 2,
+      height: x.fields.length * s2 + s1 + p * 2,
     }));
 
     for (const { posX, posY, width, height, ...node } of nodes) {
@@ -70,18 +74,18 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ctx.roundRect(posX, posY, width, height, [8]);
       ctx.fill();
       ctx.stroke();
-      ctx.font = '24px font-monospace';
+      ctx.font = `${s1}px font-monospace`;
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
-      ctx.fillText(node.name, posX + width * 0.5, posY + 32);
-      ctx.font = '18px font-monospace';
+      ctx.fillText(node.name, posX + width * 0.5, posY + s1 + p);
+      ctx.font = `${s2}px font-monospace`;
       for (const [i, field] of node.fields.entries()) {
         ctx.textAlign = 'start';
         ctx.fillStyle = 'black';
-        ctx.fillText(field.key, posX + 8, posY + 50 + i * 18);
+        ctx.fillText(field.key, posX + p, posY + s1 + s2 + p + i * s2);
         ctx.textAlign = 'end';
         ctx.fillStyle = 'gray';
-        ctx.fillText(field.type, posX + width - 8, posY + 50 + i * 18);
+        ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p + i * s2);
       }
     }
 
