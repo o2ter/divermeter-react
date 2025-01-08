@@ -63,8 +63,10 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       const posY = 100;
       const maxWidth = node.maxLength * 8 + 16;
       const maxHeight = node.fields.length * 18 + 40;
+      ctx.fillStyle = 'white';
       ctx.beginPath();
       ctx.roundRect(posX, posY, maxWidth, maxHeight, [8]);
+      ctx.fill();
       ctx.stroke();
       ctx.font = '24px font-monospace';
       ctx.textAlign = 'center';
