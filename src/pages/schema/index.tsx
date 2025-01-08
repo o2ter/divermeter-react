@@ -47,7 +47,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     for (const node of nodes) {
       ctx.beginPath();
-      ctx.roundRect(10, 20, 150, 100, [40]);
+      ctx.roundRect(10, 20, 150, 100, [8]);
       ctx.stroke();
     }
 
