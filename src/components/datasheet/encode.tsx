@@ -43,7 +43,7 @@ const _encodeObject = (value: any, space: number, padding: number): string => {
   )).join(',\n')}\n${_.padStart('', padding - space, ' ')}}`;
 };
 
-export const encodeObject = (value: any, space = 4) => _encodeObject(value, space, space);
+export const encodeObject = (value: any, space = 2) => _encodeObject(value, space, space);
 
 export const verifyObject = (value: any) => {
   if (_.isNil(value) || _.isBoolean(value) || _.isNumber(value) || _.isString(value) || _.isDate(value)) return;
