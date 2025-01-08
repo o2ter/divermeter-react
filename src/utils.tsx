@@ -24,7 +24,7 @@
 //
 
 import _ from 'lodash';
-import { TDataType } from '../../proto';
+import { TDataType, TSchema } from './proto';
 
 export const _typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type;
 export const typeOf = (x?: TDataType) => _.isString(x) ? x : x?.type === 'pointer' && x.target === 'File' ? 'file' : x?.type;
@@ -35,4 +35,18 @@ export const typeStr = (x?: TDataType) => {
   if (x?.type === 'pointer') return `Pointer<${x.target}>`;
   if (x?.type === 'relation') return `Relation<${x.target}>`;
   return x?.type;
+};
+
+export const flatternShape = (fields: TSchema[string]['fields']) => {
+  const result: TSchema[string]['fields'] = {};
+  for (const [key, field] of _.entries(fields)) {
+    if (_.isString(field) || field.type !== 'shape') {
+      result[key] = field;
+    } else {
+      for (const [x, type] of _.entries(flatternShape(field.shape))) {
+        result[`${key}.${x}`] = type;
+      }
+    }
+  }
+  return result;
 };

@@ -32,13 +32,14 @@ import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
-import { _typeOf, typeOf } from '../../components/datasheet/type';
+import { _typeOf, typeOf } from '../../utils';
 import { FilterControl } from './menu/filter';
 import { ConfirmModal, Modal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
 
 import Localization from '../../i18n/browser';
+import { flatternShape } from '../../utils';
 
 const defaultObjectReadonlyKeys = ['_id', '__v', '_created_at', '_updated_at'];
 
@@ -61,20 +62,6 @@ const decodeClipboardData = async (
     const text = await clipboard.readText();
     if (!_.isEmpty(text)) return { type: 'raw', data: tsvParseRows(text) } as const;
   }
-}
-
-const flatternShape = (fields: TSchema[string]['fields']) => {
-  const result: TSchema[string]['fields'] = {};
-  for (const [key, field] of _.entries(fields)) {
-    if (_.isString(field) || field.type !== 'shape') {
-      result[key] = field;
-    } else {
-      for (const [x, type] of _.entries(flatternShape(field.shape))) {
-        result[`${key}.${x}`] = type;
-      }
-    }
-  }
-  return result;
 }
 
 const AddRelationModal = ({ onSubmit }: { onSubmit: (ids: string[]) => void }) => {

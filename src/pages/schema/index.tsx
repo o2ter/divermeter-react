@@ -29,7 +29,7 @@ import { View, Text } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { TSchema } from '../../proto';
 import { LayoutRectangle, StyleSheet } from 'react-native';
-import { typeStr } from '../../components/datasheet/type';
+import { flatternShape, typeStr } from '../../utils';
 
 export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [layout, setLayout] = React.useState<LayoutRectangle>();
@@ -43,7 +43,10 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     const nodes = _.map(schema, ({ fields }, name) => ({
       name,
-      fields: _.map(fields, (type, key) => ({
+      fields: _.map({
+        ...flatternShape(fields),
+        ...name === 'User' ? { password: 'string' } : {},
+      } as ReturnType<typeof flatternShape>, (type, key) => ({
         key,
         type: typeStr(type) ?? '',
       })),

@@ -28,7 +28,7 @@ import React from 'react';
 import { Icon, Text, useNavigate, useParams } from '@o2ter/react-ui';
 import { Decimal, isFile, serialize } from 'proto.io/dist/client';
 import { TDataType } from '../../proto';
-import { typeOf } from './type';
+import { typeOf } from '../../utils';
 
 export type DataSheetCellProps = {
   objectId?: string;

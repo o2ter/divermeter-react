@@ -29,7 +29,7 @@ import { DataSheet as _DataSheet, Icon, Text, Pressable } from '@o2ter/react-ui'
 import { TObject, TSchema } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent } from 'react-native';
-import { typeStr } from './type';
+import { typeStr } from '../../utils';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
 import { Decimal, isObject, serialize } from 'proto.io/dist/client';
