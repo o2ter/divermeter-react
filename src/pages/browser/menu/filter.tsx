@@ -40,6 +40,11 @@ export const FilterControl: React.FC<FilterButtonProps> = ({
   setFilter,
 }) => {
   const [store, setStore] = React.useState(filter);
+  const initialValue = React.useMemo(() => {
+    if (_.isNil(store)) return '';
+    const str = encodeObject(store, 0);
+    return str.length < 60 ? str : encodeObject(store);
+  }, [store]);
   return (
     <Row classes='align-items-start gap-2'>
       <View classes='flex-fill bg-white rounded overflow-hidden'>
@@ -54,7 +59,7 @@ export const FilterControl: React.FC<FilterButtonProps> = ({
           <JSCode
             classes='w-100 h-100'
             style={{ outline: 'none' } as any}
-            initialValue={_.isNil(store) ? '' : encodeObject(store)}
+            initialValue={initialValue}
             onChangeValue={(code) => {
               try {
                 const func = new Function('Decimal', `return (${code})`);

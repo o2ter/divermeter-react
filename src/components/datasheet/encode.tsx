@@ -29,18 +29,19 @@ import { Decimal } from 'proto.io/dist/client';
 const normalName = /^[a-z_][a-z\d_]\w*$/gi;
 
 const _encodeObject = (value: any, space: number, padding: number): string => {
+  const newline = space ? '\n' : '';
   if (_.isNil(value)) return 'null';
   if (_.isBoolean(value)) return value ? 'true' : 'false';
   if (_.isNumber(value)) return value.toString();
   if (_.isString(value)) return JSON.stringify(value);
   if (_.isDate(value)) return `new Date('${value.toISOString()}')`;
   if (value instanceof Decimal) return `new Decimal('${value.toString()}')`;
-  if (_.isArray(value)) return _.isEmpty(value) ? '[]' : `[\n${_.map(value, v => (
+  if (_.isArray(value)) return _.isEmpty(value) ? '[]' : `[${newline}${_.map(value, v => (
     `${_.padStart('', padding, ' ')}${_encodeObject(v, space, padding + space)}`
-  )).join(',\n')}\n${_.padStart('', padding - space, ' ')}]`;
-  return _.isEmpty(value) ? '{}' : `{\n${_.map(value, (v, k) => (
+  )).join(`,${newline}`)}${newline}${_.padStart('', padding - space, ' ')}]`;
+  return _.isEmpty(value) ? '{}' : `{${newline}${_.map(value, (v, k) => (
     `${_.padStart('', padding, ' ')}${k.match(normalName) ? k : `"${k.replace(/[\\"]/g, '\\$&')}"`}: ${_encodeObject(v, space, padding + space)}`
-  )).join(',\n')}\n${_.padStart('', padding - space, ' ')}}`;
+  )).join(`,${newline}`)}${newline}${_.padStart('', padding - space, ' ')}}`;
 };
 
 export const encodeObject = (value: any, space = 2) => _encodeObject(value, space, space);
