@@ -33,7 +33,7 @@ import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
 import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
 import { _typeOf, typeOf } from '../../components/datasheet/type';
-import { FilterButton } from './menu/filter';
+import { FilterControl } from './menu/filter';
 import { ConfirmModal, Modal } from '../../components/modal';
 import { Row } from '@o2ter/wireframe';
 import { StyleSheet } from 'react-native';
@@ -255,43 +255,41 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   return (
     <>
-      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
-        <View classes='flex-row align-items-center gap-3'>
-          {relatedBy && (
-            <Button
-              variant='unstyled'
-              color='white'
-              onPress={() => navigate(-1)}
-            >
-              <Icon icon='SimpleLineIcons' name='arrow-left-circle' style={{ fontSize: 24 }} />
-            </Button>
-          )}
-          <View>
-            {!relatedBy && (
-              <Text style={{ fontSize: 10 }}>CLASS</Text>
-            )}
+      <View classes='py-3 px-4 bg-secondary-600 text-secondary-200 font-monospace'>
+        <Row classes='justify-content-between'>
+          <View classes='flex-row align-items-center gap-3'>
             {relatedBy && (
-              <Text style={{ fontSize: 10 }}>RELATION {`<${relatedBy.className}>`}</Text>
+              <Button
+                variant='unstyled'
+                color='white'
+                onPress={() => navigate(-1)}
+              >
+                <Icon icon='SimpleLineIcons' name='arrow-left-circle' style={{ fontSize: 24 }} />
+              </Button>
             )}
-            <Text>
+            <View>
               {!relatedBy && (
-                <Text classes='h5 text-white'>{className}</Text>
+                <Text style={{ fontSize: 10 }}>CLASS</Text>
               )}
               {relatedBy && (
-                <Text classes='h5 text-white'>'{relatedBy.key}' on {relatedBy.objectId}</Text>
+                <Text style={{ fontSize: 10 }}>RELATION {`<${relatedBy.className}>`}</Text>
               )}
-              {!_.isNil(count) && <Text
-                classes='fs-small ml-3'
-              >{count} objects</Text>}
-            </Text>
+              <Text>
+                {!relatedBy && (
+                  <Text classes='h5 text-white'>{className}</Text>
+                )}
+                {relatedBy && (
+                  <Text classes='h5 text-white'>'{relatedBy.key}' on {relatedBy.objectId}</Text>
+                )}
+                {!_.isNil(count) && <Text
+                  classes='fs-small ml-3'
+                >{count} objects</Text>}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View classes='justify-content-end'>
-          <Row classes='text-white'>
-            <FilterButton fields={_fields} filter={filter} setFilter={setFilter} />
-            {relatedBy?.editable && (
-              <>
-                <View classes='bg-secondary-200 h-100 mx-2' style={{ width: 1 }} />
+          <View classes='justify-content-end'>
+            <Row classes='text-white'>
+              {relatedBy?.editable && (
                 <Text
                   classes='py-1 px-2'
                   onPress={() => setModal(
@@ -312,11 +310,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                     })} />
                   )}
                 >Add Object</Text>
-              </>
-            )}
-          </Row>
-        </View>
-      </Row>
+              )}
+            </Row>
+          </View>
+        </Row>
+        <FilterControl filter={filter} setFilter={setFilter} />
+      </View>
       <View classes='flex-fill bg-secondary-100'>
         {_schema && (
           <View style={StyleSheet.absoluteFill}>

@@ -25,76 +25,53 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { MenuButton } from './base';
-import { Button, JSCode } from '@o2ter/react-ui';
-import { Col, Row } from '@o2ter/wireframe';
-import { TDataType } from '../../../proto';
+import { Button, JSCode, View } from '@o2ter/react-ui';
+import { Row } from '@o2ter/wireframe';
 import { encodeObject, verifyObject } from '../../../components/datasheet/encode';
 import { Decimal } from 'proto.io/dist/client';
 
-const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
-  style,
-  children,
-}) => (
-  <div style={{
-    resize: 'both',
-    overflow: 'auto',
-    backgroundColor: 'white',
-    ...style,
-  }}>{children}</div>
-);
-
 type FilterButtonProps = {
-  fields: Record<string, TDataType>;
   filter: any[];
   setFilter: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-export const FilterButton: React.FC<FilterButtonProps> = ({
-  fields,
+export const FilterControl: React.FC<FilterButtonProps> = ({
   filter,
   setFilter,
 }) => {
-
   const [store, setStore] = React.useState(filter);
-
   return (
-    <MenuButton
-      title='Filter'
-      extraData={store}
-      menu={({ hide }) => (
-        <Col classes='gap-2'>
-          <Resizable
-            style={{
-              paddingRight: 12,
-              minWidth: 300,
-              minHeight: 200,
-            }}>
-            <JSCode
-              classes='w-100 h-100'
-              style={{ outline: 'none' } as any}
-              initialValue={_.isNil(store) ? '' : encodeObject(store)}
-              onChangeValue={(code) => {
-                try {
-                  const func = new Function('Decimal', `return (${code})`);
-                  const value = func(Decimal);
-                  verifyObject(value);
-                  setStore(value);
-                } catch { };
-              }}
-            />
-          </Resizable>
-          <Row classes='gap-1'>
-            <Button title='Cancel' variant='outline' color='danger' onPress={() => {
-              hide();
-            }} />
-            <Button title='Submit' variant='outline' color='light' onPress={() => {
-              setFilter(store);
-              hide();
-            }} />
-          </Row>
-        </Col>
-      )}
-    />
+    <Row classes='align-items-start gap-2'>
+      <View classes='flex-fill bg-white rounded overflow-hidden'>
+        <View
+          classes='flex-fill'
+          style={{
+            minHeight: 32,
+            maxHeight: 200,
+            overflow: 'scroll',
+          }}
+        >
+          <JSCode
+            classes='w-100 h-100'
+            style={{ outline: 'none' } as any}
+            initialValue={_.isNil(store) ? '' : encodeObject(store)}
+            onChangeValue={(code) => {
+              try {
+                const func = new Function('Decimal', `return (${code})`);
+                const value = func(Decimal);
+                verifyObject(value);
+                setStore(value);
+              } catch { };
+            }}
+          />
+        </View>
+      </View>
+      <Button title='Submit' color='success' onPress={() => {
+        setFilter(store);
+      }} />
+      <Button title='Reset' color='secondary' onPress={() => {
+        setStore(filter);
+      }} />
+    </Row>
   );
 }
