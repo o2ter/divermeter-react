@@ -58,8 +58,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ),
     })).map(x => ({
       ...x,
-      posX: 100,
-      posY: 100,
+      posX: 0,
+      posY: 0,
       width: x.maxLength * 8 + 16,
       height: x.fields.length * 18 + 40,
     }));
