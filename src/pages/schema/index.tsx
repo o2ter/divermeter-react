@@ -28,8 +28,30 @@ import React from 'react';
 import { View, Text } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { TSchema } from '../../proto';
+import { LayoutRectangle, StyleSheet } from 'react-native';
 
 export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
+  const [layout, setLayout] = React.useState<LayoutRectangle>();
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const nodes = _.map(schema, ({ fields }, name) => ({
+      name,
+      fields,
+    }));
+
+    for (const node of nodes) {
+      ctx.beginPath();
+      ctx.roundRect(10, 20, 150, 100, [40]);
+      ctx.stroke();
+    }
+
+  }, [schema, layout]);
   return (
     <>
       <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
@@ -39,6 +61,11 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         </View>
       </Row>
       <View classes='flex-fill bg-secondary-100'>
+        <View style={StyleSheet.absoluteFill} onLayout={(e) => setLayout(e.nativeEvent.layout)}>
+          <div className='flex-fill overflow-auto'>
+            <canvas ref={canvasRef} width={layout?.width} height={layout?.height} />
+          </div>
+        </View>
       </View>
     </>
   );
