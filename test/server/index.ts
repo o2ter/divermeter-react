@@ -125,27 +125,31 @@ export default async (app: Server, env: Record<string, any>) => {
     proto: Proto,
   }));
 
-  const date = new Date();
+  if (!await Proto.Query('Test').count()) {
 
-  const inserted = await Proto.Query('Test').insert({
-    boolean: true,
-    number: 42,
-    decimal: new Decimal('0.001'),
-    string: 'hello',
-    date: date,
-    object: {
+    const date = new Date();
+
+    const inserted = await Proto.Query('Test').insert({
       boolean: true,
       number: 42,
       decimal: new Decimal('0.001'),
       string: 'hello',
       date: date,
+      object: {
+        boolean: true,
+        number: 42,
+        decimal: new Decimal('0.001'),
+        string: 'hello',
+        date: date,
+        array: [1, 2, 3, date, new Decimal('0.001')],
+      },
       array: [1, 2, 3, date, new Decimal('0.001')],
-    },
-    array: [1, 2, 3, date, new Decimal('0.001')],
-  });
+    });
 
-  await Proto.Query('Test').insert({
-    pointer: inserted,
-    relation: [inserted],
-  });
+    await Proto.Query('Test').insert({
+      pointer: inserted,
+      relation: [inserted],
+    });
+  }
+
 }
