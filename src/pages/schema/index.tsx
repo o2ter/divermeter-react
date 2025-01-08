@@ -27,8 +27,9 @@ import _ from 'lodash';
 import React from 'react';
 import { View, Text } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
+import { TSchema } from '../../proto';
 
-export const Schema: React.FC<{}> = () => {
+export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   return (
     <>
       <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>

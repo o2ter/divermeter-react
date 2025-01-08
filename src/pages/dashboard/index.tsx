@@ -56,7 +56,7 @@ export const Dashboard = () => {
         <Navigator>
           <Route path='/browser/:class' component={Browser} props={{ schema }} />
           <Route path='/config' component={Config} />
-          <Route path='/schema' component={Schema} />
+          <Route path='/schema' component={Schema} props={{ schema }} />
           <Route path='*' title='404 Not Found' statusCode={404} component={NotFound} />
         </Navigator>
       </Col>
