@@ -255,7 +255,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   return (
     <>
-      <View classes='py-3 px-4 bg-secondary-600 text-secondary-200 font-monospace'>
+      <View classes='py-3 px-4 bg-secondary-600 text-secondary-200 font-monospace gap-3'>
         <Row classes='justify-content-between'>
           <View classes='flex-row align-items-center gap-3'>
             {relatedBy && (
