@@ -55,23 +55,25 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       maxLength: Math.max(
         x.name.length,
         ..._.map(x.fields, ({ key, type }) => key.length + type.length + 4)
-      )
+      ),
+    })).map(x => ({
+      ...x,
+      posX: 100,
+      posY: 100,
+      width: x.maxLength * 8 + 16,
+      height: x.fields.length * 18 + 40,
     }));
 
-    for (const node of nodes) {
-      const posX = 100;
-      const posY = 100;
-      const maxWidth = node.maxLength * 8 + 16;
-      const maxHeight = node.fields.length * 18 + 40;
+    for (const { posX, posY, width, height, ...node } of nodes) {
       ctx.fillStyle = 'white';
       ctx.beginPath();
-      ctx.roundRect(posX, posY, maxWidth, maxHeight, [8]);
+      ctx.roundRect(posX, posY, width, height, [8]);
       ctx.fill();
       ctx.stroke();
       ctx.font = '24px font-monospace';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
-      ctx.fillText(node.name, posX + maxWidth * 0.5, posY + 32);
+      ctx.fillText(node.name, posX + width * 0.5, posY + 32);
       ctx.font = '18px font-monospace';
       for (const [i, field] of node.fields.entries()) {
         ctx.textAlign = 'start';
@@ -79,7 +81,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         ctx.fillText(field.key, posX + 8, posY + 50 + i * 18);
         ctx.textAlign = 'end';
         ctx.fillStyle = 'gray';
-        ctx.fillText(field.type, posX + maxWidth - 8, posY + 50 + i * 18);
+        ctx.fillText(field.type, posX + width - 8, posY + 50 + i * 18);
       }
     }
 
