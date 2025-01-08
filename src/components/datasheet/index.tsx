@@ -29,7 +29,7 @@ import { DataSheet as _DataSheet, Icon, Text, Pressable } from '@o2ter/react-ui'
 import { TObject, TSchema } from '../../proto';
 import { DataSheetCellProps, DataSheetCell } from './cell';
 import { GestureResponderEvent } from 'react-native';
-import { typeOf, typeStr } from './type';
+import { typeStr } from './type';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
 import { Decimal, isObject, serialize } from 'proto.io/dist/client';
@@ -106,7 +106,9 @@ export const DataSheet = React.forwardRef(({
         )
       }))}
       showEmptyLastRow={showEmptyLastRow}
-      onEndEditing={(row, column) => onValueChanged(editCell.current.value, row, columns[column])}
+      onEndEditing={(row, column) => {
+        if (editCell.current.dirty) onValueChanged(editCell.current.value, row, columns[column])
+      }}
       renderItem={({ item = {}, columnIdx, isEditing }) => (
         isEditing ? (
           <DataSheetEditCell

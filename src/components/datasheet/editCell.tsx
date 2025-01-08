@@ -70,14 +70,20 @@ const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties;
   </div>
 );
 
-export const DataSheetEditCell = React.forwardRef<{ value?: any }, DataSheetEditCellProps>(({
+export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean; }, DataSheetEditCellProps>(({
   value,
   type,
 }, forwardRef) => {
 
-  const [_value, setValue] = React.useState(value);
+  const [_value, _setValue] = React.useState(value);
+  const [dirty, setDirty] = React.useState(false);
   const [str, setStr] = React.useState<string>();
-  React.useImperativeHandle(forwardRef, () => ({ value: _value }), [_value]);
+  React.useImperativeHandle(forwardRef, () => ({ value: _value, dirty }), [_value]);
+
+  const setValue: typeof _setValue = (v) => {
+    setDirty(true);
+    _setValue(v);
+  };
 
   const Proto = useProto();
 
