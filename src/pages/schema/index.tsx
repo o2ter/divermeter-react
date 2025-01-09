@@ -50,6 +50,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [nodeZ, setNodeZ] = React.useState<Record<string, number>>({});
 
   const [nodeBounding, setNodeBounding] = React.useState<Record<string, LayoutRectangle>>({});
+  const [selectedNode, setSelectedNode] = React.useState<string>();
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -115,7 +116,32 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         </View>
       </Row>
       <View classes='flex-fill bg-secondary-100'>
-        <View style={StyleSheet.absoluteFill} onLayout={(e) => setLayout(e.nativeEvent.layout)}>
+        <View
+          style={StyleSheet.absoluteFill}
+          onLayout={(e) => setLayout(e.nativeEvent.layout)}
+          onTouchStart={(e) => {
+            const { locationX, locationY } = e.nativeEvent;
+            for (const [name, layout] of _.entries(nodeBounding)) {
+              if (locationX < layout.x || locationX > layout.x + layout.width) continue;
+              if (locationY < layout.y || locationY > layout.y + layout.height) continue;
+              setNodeZ({ [name]: 1 });
+              setSelectedNode(name);
+              break;
+            }
+          }}
+          onTouchMove={(e) => {
+            if (!selectedNode) return;
+            const { locationX, locationY } = e.nativeEvent;
+            const layout = nodeBounding[selectedNode] ?? {};
+            setNodePos(v => ({
+              ...v,
+              [selectedNode]: {
+                x: locationX - (layout.width ?? 0) * 0.5,
+                y: locationY - (layout.height ?? 0) * 0.5,
+              },
+            }))
+          }}
+        >
           <div className='flex-fill overflow-auto'>
             <canvas ref={canvasRef} width={layout?.width} height={layout?.height} />
           </div>
