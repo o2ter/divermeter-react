@@ -47,6 +47,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     } as ReturnType<typeof flatternShape>, (type, key) => ({
       key,
       type: typeStr(type) ?? '',
+      _type: type,
     })),
   })), [schema]);
 
@@ -71,6 +72,12 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       return ctx.measureText(text);
     };
 
+    const headerMetrics = measureText(`${s1}px font-monospace`, 'Text');
+    const fieldMetrics = measureText(`${s2}px font-monospace`, 'Text');
+
+    const headerHeight = headerMetrics.fontBoundingBoxAscent + headerMetrics.fontBoundingBoxDescent;
+    const fieldHeight = fieldMetrics.fontBoundingBoxAscent + fieldMetrics.fontBoundingBoxDescent;
+
     const _nodes = _.map(nodes, x => ({
       ...x,
       width: Math.max(
@@ -82,8 +89,20 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       posX: nodePos[x.name]?.x ?? 0,
       posY: nodePos[x.name]?.y ?? 0,
       width: x.width + p * 2,
-      height: x.fields.length * s2 + s1 + p * 3,
+      height: x.fields.length * fieldHeight + headerHeight + p * 3,
     }));
+
+    for (const { posX, posY, width, height, fields } of _nodes) {
+      for (const [i, { _type: type }] of fields.entries()) {
+        if (_.isString(type)) continue;
+        if (type.type !== 'pointer' && type.type !== 'relation') continue;
+        const _posY = posY + headerHeight + p * 2 + (i + 0.5) * fieldHeight;
+        ctx.beginPath();
+        ctx.moveTo(posX + p, _posY);
+        ctx.lineTo(posX + p - 50, _posY);
+        ctx.stroke();
+      }
+    }
 
     for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, x => nodeZ[x.name] ?? 0)) {
       setNodeBounding(v => ({ ...v, [node.name]: { x: posX, y: posY, width, height } }));
@@ -95,16 +114,17 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
       ctx.font = `${s1}px font-monospace`;
-      ctx.fillText(node.name, posX + width * 0.5, posY + s1 + p);
+      ctx.fillText(node.name, posX + width * 0.5, posY + headerMetrics.fontBoundingBoxAscent + p);
       for (const [i, field] of node.fields.entries()) {
+        const _posY = posY + headerHeight + fieldMetrics.fontBoundingBoxAscent + p * 2 + i * fieldHeight;
         ctx.textAlign = 'start';
         ctx.fillStyle = 'black';
         ctx.font = `${s2}px font-monospace`;
-        ctx.fillText(field.key, posX + p, posY + s1 + s2 + p * 2 + i * s2);
+        ctx.fillText(field.key, posX + p, _posY);
         ctx.textAlign = 'end';
         ctx.fillStyle = 'gray';
         ctx.font = `${s2}px font-monospace`;
-        ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p * 2 + i * s2);
+        ctx.fillText(field.type, posX + width - p, _posY);
       }
     }
   }, [nodes, layout, nodePos, nodeZ]);
