@@ -57,11 +57,16 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     const s2 = 18;
     const p = 8;
 
+    const measureText = (font: string, text: string) => {
+      ctx.font = font;
+      return ctx.measureText(text);
+    };
+
     const _nodes = _.map(nodes, x => ({
       ...x,
       maxLength: Math.max(
-        x.name.length,
-        ..._.map(x.fields, ({ key, type }) => key.length + type.length + 4)
+        measureText(`${s1}px font-monospace`, x.name).width,
+        ..._.map(x.fields, ({ key, type }) => measureText(`${s2}px font-monospace`, `${key} ${type}`).width)
       ),
     })).map(x => ({
       ...x,
