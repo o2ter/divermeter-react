@@ -143,7 +143,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   }, [className, schema, filter, relatedBy]);
 
   const { resource: count, refresh: refreshCount } = useAsyncResource(() => query.count({ master: true }), [className, query]);
-  const { resource: objects, refresh } = useAsyncResource(() => startActivity(async () => {
+  const { resource: objects = [], refresh, setResource: setObjects } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
       const files = _.pickBy(_fields, type => !_.isString(type) && type.type === 'pointer' && type.target === 'File');
@@ -159,20 +159,6 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
       showError(e);
     }
   }), [query, sort, limit, page]);
-
-  const [insertedObjs, setInsertedObjs] = React.useState<TObject[]>([]);
-  const [updatedObjs, setUpdatedObjs] = React.useState<Record<string, TObject>>({});
-  const [deletedObjs, setDeletedObjs] = React.useState<string[]>([]);
-  React.useEffect(() => {
-    setInsertedObjs([]);
-    setUpdatedObjs({});
-    setDeletedObjs([]);
-  }, [objects]);
-
-  const _objs = React.useMemo(() => _.map(_.filter(
-    [...objects ?? [], ...insertedObjs],
-    obj => !_.includes(deletedObjs, obj.objectId)), obj => updatedObjs[obj.objectId!] ?? obj,
-  ), [objects, insertedObjs, updatedObjs, deletedObjs]);
 
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
@@ -233,11 +219,8 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
     await Promise.all(_.map(updates, v => v.save({ master: true })));
     const _inserted = _.filter(updates, v => !_.includes(ids, v.objectId));
     const _updated = _.filter(updates, v => _.includes(ids, v.objectId));
-    if (!_.isEmpty(_inserted)) setInsertedObjs(objs => [...objs, ..._inserted]);
-    if (!_.isEmpty(_updated)) setUpdatedObjs(objs => ({
-      ...objs,
-      ..._.fromPairs(_.map(_updated, v => [v.objectId, v])),
-    }));
+    if (!_.isEmpty(_inserted)) setObjects(v => [...v ?? [], ..._inserted]);
+    if (!_.isEmpty(_updated)) setObjects(v => _.map(v, o => _.find(_updated, u => u.objectId === o.objectId) ?? o));
   }
 
   return (
@@ -309,7 +292,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
             <div className='flex-fill overflow-auto'>
               <DataSheet
                 ref={ref}
-                data={_objs}
+                data={objects}
                 schema={_schema}
                 columns={_columns}
                 showEmptyLastRow={!relatedBy}
@@ -337,10 +320,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 }))}
                 onValueChanged={(value, row, column) => startActivity(async () => {
                   try {
-                    if (_objs[row] && className === 'User' && column === 'password') {
-                      await Proto.setPassword(_objs[row], value, { master: true });
+                    if (objects[row] && className === 'User' && column === 'password') {
+                      await Proto.setPassword(objects[row], value, { master: true });
                     } else {
-                      let obj = _objs[row]?.clone() ?? Proto.Object(className);
+                      let obj = objects[row]?.clone() ?? Proto.Object(className);
                       await setValue(obj, column, value);
                       await saveUpdates([obj]);
                     }
@@ -354,10 +337,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 onPasteRows={(rows, clipboard) => startActivity(async () => {
                   try {
                     const { type, data } = decodeClipboardJsonData(clipboard) ?? await decodeClipboardData(clipboard) ?? {};
-                    const objects = _.compact(_.map(rows, row => _objs[row]));
+                    const objs = _.compact(_.map(rows, row => objects[row]));
                     const updates: TObject[] = [];
                     if (type === 'json') {
-                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                      for (const [obj, values] of _.zip(objs, data ?? [])) {
                         const _obj = obj?.clone() ?? Proto.Object(className);
                         for (const [column, value] of _.toPairs(values)) {
                           if (!_.includes(readonlyKeys, column)) {
@@ -367,7 +350,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         updates.push(_obj);
                       }
                     } else if (type === 'raw') {
-                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                      for (const [obj, values] of _.zip(objs, data ?? [])) {
                         const _obj = obj?.clone() ?? Proto.Object(className);
                         for (const [column = '', value] of _.zip(_columns, values)) {
                           if (!_.includes(readonlyKeys, column)) {
@@ -395,9 +378,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   const { data } = await decodeClipboardData(clipboard) ?? {};
                   const replaceAction = () => startActivity(async () => {
                     try {
-                      const objects = _.compact(_.map(_rows, row => _objs[row]));
+                      const objs = _.compact(_.map(_rows, row => objects[row]));
                       const updates: TObject[] = [];
-                      for (const [obj, values] of _.zip(objects, data ?? [])) {
+                      for (const [obj, values] of _.zip(objs, data ?? [])) {
                         const _obj = obj?.clone() ?? Proto.Object(className);
                         for (const [column = '', value] of _.zip(_cols, values)) {
                           if (!_.includes(readonlyKeys, column)) {
@@ -433,7 +416,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   );
                 })}
                 onDeleteRows={(rows) => {
-                  const ids = _.compact(_.map(rows, row => _objs[row]?.objectId));
+                  const ids = _.compact(_.map(rows, row => objects[row]?.objectId));
                   const deleteAction = () => startActivity(async () => {
                     try {
                       if (relatedBy) {
@@ -445,8 +428,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         refresh();
                       } else {
                         await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
-                        setDeletedObjs(_objs => [..._objs, ...ids]);
-                        setUpdatedObjs(objs => _.omit(objs, ...ids));
+                        setObjects(v => _.filter(v, o => !_.includes(ids, o.objectId)));
                       }
                       ref.current?.clearSelection();
                       showSuccess(t('deleted'));
@@ -476,17 +458,13 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                     .filter(c => !_.includes(readonlyKeys, c));
                   const deleteAction = () => startActivity(async () => {
                     try {
-                      const updated = await Promise.all(_.map(_rows, row => {
-                        let obj = _objs[row]?.clone();
+                      const updated = _.compact(await Promise.all(_.map(_rows, row => {
+                        let obj = objects[row]?.clone();
                         if (!obj?.objectId) return;
-                        obj = updatedObjs[obj.objectId]?.clone() ?? obj;
                         for (const _col of _cols) obj.set(_col, null);
                         return obj.save({ master: true });
-                      }));
-                      setUpdatedObjs(objs => ({
-                        ...objs,
-                        ..._.fromPairs(_.map(_.compact(updated), obj => [obj.objectId, obj])),
-                      }));
+                      })));
+                      setObjects(v => _.map(v, o => _.find(updated, u => u.objectId === o.objectId) ?? o));
                       ref.current?.clearSelection();
                       showSuccess(t('deleted'));
                     } catch (e: any) {
