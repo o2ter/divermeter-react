@@ -34,6 +34,18 @@ import { flatternShape, typeStr } from '../../utils';
 export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [layout, setLayout] = React.useState<LayoutRectangle>();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  const nodes = React.useMemo(() => _.map(schema, ({ fields }, name) => ({
+    name,
+    fields: _.map({
+      ...flatternShape(fields),
+      ...name === 'User' ? { password: 'string' } : {},
+    } as ReturnType<typeof flatternShape>, (type, key) => ({
+      key,
+      type: typeStr(type) ?? '',
+    })),
+  })), [schema]);
+
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -45,16 +57,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     const s2 = 18;
     const p = 8;
 
-    const nodes = _.map(schema, ({ fields }, name) => ({
-      name,
-      fields: _.map({
-        ...flatternShape(fields),
-        ...name === 'User' ? { password: 'string' } : {},
-      } as ReturnType<typeof flatternShape>, (type, key) => ({
-        key,
-        type: typeStr(type) ?? '',
-      })),
-    })).map(x => ({
+    const _nodes = _.map(nodes, x => ({
       ...x,
       maxLength: Math.max(
         x.name.length,
@@ -68,7 +71,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       height: x.fields.length * s2 + s1 + p * 2,
     }));
 
-    for (const { posX, posY, width, height, ...node } of nodes) {
+    for (const { posX, posY, width, height, ...node } of _nodes) {
       ctx.fillStyle = 'white';
       ctx.beginPath();
       ctx.roundRect(posX, posY, width, height, [8]);
