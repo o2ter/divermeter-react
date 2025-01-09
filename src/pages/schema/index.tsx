@@ -49,6 +49,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [nodePos, setNodePos] = React.useState<Record<string, { x: number; y: number; }>>({});
   const [nodeZ, setNodeZ] = React.useState<Record<string, number>>({});
 
+  const [nodeBounding, setNodeBounding] = React.useState<Record<string, LayoutRectangle>>({});
+
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -81,6 +83,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     }));
 
     for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, 'zIndex')) {
+      setNodeBounding(v => ({ ...v, [node.name]: { x: posX, y: posY, width, height } }));
       ctx.fillStyle = 'white';
       ctx.beginPath();
       ctx.roundRect(posX, posY, width, height, [8]);
