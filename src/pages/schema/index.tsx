@@ -97,8 +97,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p + i * s2);
       }
     }
+  }, [nodes, layout]);
 
-  }, [schema, layout]);
   return (
     <>
       <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
