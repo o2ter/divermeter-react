@@ -70,7 +70,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     const _nodes = _.map(nodes, x => ({
       ...x,
-      maxLength: Math.max(
+      width: Math.max(
         measureText(`${s1}px font-monospace`, x.name).width,
         ..._.map(x.fields, ({ key, type }) => measureText(`${s2}px font-monospace`, `${key} ${type}`).width)
       ),
@@ -78,7 +78,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ...x,
       posX: nodePos[x.name]?.x ?? 0,
       posY: nodePos[x.name]?.y ?? 0,
-      width: x.maxLength * p + p * 2,
+      width: x.width + p * 2,
       height: x.fields.length * s2 + s1 + p * 2,
       zIndex: nodeZ[x.name] ?? 0,
     }));
