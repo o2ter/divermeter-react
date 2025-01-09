@@ -92,14 +92,26 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       height: x.fields.length * fieldHeight + headerHeight + p * 3,
     }));
 
-    for (const { posX, posY, width, height, fields } of _nodes) {
+    const nodeBounding: Record<string, LayoutRectangle> = {};
+    for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, x => nodeZ[x.name] ?? 0)) {
+      nodeBounding[node.name] = { x: posX, y: posY, width, height };
+    }
+    setNodeBounding(nodeBounding);
+
+    for (const { name, posX, posY, width, height, fields } of _nodes) {
       for (const [i, { _type: type }] of fields.entries()) {
         if (_.isString(type)) continue;
         if (type.type !== 'pointer' && type.type !== 'relation') continue;
+        const layout = nodeBounding[name];
+        const targetLayout = nodeBounding[type.target];
         const _posY = posY + headerHeight + p * 2 + (i + 0.5) * fieldHeight;
         ctx.beginPath();
         ctx.moveTo(posX + p, _posY);
-        ctx.lineTo(posX + p - 50, _posY);
+        if (layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width) {
+          ctx.lineTo(posX + width - p + 25, _posY);
+        } else {
+          ctx.lineTo(posX + p - 25, _posY);
+        }
         ctx.stroke();
       }
     }
