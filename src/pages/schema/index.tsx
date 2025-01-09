@@ -113,34 +113,12 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         const endRight = type.target === name || !startRight;
         ctx.beginPath();
         ctx.moveTo(posX + p, _posY);
-        if (startRight) {
-          ctx.arcTo(
-            posX + width - p + 32, _posY,
-            targetLayout.x + targetLayout.width - p + 32, targetPosY,
-            8
-          );
-        } else {
-          ctx.arcTo(
-            posX + p - 25, _posY,
-            targetLayout.x + targetLayout.width - p + 32, targetPosY,
-            8
-          );
-        }
-        if (endRight) {
-          ctx.arcTo(
-            targetLayout.x + targetLayout.width - p + 32, targetPosY,
-            targetLayout.x + targetLayout.width - p, targetPosY,
-            8
-          );
-          ctx.lineTo(targetLayout.x + targetLayout.width - p, targetPosY);
-        } else {
-          ctx.arcTo(
-            targetLayout.x + p - 32, targetPosY,
-            targetLayout.x + p, targetPosY,
-            8
-          );
-          ctx.lineTo(targetLayout.x + p, targetPosY);
-        }
+        const p1 = startRight ? [posX + width - p + 32, _posY] as const : [posX + p - 25, _posY] as const;
+        const p2 = endRight ? [targetLayout.x + targetLayout.width - p + 32, targetPosY] as const : [targetLayout.x + p - 32, targetPosY] as const;
+        const p3 = endRight ? [targetLayout.x + targetLayout.width - p, targetPosY] as const : [targetLayout.x + p, targetPosY] as const;
+        ctx.arcTo(...p1, ...p2, 8);
+        ctx.arcTo(...p2, ...p3, 8);
+        ctx.lineTo(...p3);
         ctx.stroke();
       }
     }
