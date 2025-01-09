@@ -82,7 +82,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ...x,
       width: Math.max(
         measureText(`${s1}px font-monospace`, x.name).width,
-        ..._.map(x.fields, ({ key, type }) => measureText(`${s2}px font-monospace`, `${key} ${type}`).width)
+        ..._.map(x.fields, ({ key, type }) => measureText(`${s2}px font-monospace`, `${key}    ${type}`).width)
       ),
     })).map(x => ({
       ...x,
