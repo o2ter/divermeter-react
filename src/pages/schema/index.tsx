@@ -31,6 +31,10 @@ import { TSchema } from '../../proto';
 import { LayoutRectangle, StyleSheet } from 'react-native';
 import { flatternShape, typeStr } from '../../utils';
 
+const s1 = 16;
+const s2 = 12;
+const p = 8;
+
 export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
   const [layout, setLayout] = React.useState<LayoutRectangle>();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -61,10 +65,6 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const s1 = 16;
-    const s2 = 12;
-    const p = 8;
-
     const measureText = (font: string, text: string) => {
       ctx.font = font;
       return ctx.measureText(text);
@@ -81,7 +81,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       posX: nodePos[x.name]?.x ?? 0,
       posY: nodePos[x.name]?.y ?? 0,
       width: x.width + p * 2,
-      height: x.fields.length * s2 + s1 + p * 2,
+      height: x.fields.length * s2 + s1 + p * 3,
     }));
 
     for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, x => nodeZ[x.name] ?? 0)) {
@@ -99,11 +99,11 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         ctx.textAlign = 'start';
         ctx.fillStyle = 'black';
         ctx.font = `${s2}px font-monospace`;
-        ctx.fillText(field.key, posX + p, posY + s1 + s2 + p + i * s2);
+        ctx.fillText(field.key, posX + p, posY + s1 + s2 + p * 2 + i * s2);
         ctx.textAlign = 'end';
         ctx.fillStyle = 'gray';
         ctx.font = `${s2}px font-monospace`;
-        ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p + i * s2);
+        ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p * 2 + i * s2);
       }
     }
   }, [nodes, layout, nodePos, nodeZ]);
@@ -140,7 +140,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
               ...v,
               [selectedNode]: {
                 x: offsetX - (layout.width ?? 0) * 0.5,
-                y: offsetY - (layout.height ?? 0) * 0.5,
+                y: offsetY - p - s1 * 0.5,
               },
             }))
           }}
