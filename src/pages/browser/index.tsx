@@ -143,7 +143,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   }, [className, schema, filter, relatedBy]);
 
   const { resource: count, refresh: refreshCount } = useAsyncResource(() => query.count({ master: true }), [className, query]);
-  const { resource: objects = [], refresh, setResource: setObjects } = useAsyncResource(() => startActivity(async () => {
+  const { resource: objects, refresh, setResource: setObjects } = useAsyncResource(() => startActivity(async () => {
     try {
       const relation = _.pickBy(_fields, type => !_.isString(type) && (type.type === 'pointer' || type.type === 'relation'));
       const files = _.pickBy(_fields, type => !_.isString(type) && type.type === 'pointer' && type.target === 'File');
@@ -320,10 +320,10 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 }))}
                 onValueChanged={(value, row, column) => startActivity(async () => {
                   try {
-                    if (objects[row] && className === 'User' && column === 'password') {
+                    if (objects?.[row] && className === 'User' && column === 'password') {
                       await Proto.setPassword(objects[row], value, { master: true });
                     } else {
-                      let obj = objects[row]?.clone() ?? Proto.Object(className);
+                      let obj = objects?.[row]?.clone() ?? Proto.Object(className);
                       await setValue(obj, column, value);
                       await saveUpdates([obj]);
                     }
@@ -337,7 +337,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                 onPasteRows={(rows, clipboard) => startActivity(async () => {
                   try {
                     const { type, data } = decodeClipboardJsonData(clipboard) ?? await decodeClipboardData(clipboard) ?? {};
-                    const objs = _.compact(_.map(rows, row => objects[row]));
+                    const objs = _.compact(_.map(rows, row => objects?.[row]));
                     const updates: TObject[] = [];
                     if (type === 'json') {
                       for (const [obj, values] of _.zip(objs, data ?? [])) {
@@ -378,7 +378,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   const { data } = await decodeClipboardData(clipboard) ?? {};
                   const replaceAction = () => startActivity(async () => {
                     try {
-                      const objs = _.compact(_.map(_rows, row => objects[row]));
+                      const objs = _.compact(_.map(_rows, row => objects?.[row]));
                       const updates: TObject[] = [];
                       for (const [obj, values] of _.zip(objs, data ?? [])) {
                         const _obj = obj?.clone() ?? Proto.Object(className);
@@ -416,7 +416,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   );
                 })}
                 onDeleteRows={(rows) => {
-                  const ids = _.compact(_.map(rows, row => objects[row]?.objectId));
+                  const ids = _.compact(_.map(rows, row => objects?.[row]?.objectId));
                   const deleteAction = () => startActivity(async () => {
                     try {
                       if (relatedBy) {
@@ -459,7 +459,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   const deleteAction = () => startActivity(async () => {
                     try {
                       const updated = _.compact(await Promise.all(_.map(_rows, row => {
-                        let obj = objects[row]?.clone();
+                        let obj = objects?.[row]?.clone();
                         if (!obj?.objectId) return;
                         for (const _col of _cols) obj.set(_col, null);
                         return obj.save({ master: true });

@@ -36,7 +36,7 @@ import { Decimal, isObject, serialize } from 'proto.io/dist/client';
 
 type _DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'>;
 type DataSheetProps = _DataSheetProps & {
-  data: TObject[];
+  data?: TObject[];
   columns: string[];
   schema: TSchema[string];
   sort: Record<string, 1 | -1>;
