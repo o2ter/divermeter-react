@@ -82,10 +82,9 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       posY: nodePos[x.name]?.y ?? 0,
       width: x.width + p * 2,
       height: x.fields.length * s2 + s1 + p * 2,
-      zIndex: nodeZ[x.name] ?? 0,
     }));
 
-    for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, 'zIndex')) {
+    for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, x => nodeZ[x.name] ?? 0)) {
       setNodeBounding(v => ({ ...v, [node.name]: { x: posX, y: posY, width, height } }));
       ctx.fillStyle = 'white';
       ctx.beginPath();
@@ -123,7 +122,9 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
           onLayout={(e) => setLayout(e.nativeEvent.layout)}
           onPointerDown={(e) => {
             const { offsetX, offsetY } = e.nativeEvent;
-            for (const [name, layout] of _.entries(nodeBounding)) {
+            const layouts = _.map(nodes, ({ name }) => ({ name, layout: nodeBounding[name] }));
+            for (const { name, layout } of _.orderBy(layouts, x => nodeZ[x.name] ?? 0).reverse()) {
+              if (!layout) continue;
               if (offsetX < layout.x || offsetX > layout.x + layout.width) continue;
               if (offsetY < layout.y || offsetY > layout.y + layout.height) continue;
               setNodeZ({ [name]: 1 });
