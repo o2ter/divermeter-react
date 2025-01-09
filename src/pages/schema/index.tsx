@@ -61,8 +61,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const s1 = 24;
-    const s2 = 18;
+    const s1 = 16;
+    const s2 = 12;
     const p = 8;
 
     const measureText = (font: string, text: string) => {
