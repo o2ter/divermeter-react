@@ -112,10 +112,11 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         const startRight = type.target === name || layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width;
         const endRight = type.target === name || !startRight;
         ctx.beginPath();
-        ctx.moveTo(posX + p, _posY);
+        const p0 = startRight ? [posX + width - p, _posY] as const : [posX + p, _posY] as const;
         const p1 = startRight ? [posX + width - p + 32, _posY] as const : [posX + p - 25, _posY] as const;
         const p2 = endRight ? [targetLayout.x + targetLayout.width - p + 32, targetPosY] as const : [targetLayout.x + p - 32, targetPosY] as const;
         const p3 = endRight ? [targetLayout.x + targetLayout.width - p, targetPosY] as const : [targetLayout.x + p, targetPosY] as const;
+        ctx.moveTo(...p0);
         ctx.arcTo(...p1, ...p2, 8);
         ctx.arcTo(...p2, ...p3, 8);
         ctx.lineTo(...p3);
