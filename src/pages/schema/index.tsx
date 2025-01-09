@@ -55,6 +55,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
   const [nodeBounding, setNodeBounding] = React.useState<Record<string, LayoutRectangle>>({});
   const [selectedNode, setSelectedNode] = React.useState<string>();
+  const [startPos, setStartPos] = React.useState<{ x: number; y: number; }>();
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -129,6 +130,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
               if (offsetY < layout.y || offsetY > layout.y + layout.height) continue;
               setNodeZ({ [name]: 1 });
               setSelectedNode(name);
+              setStartPos({ x: offsetX - layout.x, y: offsetY - layout.y });
               break;
             }
           }}
@@ -139,10 +141,10 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
             setNodePos(v => ({
               ...v,
               [selectedNode]: {
-                x: offsetX - (layout.width ?? 0) * 0.5,
-                y: offsetY - p - s1 * 0.5,
+                x: offsetX - (startPos?.x ?? 0),
+                y: offsetY - (startPos?.y ?? 0),
               },
-            }))
+            }));
           }}
           onPointerUp={() => {
             setSelectedNode(undefined);
