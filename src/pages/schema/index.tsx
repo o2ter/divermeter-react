@@ -82,17 +82,18 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ctx.roundRect(posX, posY, width, height, [8]);
       ctx.fill();
       ctx.stroke();
-      ctx.font = `${s1}px font-monospace`;
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
+      ctx.font = `${s1}px font-monospace`;
       ctx.fillText(node.name, posX + width * 0.5, posY + s1 + p);
-      ctx.font = `${s2}px font-monospace`;
       for (const [i, field] of node.fields.entries()) {
         ctx.textAlign = 'start';
         ctx.fillStyle = 'black';
+        ctx.font = `${s2}px font-monospace`;
         ctx.fillText(field.key, posX + p, posY + s1 + s2 + p + i * s2);
         ctx.textAlign = 'end';
         ctx.fillStyle = 'gray';
+        ctx.font = `${s2}px font-monospace`;
         ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p + i * s2);
       }
     }
