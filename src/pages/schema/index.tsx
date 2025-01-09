@@ -192,20 +192,31 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
               setNodeZ({ [name]: 1 });
               setSelectedNode(name);
               setStartPos({ x: offsetX - layout.x, y: offsetY - layout.y });
-              break;
+              return;
             }
+            setSelectedNode('');
+            setStartPos({ x: offsetX, y: offsetY });
           }}
           onPointerMove={(e) => {
-            if (!selectedNode) return;
             const { offsetX, offsetY } = e.nativeEvent;
-            const layout = nodeBounding[selectedNode] ?? {};
-            setNodePos(v => ({
-              ...v,
-              [selectedNode]: {
-                x: offsetX - (startPos?.x ?? 0),
-                y: offsetY - (startPos?.y ?? 0),
-              },
-            }));
+            if (selectedNode) {
+              setNodePos(v => ({
+                ...v,
+                [selectedNode]: {
+                  x: offsetX - (startPos?.x ?? 0),
+                  y: offsetY - (startPos?.y ?? 0),
+                },
+              }));
+            } else if (selectedNode === '') {
+              setNodePos(v => _.mapValues({
+                ..._.fromPairs(_.map(nodes, ({ name }) => [name, { x: 0, y: 0 }])),
+                ...v,
+              }, n => ({
+                x: n.x + offsetX - (startPos?.x ?? 0),
+                y: n.y + offsetY - (startPos?.y ?? 0),
+              })));
+              setStartPos({ x: offsetX, y: offsetY });
+            }
           }}
           onPointerUp={() => {
             setSelectedNode(undefined);
