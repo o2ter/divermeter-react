@@ -119,27 +119,30 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         <View
           style={StyleSheet.absoluteFill}
           onLayout={(e) => setLayout(e.nativeEvent.layout)}
-          onTouchStart={(e) => {
-            const { locationX, locationY } = e.nativeEvent;
+          onPointerDown={(e) => {
+            const { offsetX, offsetY } = e.nativeEvent;
             for (const [name, layout] of _.entries(nodeBounding)) {
-              if (locationX < layout.x || locationX > layout.x + layout.width) continue;
-              if (locationY < layout.y || locationY > layout.y + layout.height) continue;
+              if (offsetX < layout.x || offsetX > layout.x + layout.width) continue;
+              if (offsetY < layout.y || offsetY > layout.y + layout.height) continue;
               setNodeZ({ [name]: 1 });
               setSelectedNode(name);
               break;
             }
           }}
-          onTouchMove={(e) => {
+          onPointerMove={(e) => {
             if (!selectedNode) return;
-            const { locationX, locationY } = e.nativeEvent;
+            const { offsetX, offsetY } = e.nativeEvent;
             const layout = nodeBounding[selectedNode] ?? {};
             setNodePos(v => ({
               ...v,
               [selectedNode]: {
-                x: locationX - (layout.width ?? 0) * 0.5,
-                y: locationY - (layout.height ?? 0) * 0.5,
+                x: offsetX - (layout.width ?? 0) * 0.5,
+                y: offsetY - (layout.height ?? 0) * 0.5,
               },
             }))
+          }}
+          onPointerUp={() => {
+            setSelectedNode(undefined);
           }}
         >
           <div className='flex-fill overflow-auto'>
