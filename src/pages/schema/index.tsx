@@ -102,15 +102,27 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       for (const [i, { _type: type }] of fields.entries()) {
         if (_.isString(type)) continue;
         if (type.type !== 'pointer' && type.type !== 'relation') continue;
+        const target = _.find(_nodes, n => n.name === type.target);
+        const targetId = _.findIndex(target?.fields, v => v.key === '_id');
         const layout = nodeBounding[name];
         const targetLayout = nodeBounding[type.target];
+        if (_.isNil(target) || _.isNil(layout) || _.isNil(targetLayout)) continue;
         const _posY = posY + headerHeight + p * 2 + (i + 0.5) * fieldHeight;
+        const targetPosY = targetLayout.y + headerHeight + p * 2 + (targetId + 0.5) * fieldHeight;
         ctx.beginPath();
         ctx.moveTo(posX + p, _posY);
-        if (layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width) {
+        if (type.target === name) {
           ctx.lineTo(posX + width - p + 25, _posY);
+          ctx.lineTo(targetLayout.x + targetLayout.width - p + 25, targetPosY);
+          ctx.lineTo(targetLayout.x + targetLayout.width - p, targetPosY);
+        } else if (layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width) {
+          ctx.lineTo(posX + width - p + 25, _posY);
+          ctx.lineTo(targetLayout.x + p - 25, targetPosY);
+          ctx.lineTo(targetLayout.x + p, targetPosY);
         } else {
           ctx.lineTo(posX + p - 25, _posY);
+          ctx.lineTo(targetLayout.x + targetLayout.width - p + 25, targetPosY);
+          ctx.lineTo(targetLayout.x + targetLayout.width - p, targetPosY);
         }
         ctx.stroke();
       }
