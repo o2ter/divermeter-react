@@ -109,20 +109,37 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         if (_.isNil(target) || _.isNil(layout) || _.isNil(targetLayout)) continue;
         const _posY = posY + headerHeight + p * 2 + (i + 0.5) * fieldHeight;
         const targetPosY = targetLayout.y + headerHeight + p * 2 + (targetId + 0.5) * fieldHeight;
+        const startRight = type.target === name || layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width;
+        const endRight = type.target === name || !startRight;
         ctx.beginPath();
         ctx.moveTo(posX + p, _posY);
-        if (type.target === name) {
-          ctx.lineTo(posX + width - p + 25, _posY);
-          ctx.lineTo(targetLayout.x + targetLayout.width - p + 25, targetPosY);
-          ctx.lineTo(targetLayout.x + targetLayout.width - p, targetPosY);
-        } else if (layout.x + 0.5 * layout.width < targetLayout.x + 0.5 * targetLayout.width) {
-          ctx.lineTo(posX + width - p + 25, _posY);
-          ctx.lineTo(targetLayout.x + p - 25, targetPosY);
-          ctx.lineTo(targetLayout.x + p, targetPosY);
+        if (startRight) {
+          ctx.arcTo(
+            posX + width - p + 32, _posY,
+            targetLayout.x + targetLayout.width - p + 32, targetPosY,
+            8
+          );
         } else {
-          ctx.lineTo(posX + p - 25, _posY);
-          ctx.lineTo(targetLayout.x + targetLayout.width - p + 25, targetPosY);
+          ctx.arcTo(
+            posX + p - 25, _posY,
+            targetLayout.x + targetLayout.width - p + 32, targetPosY,
+            8
+          );
+        }
+        if (endRight) {
+          ctx.arcTo(
+            targetLayout.x + targetLayout.width - p + 32, targetPosY,
+            targetLayout.x + targetLayout.width - p, targetPosY,
+            8
+          );
           ctx.lineTo(targetLayout.x + targetLayout.width - p, targetPosY);
+        } else {
+          ctx.arcTo(
+            targetLayout.x + p - 32, targetPosY,
+            targetLayout.x + p, targetPosY,
+            8
+          );
+          ctx.lineTo(targetLayout.x + p, targetPosY);
         }
         ctx.stroke();
       }
