@@ -46,6 +46,9 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     })),
   })), [schema]);
 
+  const [nodePos, setNodePos] = React.useState<Record<string, { x: number; y: number; }>>({});
+  const [nodeZ, setNodeZ] = React.useState<Record<string, number>>({});
+
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -70,13 +73,14 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
       ),
     })).map(x => ({
       ...x,
-      posX: 0,
-      posY: 0,
+      posX: nodePos[x.name]?.x ?? 0,
+      posY: nodePos[x.name]?.y ?? 0,
       width: x.maxLength * p + p * 2,
       height: x.fields.length * s2 + s1 + p * 2,
+      zIndex: nodeZ[x.name] ?? 0,
     }));
 
-    for (const { posX, posY, width, height, ...node } of _nodes) {
+    for (const { posX, posY, width, height, ...node } of _.orderBy(_nodes, 'zIndex')) {
       ctx.fillStyle = 'white';
       ctx.beginPath();
       ctx.roundRect(posX, posY, width, height, [8]);
@@ -97,7 +101,7 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
         ctx.fillText(field.type, posX + width - p, posY + s1 + s2 + p + i * s2);
       }
     }
-  }, [nodes, layout]);
+  }, [nodes, layout, nodePos, nodeZ]);
 
   return (
     <>
