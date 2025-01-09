@@ -59,6 +59,8 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     const s1 = 24;
     const s2 = 18;
     const p = 8;
