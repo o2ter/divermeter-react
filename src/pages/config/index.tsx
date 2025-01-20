@@ -64,7 +64,7 @@ export const Config: React.FC<{}> = () => {
 
   return (
     <>
-      <Row classes='py-3 px-4 justify-content-between bg-gray-700 text-gray-400 font-monospace'>
+      <Row classes='py-3 px-4 justify-content-between bg-primary-900 text-gray-400 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>SYSTEM</Text>
           <Text classes='h5 text-white'>Config</Text>
