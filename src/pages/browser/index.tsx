@@ -225,7 +225,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   return (
     <>
-      <View classes='py-3 px-4 bg-secondary-600 text-secondary-200 font-monospace gap-3'>
+      <View classes='py-3 px-4 bg-gray-700 text-gray-400 font-monospace gap-3'>
         <Row classes='justify-content-between'>
           <View classes='flex-row align-items-center gap-3'>
             {relatedBy && (
@@ -286,7 +286,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         </Row>
         <FilterControl filter={filter} setFilter={setFilter} />
       </View>
-      <View classes='flex-fill bg-secondary-100'>
+      <View classes='flex-fill bg-gray-200'>
         {_schema && (
           <View style={StyleSheet.absoluteFill}>
             <div className='flex-fill overflow-auto'>
@@ -491,7 +491,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           </View>
         )}
       </View>
-      <Row classes='py-1 px-4 justify-content-between bg-secondary-600 text-secondary-200'>
+      <Row classes='py-1 px-4 justify-content-between bg-gray-700 text-gray-400'>
         <Row classes='gap-2 align-items-center'>
           <Text>Limit</Text>
           <UncontrolledTextInput
@@ -510,7 +510,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
         <Row classes='gap-2 align-items-center'>
           <Button
             variant='unstyled'
-            color='secondary-200'
+            color='gray-400'
             onPress={() => setPage(v => Math.max(1, v - 1))}
           >
             <Icon icon='MaterialIcons' name='navigate-before' />
@@ -529,7 +529,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
           />
           <Button
             variant='unstyled'
-            color='secondary-200'
+            color='gray-400'
             onPress={() => setPage(v => v + 1)}
           >
             <Icon icon='MaterialIcons' name='navigate-next' />

@@ -64,7 +64,7 @@ export const Config: React.FC<{}> = () => {
 
   return (
     <>
-      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+      <Row classes='py-3 px-4 justify-content-between bg-gray-700 text-gray-400 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>SYSTEM</Text>
           <Text classes='h5 text-white'>Config</Text>
@@ -93,10 +93,10 @@ export const Config: React.FC<{}> = () => {
           </Row>
         </View>
       </Row>
-      <View classes='flex-fill bg-secondary-100'>
+      <View classes='flex-fill bg-gray-200'>
         <div className='flex-fill overflow-auto'>
           <table className='table-striped'>
-            <thead className='bg-secondary-400 text-white'>
+            <thead className='bg-gray-500 text-white'>
               <tr>
                 <th>name</th>
                 <th>type</th>

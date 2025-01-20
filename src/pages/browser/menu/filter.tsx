@@ -74,7 +74,7 @@ export const FilterControl: React.FC<FilterButtonProps> = ({
       <Button title='Submit' color='success' onPress={() => {
         setFilter(store);
       }} />
-      <Button title='Reset' color='secondary' onPress={() => {
+      <Button title='Reset' color='gray-600' onPress={() => {
         setStore(filter);
       }} />
     </Row>

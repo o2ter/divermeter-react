@@ -151,13 +151,13 @@ export const Schema: React.FC<{ schema: TSchema; }> = ({ schema }) => {
 
   return (
     <>
-      <Row classes='py-3 px-4 justify-content-between bg-secondary-600 text-secondary-200 font-monospace'>
+      <Row classes='py-3 px-4 justify-content-between bg-gray-700 text-gray-400 font-monospace'>
         <View>
           <Text style={{ fontSize: 10 }}>SYSTEM</Text>
           <Text classes='h5 text-white'>Schema</Text>
         </View>
       </Row>
-      <View classes='flex-fill bg-secondary-100'>
+      <View classes='flex-fill bg-gray-200'>
         <View
           style={StyleSheet.absoluteFill}
           onLayout={(e) => setLayout(e.nativeEvent.layout)}
