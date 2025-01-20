@@ -2401,13 +2401,13 @@
     react-native-vector-icons ">=10.1.0"
     react-router-dom "^7.1.1"
 
-"@o2ter/server-js@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.19.tgz#7cea0ea35bb3f30ddc63c748a5875a4b5e25cbde"
-  integrity sha512-bCJ2uxlrFsjAi4B2ZyNMR69WSz9MjcG+M9Of84WzqnFafE+KCbotwq1V745QQGKZLZ8CIV0KArgKZ/1/L4j6bQ==
+"@o2ter/server-js@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@o2ter/server-js/-/server-js-0.0.20.tgz#462f1048b88cc92453d200d7f193224c85b2ffd9"
+  integrity sha512-NgVnUQo2oyVTMOmMx7cICNzOZ4XXznr/P2a1SI4003gkvznslWucaOvjl42f9sjZeqReooUGNwmW5zI76bfRuQ==
   dependencies:
     "@o2ter/styler.js" "^0.0.1"
-    "@o2ter/utils-js" "^0.0.11"
+    "@o2ter/utils-js" "^0.0.12"
     "@types/compression" "^1.7.5"
     "@types/cookie-parser" "^1.4.8"
     "@types/express" "^5.0.0"
@@ -2435,13 +2435,6 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.1.tgz#f208778d49b1dcb27eb75cbd32a6ce444df64e0c"
   integrity sha512-IOZbRAdkLaDMoh4Ff1rIx3zIURTWNwCdEZMinjS5xipBTy0MwMtT/0kJrC+rdgoWUPEIZXlcdZcj09RQ4U+RIw==
-  dependencies:
-    lodash ">=4.17.21"
-
-"@o2ter/utils-js@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@o2ter/utils-js/-/utils-js-0.0.11.tgz#fe4defb91400dbda66f25183331a807a28c90e4c"
-  integrity sha512-jVX7M97VyUNyAiPeZzLrAi0Fd3p8MRldnU0pttRszIN10GYeAperItnFbQ0F3DMtNaVpsF9i+aZeveQtq44oNQ==
   dependencies:
     lodash ">=4.17.21"
 
