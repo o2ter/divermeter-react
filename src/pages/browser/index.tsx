@@ -427,7 +427,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         refreshCount();
                         refresh();
                       } else {
-                        await Proto.Query(className).containsIn('_id', ids).deleteMany({ master: true });
+                        await Proto.Query(className).containedIn('_id', ids).deleteMany({ master: true });
                         setObjects(v => _.filter(v, o => !_.includes(ids, o.objectId)));
                       }
                       ref.current?.clearSelection();
