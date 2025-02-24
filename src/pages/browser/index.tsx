@@ -25,13 +25,13 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput, useNavigate, Pressable } from '@o2ter/react-ui';
+import { View, Text, useParams, useAlert, useActivity, useLocation, useModal, UncontrolledTextInput, Button, Icon, TextInput, useNavigate } from '@o2ter/react-ui';
 import { useAsyncResource } from 'sugax';
 import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
-import { Decimal, deserialize, isObject } from 'proto.io/dist/client';
+import { Decimal, deserialize } from 'proto.io/dist/client';
 import { _typeOf, typeOf } from '../../utils';
 import { FilterControl } from './menu/filter';
 import { ConfirmModal, Modal } from '../../components/modal';
@@ -163,9 +163,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const ref = React.useRef<React.ComponentRef<typeof DataSheet>>(null);
 
   const setValue = async (obj: TObject, column: string, value: any) => {
-    if (isObject(value)) {
+    if (Proto.isObject(value)) {
       obj.set(column, value.objectId ? await value.fetch({ master: true }) : value);
-    } else if (_.isArray(value) && _.every(value, v => isObject(v))) {
+    } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
       obj.set(column, await Promise.all(_.map(value, v => v.objectId ? v.fetch({ master: true }) : v)));
     } else {
       obj.set(column, value);
