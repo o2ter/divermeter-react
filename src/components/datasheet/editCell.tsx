@@ -192,7 +192,7 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean
         <TextInput
           classes='border-0 rounded-0'
           style={{ outline: 'none' } as any}
-          value={_value?.objectId ?? ''}
+          value={_value?.id ?? ''}
           onChangeText={(text) => {
             if (_.isString(type) || type?.type !== 'pointer') return <></>;
             setValue(_.isEmpty(text) ? null : Proto.Object(type.target, text));

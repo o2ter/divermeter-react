@@ -76,7 +76,7 @@ const AddRelationModal = ({ onSubmit }: { onSubmit: (ids: string[]) => void }) =
       }}
     >
       <View classes='bg-body p-3'>
-        <Text>objectIds</Text>
+        <Text>ids</Text>
         <TextInput value={value} onChangeText={setValue} />
       </View>
     </Modal>
@@ -94,7 +94,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   const relatedBy = React.useMemo(() => {
     const { relatedBy } = state ?? {};
     if (!_.isString(relatedBy?.className) || _.isEmpty(relatedBy?.className)) return;
-    if (!_.isString(relatedBy?.objectId) || _.isEmpty(relatedBy?.objectId)) return;
+    if (!_.isString(relatedBy?.id) || _.isEmpty(relatedBy?.id)) return;
     if (!_.isString(relatedBy?.key) || _.isEmpty(relatedBy?.key)) return;
     return relatedBy;
   }, [state]);
@@ -135,7 +135,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const query = React.useMemo(() => {
     const query = relatedBy ? Proto.Relation(
-      Proto.Object(relatedBy.className, relatedBy.objectId),
+      Proto.Object(relatedBy.className, relatedBy.id),
       relatedBy.key,
     ) : Proto.Query(className);
     for (const f of filter) query.filter(f);
@@ -164,9 +164,9 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
 
   const setValue = async (obj: TObject, column: string, value: any) => {
     if (Proto.isObject(value)) {
-      obj.set(column, value.objectId ? await value.fetch({ master: true }) : value);
+      obj.set(column, value.id ? await value.fetch({ master: true }) : value);
     } else if (_.isArray(value) && _.every(value, v => Proto.isObject(v))) {
-      obj.set(column, await Promise.all(_.map(value, v => v.objectId ? v.fetch({ master: true }) : v)));
+      obj.set(column, await Promise.all(_.map(value, v => v.id ? v.fetch({ master: true }) : v)));
     } else {
       obj.set(column, value);
     }
@@ -215,12 +215,12 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
   }
 
   const saveUpdates = async (updates: TObject[]) => {
-    const ids = _.compact(_.map(updates, v => v.objectId));
+    const ids = _.compact(_.map(updates, v => v.id));
     await Promise.all(_.map(updates, v => v.save({ master: true })));
-    const _inserted = _.filter(updates, v => !_.includes(ids, v.objectId));
-    const _updated = _.filter(updates, v => _.includes(ids, v.objectId));
+    const _inserted = _.filter(updates, v => !_.includes(ids, v.id));
+    const _updated = _.filter(updates, v => _.includes(ids, v.id));
     if (!_.isEmpty(_inserted)) setObjects(v => [...v ?? [], ..._inserted]);
-    if (!_.isEmpty(_updated)) setObjects(v => _.map(v, o => _.find(_updated, u => u.objectId === o.objectId) ?? o));
+    if (!_.isEmpty(_updated)) setObjects(v => _.map(v, o => _.find(_updated, u => u.id === o.id) ?? o));
   }
 
   return (
@@ -249,7 +249,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   <Text classes='h5 text-white'>{className}</Text>
                 )}
                 {relatedBy && (
-                  <Text classes='h5 text-white'>'{relatedBy.key}' on {relatedBy.objectId}</Text>
+                  <Text classes='h5 text-white'>'{relatedBy.key}' on {relatedBy.id}</Text>
                 )}
                 {!_.isNil(count) && <Text
                   classes='fs-small ml-3'
@@ -266,7 +266,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                     <AddRelationModal onSubmit={(ids) => startActivity(async () => {
                       if (_.isEmpty(ids)) return setModal();
                       try {
-                        const obj = Proto.Object(relatedBy.className, relatedBy.objectId);
+                        const obj = Proto.Object(relatedBy.className, relatedBy.id);
                         obj.addToSet(relatedBy.key, _.map(ids, x => Proto.Object(className, x)));
                         await obj.save({ master: true });
                         showSuccess(t('saved'));
@@ -355,7 +355,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         for (const [column = '', value] of _.zip(_columns, values)) {
                           if (!_.includes(readonlyKeys, column)) {
                             if (_.isNil(value)) {
-                              if (_obj.objectId) _obj.set(column, null);
+                              if (_obj.id) _obj.set(column, null);
                             } else {
                               const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
                               if (!_.isNil(_value)) _obj.set(column, _value as any);
@@ -385,7 +385,7 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                         for (const [column = '', value] of _.zip(_cols, values)) {
                           if (!_.includes(readonlyKeys, column)) {
                             if (_.isNil(value)) {
-                              if (_obj.objectId) _obj.set(column, null);
+                              if (_obj.id) _obj.set(column, null);
                             } else {
                               const _value = await decodeRawValue(_typeOf(_fields[column]) ?? '', value);
                               if (!_.isNil(_value)) _obj.set(column, _value as any);
@@ -416,19 +416,19 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                   );
                 })}
                 onDeleteRows={(rows) => {
-                  const ids = _.compact(_.map(rows, row => objects?.[row]?.objectId));
+                  const ids = _.compact(_.map(rows, row => objects?.[row]?.id));
                   const deleteAction = () => startActivity(async () => {
                     try {
                       if (relatedBy) {
                         if (!relatedBy.editable) return;
-                        const obj = Proto.Object(relatedBy.className, relatedBy.objectId);
+                        const obj = Proto.Object(relatedBy.className, relatedBy.id);
                         obj.removeAll(relatedBy.key, _.map(ids, x => Proto.Object(className, x)));
                         await obj.save({ master: true });
                         refreshCount();
                         refresh();
                       } else {
                         await Proto.Query(className).containedIn('_id', ids).deleteMany({ master: true });
-                        setObjects(v => _.filter(v, o => !_.includes(ids, o.objectId)));
+                        setObjects(v => _.filter(v, o => !_.includes(ids, o.id)));
                       }
                       ref.current?.clearSelection();
                       showSuccess(t('deleted'));
@@ -460,11 +460,11 @@ const BrowserBody: React.FC<{ schema: TSchema; className: string; state: any; }>
                     try {
                       const updated = _.compact(await Promise.all(_.map(_rows, row => {
                         let obj = objects?.[row]?.clone();
-                        if (!obj?.objectId) return;
+                        if (!obj?.id) return;
                         for (const _col of _cols) obj.set(_col, null);
                         return obj.save({ master: true });
                       })));
-                      setObjects(v => _.map(v, o => _.find(updated, u => u.objectId === o.objectId) ?? o));
+                      setObjects(v => _.map(v, o => _.find(updated, u => u.id === o.id) ?? o));
                       ref.current?.clearSelection();
                       showSuccess(t('deleted'));
                     } catch (e: any) {

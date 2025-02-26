@@ -58,7 +58,7 @@ export const DataSheet = React.forwardRef(({
   const Proto = useProto();
 
   const _data = React.useMemo(() => _.map(data, x => _.fromPairs(_.map(columns, c => [c, {
-    objectId: x.objectId,
+    id: x.id,
     column: c,
     value: x.get(c),
     type: schema.fields[c],
@@ -71,7 +71,7 @@ export const DataSheet = React.forwardRef(({
     if (_.isNumber(x) || _.isBoolean(x) || _.isString(x)) return `${x}`;
     if (x instanceof Decimal) return x.toString();
     if (_.isDate(x)) return x.toISOString();
-    if (Proto.isObject(x)) return x.objectId ?? '';
+    if (Proto.isObject(x)) return x.id ?? '';
     return serialize(x);
   }
 

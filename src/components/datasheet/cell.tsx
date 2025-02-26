@@ -31,14 +31,14 @@ import { TDataType } from '../../proto';
 import { typeOf } from '../../utils';
 
 export type DataSheetCellProps = {
-  objectId?: string;
+  id?: string;
   column?: string;
   value?: any;
   type?: TDataType;
   hidden?: boolean;
 };
 
-const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value, type, hidden }) => {
+const _DataSheetCell: React.FC<DataSheetCellProps> = ({ id, column, value, type, hidden }) => {
 
   const navigate = useNavigate();
   const { class: className } = useParams();
@@ -98,7 +98,7 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value,
     case 'pointer':
       return (
         <Text classes='font-monospace text-right' style={{ color: 'rebeccapurple' }} numberOfLines={1}>
-          {value.objectId}
+          {value.id}
           <Icon
             classes='ml-1'
             icon='Ionicons'
@@ -109,7 +109,7 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value,
                   state: {
                     filter: [{
                       _id: {
-                        $eq: value.objectId,
+                        $eq: value.id,
                       },
                     }]
                   }
@@ -128,12 +128,12 @@ const _DataSheetCell: React.FC<DataSheetCellProps> = ({ objectId, column, value,
             icon='Ionicons'
             name='arrow-redo-circle'
             onPress={() => {
-              if (objectId && column && className) {
+              if (id && column && className) {
                 navigate(`/browser/${(type as any).target}`, {
                   state: {
                     relatedBy: {
                       className,
-                      objectId,
+                      id,
                       key: column,
                       editable: !(type as any).foreignField,
                     },
