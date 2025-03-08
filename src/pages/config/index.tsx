@@ -55,7 +55,10 @@ const valueToString = (value: any) => {
 
 export const Config: React.FC<{}> = () => {
   const Proto = useProto();
-  const { resource: config, refresh } = useAsyncResource(() => Proto.config());
+  const { resource: { config, acl } = {}, refresh } = useAsyncResource(async () => ({
+    config: await Proto.config({ master: true }),
+    acl: await Proto.configAcl({ master: true }),
+  }));
 
   const setModal = useModal();
   const startActivity = useActivity();
@@ -101,6 +104,7 @@ export const Config: React.FC<{}> = () => {
                 <th>name</th>
                 <th>type</th>
                 <th>value</th>
+                <th>acl</th>
               </tr>
             </thead>
             <tbody>
@@ -123,6 +127,7 @@ export const Config: React.FC<{}> = () => {
                   <td>{key}</td>
                   <td>{valueToType(value)}</td>
                   <td>{valueToString(value)}</td>
+                  <td>{valueToString(acl?.[key] ?? [])}</td>
                 </tr>
               ))}
             </tbody>
