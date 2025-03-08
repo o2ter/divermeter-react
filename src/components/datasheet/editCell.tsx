@@ -99,31 +99,35 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean
       );
     case 'number':
       return (
-        <TextInput
-          classes='border-0 rounded-0'
-          style={{ outline: 'none' } as any}
-          value={str ?? _value?.toString() ?? ''}
-          onChangeText={(text) => {
-            setStr(text);
-            const number = parseFloat(text);
-            if (_.isFinite(number)) setValue(number);
-          }}
-          autoFocus
-        />
+        <Resizable style={paddingStyle}>
+          <TextInput
+            classes='border-0 rounded-0 p-0 w-100 h-100'
+            style={{ outline: 'none' } as any}
+            value={str ?? _value?.toString() ?? ''}
+            onChangeText={(text) => {
+              setStr(text);
+              const number = parseFloat(text);
+              if (_.isFinite(number)) setValue(number);
+            }}
+            autoFocus
+          />
+        </Resizable>
       );
     case 'decimal':
       return (
-        <TextInput
-          classes='border-0 rounded-0'
-          style={{ outline: 'none' } as any}
-          value={str ?? _value?.toString() ?? ''}
-          onChangeText={(text) => {
-            setStr(text);
-            const number = new Decimal(text);
-            if (number.isFinite()) setValue(number);
-          }}
-          autoFocus
-        />
+        <Resizable style={paddingStyle}>
+          <TextInput
+            classes='border-0 rounded-0 p-0 w-100 h-100'
+            style={{ outline: 'none' } as any}
+            value={str ?? _value?.toString() ?? ''}
+            onChangeText={(text) => {
+              setStr(text);
+              const number = new Decimal(text);
+              if (number.isFinite()) setValue(number);
+            }}
+            autoFocus
+          />
+        </Resizable>
       );
     case 'string':
       return (
@@ -138,7 +142,22 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean
           />
         </Resizable>
       );
-    case 'date': return <></>;
+    case 'date':
+      return (
+        <Resizable style={paddingStyle}>
+          <TextInput
+            classes='border-0 rounded-0 p-0 w-100 h-100'
+            style={{ outline: 'none' } as any}
+            value={str ?? _value?.toISOString() ?? ''}
+            onChangeText={(text) => {
+              setStr(text);
+              const date = new Date(text);
+              if (!_.isNaN(date)) setValue(date);
+            }}
+            autoFocus
+          />
+        </Resizable>
+      );
     case 'object':
     case 'array':
     case 'string[]':
@@ -189,16 +208,18 @@ export const DataSheetEditCell = React.forwardRef<{ value?: any; dirty?: boolean
       );
     case 'pointer':
       return (
-        <TextInput
-          classes='border-0 rounded-0'
-          style={{ outline: 'none' } as any}
-          value={_value?.id ?? ''}
-          onChangeText={(text) => {
-            if (_.isString(type) || type?.type !== 'pointer') return <></>;
-            setValue(_.isEmpty(text) ? null : Proto.Object(type.target, text));
-          }}
-          autoFocus
-        />
+        <Resizable style={paddingStyle}>
+          <TextInput
+            classes='border-0 rounded-0 p-0 w-100 h-100'
+            style={{ outline: 'none' } as any}
+            value={_value?.id ?? ''}
+            onChangeText={(text) => {
+              if (_.isString(type) || type?.type !== 'pointer') return <></>;
+              setValue(_.isEmpty(text) ? null : Proto.Object(type.target, text));
+            }}
+            autoFocus
+          />
+        </Resizable>
       );
     case 'relation': return <></>;
     default: return <></>;
