@@ -82,11 +82,11 @@ export const Config: React.FC<{}> = () => {
                 <ParameterModal
                   title='Create a parameter'
                   onCancel={() => setModal()}
-                  onSubmit={(name, value) => startActivity(async () => {
+                  onSubmit={(name, value, acl) => startActivity(async () => {
                     if (_.isEmpty(name)) {
                       return showError('Empty parameter name is not allowed.');
                     }
-                    await Proto.setConfig({ [name]: value }, { master: true });
+                    await Proto.setConfig({ [name]: value }, { acl, master: true });
                     await refresh();
                     setModal();
                   })}
@@ -109,15 +109,16 @@ export const Config: React.FC<{}> = () => {
             </thead>
             <tbody>
               {_.map(config, (value, key) => (
-                <tr onClick={() => {
+                <tr key={key} onClick={() => {
                   setModal(
                     <ParameterModal
                       title='Update parameter'
                       name={key}
                       initialValue={value}
+                      initialAcl={acl?.[key] ?? []}
                       onCancel={() => setModal()}
-                      onSubmit={(name, value) => startActivity(async () => {
-                        await Proto.setConfig({ [name]: value }, { master: true });
+                      onSubmit={(name, value, acl) => startActivity(async () => {
+                        await Proto.setConfig({ [name]: value }, { acl, master: true });
                         await refresh();
                         setModal();
                       })}

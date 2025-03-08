@@ -35,8 +35,9 @@ type ParameterModalProps = {
   title: string;
   name?: string;
   initialValue?: any;
+  initialAcl?: string[];
   onCancel: VoidFunction;
-  onSubmit?: (name: string, value: any) => void;
+  onSubmit?: (name: string, value: any, acl: string[]) => void;
 };
 
 const Resizable: React.FC<React.PropsWithChildren<{ style?: React.CSSProperties; }>> = ({
@@ -57,11 +58,13 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
   title,
   name,
   initialValue,
+  initialAcl,
   onCancel,
   onSubmit,
 }) => {
 
   const [_name, setName] = React.useState(name ?? '');
+  const [acl, setAcl] = React.useState(initialAcl ?? ['*']);
   const [value, setValue] = React.useState(initialValue);
   const [error, setError] = React.useState(null);
 
@@ -73,7 +76,7 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
       onCancel={onCancel}
       onSubmit={() => {
         if (error) showError(error);
-        else if (onSubmit) onSubmit(_name, value);
+        else if (onSubmit) onSubmit(_name, value, acl);
       }}
     >
       <View classes='bg-body'>
@@ -114,6 +117,26 @@ export const ParameterModal: React.FC<ParameterModalProps> = ({
               />
             </Resizable>
           </View>
+        </Row>
+        <Row classes='border-top-1'>
+          <View classes='border-right-1 w-25 p-3'>
+            <Text>ACL</Text>
+          </View>
+          <TextInput
+            classes='border-0 rounded-0 flex-fill'
+            defaultValue={JSON.stringify(initialAcl ?? ['*'])}
+            onChangeText={(acl) => {
+              try {
+                const func = new Function(`return (${acl})`);
+                const value = func();
+                if (!_.isArray(value) || !_.every(value, x => _.isString(x))) throw Error('Invalid ACL');
+                setAcl(value);
+                setError(null);
+              } catch (e: any) {
+                setError(e);
+              };
+            }}
+          />
         </Row>
       </View>
     </Modal>
