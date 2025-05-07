@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import ProtoClient from 'proto.io/dist/client';
+import ProtoClient from 'proto.io/client';
 
 export const createProto = (
   endpoint: string,

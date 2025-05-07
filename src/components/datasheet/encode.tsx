@@ -24,7 +24,7 @@
 //
 
 import _ from 'lodash';
-import { Decimal } from 'proto.io/dist/client';
+import { Decimal } from 'proto.io/client';
 
 const normalName = /^[a-z_][a-z\d_]\w*$/gi;
 

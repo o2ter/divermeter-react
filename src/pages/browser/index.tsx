@@ -31,7 +31,7 @@ import { TObject, TSchema, useProto } from '../../proto';
 import { DataSheet } from '../../components/datasheet';
 import { useConfig } from '../../config';
 import { tsvParseRows } from 'd3-dsv';
-import { Decimal, deserialize } from 'proto.io/dist/client';
+import { Decimal, deserialize } from 'proto.io/client';
 import { _typeOf, typeOf } from '../../utils';
 import { FilterControl } from './menu/filter';
 import { ConfirmModal, Modal } from '../../components/modal';

@@ -29,7 +29,7 @@ import { Modal } from '../../components/modal';
 import { JSCode, Text, TextInput, View, useAlert } from '@o2ter/react-ui';
 import { Row } from '@o2ter/wireframe';
 import { encodeObject, verifyObject } from '../../components/datasheet/encode';
-import { Decimal } from 'proto.io/dist/client';
+import { Decimal } from 'proto.io/client';
 
 type ParameterModalProps = {
   title: string;

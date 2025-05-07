@@ -32,7 +32,7 @@ import { GestureResponderEvent } from 'react-native';
 import { typeStr } from '../../utils';
 import { DataSheetEditCell } from './editCell';
 import { tsvFormatRows } from 'd3-dsv';
-import { Decimal, serialize } from 'proto.io/dist/client';
+import { Decimal, serialize } from 'proto.io/client';
 
 type _DataSheetProps = Omit<React.ComponentPropsWithoutRef<typeof _DataSheet<Record<string, DataSheetCellProps>>>, 'data' | 'columns' | 'renderItem'>;
 type DataSheetProps = _DataSheetProps & {

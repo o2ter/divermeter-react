@@ -25,7 +25,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { TSerializable, deserialize, serialize } from 'proto.io/dist/client';
+import { TSerializable, deserialize, serialize } from 'proto.io/client';
 import { useSessionStorage } from 'sugax';
 
 export const useConfig = () => {
