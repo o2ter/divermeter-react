@@ -27,7 +27,7 @@ import _ from 'lodash';
 import { Server } from '@o2ter/server-js';
 import ProtoRoute, { Decimal, ProtoService, schema } from 'proto.io';
 import { DatabaseFileStorage } from 'proto.io/adapters/file/database';
-import { PostgresStorage } from 'proto.io/adapters/storage/progres';
+import { PostgresStorage } from 'proto.io/adapters/storage/postgres';
 
 const db_host = process.env['POSTGRES_HOST'] ?? "localhost";
 const db_user = process.env['POSTGRES_USERNAME'];
