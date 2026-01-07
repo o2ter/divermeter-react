@@ -1,6 +1,6 @@
 {
   "name": "divermeter-react",
-  "version": "1.0.0",
+  "version": "0.0.30",
   "main": "dist/index",
   "module": "dist/index",
   "types": "dist/index",
